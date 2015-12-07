@@ -303,6 +303,9 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="184" y="14" width="34" height="21"/>
+                                        </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRo-fY-Szk">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -397,7 +400,8 @@
                                         <exclude reference="ggP-aD-r8h"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="281" y="289" width="80" height="80"/>
                                     <mask key="constraints">
                                         <include reference="ggP-aD-r8h"/>
                                     </mask>
@@ -414,7 +418,8 @@
                                         <exclude reference="LIT-9z-DPO"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="41" y="289" width="80" height="80"/>
                                     <mask key="constraints">
                                         <include reference="LIT-9z-DPO"/>
                                     </mask>
@@ -424,6 +429,9 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="167" y="377" width="68" height="21"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客户管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2R0-Df-QAW">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -463,7 +471,8 @@
                                         <exclude reference="OAO-dA-Ell"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="281" y="418" width="80" height="80"/>
                                     <mask key="constraints">
                                         <include reference="OAO-dA-Ell"/>
                                     </mask>
@@ -480,7 +489,8 @@
                                         <exclude reference="ocV-bS-o2Z"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="41" y="418" width="80" height="80"/>
                                     <mask key="constraints">
                                         <exclude reference="ocV-bS-o2Z"/>
                                     </mask>
@@ -495,6 +505,9 @@
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="167" y="506" width="68" height="21"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的团队" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IA4-i2-A2n">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -683,7 +696,6 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="3oh-Kh-DU7"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3Q-JZ-Vys" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
