@@ -20,6 +20,7 @@
 		18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A43C1C15187D00C380B5 /* UIImageView+Loading.m */; };
 		18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44D1C15187D00C380B5 /* UIViewController+Helper.m */; };
 		18C0A4591C15187D00C380B5 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44F1C15187D00C380B5 /* Utility.m */; };
+		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		18C0A45A1C15194900C380B5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		2DF2547226180A97CAE380BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6DAA3D31AA655B689A679C69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C6F17F51C15812700B48EFE /* MYTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYTLoginViewController.h; sourceTree = "<group>"; };
+		9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYTLoginViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +119,7 @@
 				18C0A4131C1515FD00C380B5 /* Main.storyboard */,
 				18C0A4161C1515FD00C380B5 /* Images.xcassets */,
 				18C0A4181C1515FD00C380B5 /* LaunchScreen.xib */,
+				9C6F17F41C1580C100B48EFE /* YJLogin */,
 				18C0A4091C1515FD00C380B5 /* Supporting Files */,
 			);
 			path = MYT;
@@ -205,6 +209,15 @@
 				2DF2547226180A97CAE380BA /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9C6F17F41C1580C100B48EFE /* YJLogin */ = {
+			isa = PBXGroup;
+			children = (
+				9C6F17F51C15812700B48EFE /* MYTLoginViewController.h */,
+				9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */,
+			);
+			name = YJLogin;
 			sourceTree = "<group>";
 		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
@@ -353,6 +366,7 @@
 				18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */,
 				18C0A4361C1517CF00C380B5 /* PreRequestManager.m in Sources */,
 				18C0A4121C1515FD00C380B5 /* ViewController.m in Sources */,
+				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				18C0A4501C15187D00C380B5 /* UIButton+Loading.m in Sources */,
 				18C0A4351C1517CF00C380B5 /* QQRequestManager.m in Sources */,

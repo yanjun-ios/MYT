@@ -9,6 +9,8 @@
 #import "MYTLoginViewController.h"
 #import "Utility.h"
 #import "QQRequestManager.h"
+#import "UIViewController+Helper.h"
+#import <SVProgressHUD.h>
 @interface MYTLoginViewController ()
 
 @end
@@ -62,6 +64,10 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"登陆失败！"];
+        }];
     }];
 }
 @end
