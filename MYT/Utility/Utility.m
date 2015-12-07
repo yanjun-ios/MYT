@@ -78,4 +78,14 @@ static Utility * sharedInstance = nil;
         return CGSizeMake(0, 0);
     }
 }
+
+//设置视图圆角
+-(void)setLayerView:(UIView *)view borderW:(CGFloat)W borderColor:(UIColor *)color radius:(CGFloat)r
+{
+    [view.layer setMasksToBounds:YES];
+    [view.layer setBorderWidth:W];
+    [view.layer setBorderColor:[color CGColor]];
+    [view.layer setCornerRadius:r];
+    
+}
 @end

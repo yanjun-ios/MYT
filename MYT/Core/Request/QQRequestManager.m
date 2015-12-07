@@ -9,7 +9,6 @@
 #import "QQRequestManager.h"
 #import <SVProgressHUD.h>
 #import <objc/runtime.h>
-
 extern NSString* const isShowHUD;
 
 @implementation QQRequestManager

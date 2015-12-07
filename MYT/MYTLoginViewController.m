@@ -1,0 +1,67 @@
+//
+//  MYTLoginViewController.m
+//  MYT
+//
+//  Created by 熊凯 on 15/12/7.
+//  Copyright © 2015年 YunRui. All rights reserved.
+//
+
+#import "MYTLoginViewController.h"
+#import "Utility.h"
+#import "QQRequestManager.h"
+@interface MYTLoginViewController ()
+
+@end
+
+@implementation MYTLoginViewController
+
+- (void)viewDidLoad {
+    [[Utility sharedInstance] setLayerView:_ViewForm borderW:1 borderColor:[UIColor lightGrayColor] radius:3];
+    _TF_UserName.delegate=self;
+    _TF_Password.delegate=self;
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"username"])
+    {
+        _TF_UserName.text=[[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
+    }
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_TF_UserName resignFirstResponder];
+    [_TF_Password resignFirstResponder];
+    return YES;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (IBAction)loginInto:(id)sender {
+    [_TF_UserName resignFirstResponder];
+    [_TF_Password resignFirstResponder];
+//    NSDictionary* parDic=@{@"username":@"",@"password":@""};
+//    [parDic setValue:_TF_UserName.text forKey:@"username"];
+//    [parDic setValue:_TF_Password forKey:@"password"];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:_TF_UserName.text forKey:@"username"];
+    [parDic setValue:_TF_Password forKey:@"password"];
+    [[QQRequestManager sharedRequestManager] GET:@"" parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+@end

@@ -1091,23 +1091,23 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 
 - (UIColor *)foregroundColorForStyle{
     if(self.defaultStyle == SVProgressHUDStyleLight){
-        return [UIColor blackColor];
-    } else if(self.defaultStyle == SVProgressHUDStyleDark){
         return [UIColor whiteColor];
+    } else if(self.defaultStyle == SVProgressHUDStyleDark){
+        return [UIColor blackColor];
     } else{
         return self.foregroundColor;
     }
-}
+}//字体颜色
 
 - (UIColor *)backgroundColorForStyle{
     if(self.defaultStyle == SVProgressHUDStyleLight){
-        return [UIColor whiteColor];
-    } else if(self.defaultStyle == SVProgressHUDStyleDark){
         return [UIColor blackColor];
+    } else if(self.defaultStyle == SVProgressHUDStyleDark){
+        return [UIColor clearColor];
     } else{
         return self.backgroundColor;
     }
-}
+}//背景颜色
 
 - (UIImage*)image:(UIImage*)image withTintColor:(UIColor*)color{
     CGRect rect = CGRectMake(0.0f, 0.0f, image.size.width, image.size.height);

@@ -41,4 +41,8 @@
 
 
 -(CGSize)getStringSize:(NSString*)string boundsSize:(CGSize)size fontSize:(int)fontSize;
+
+//设置视图圆角
+-(void)setLayerView:(UIView*)view borderW:(CGFloat)W borderColor:(UIColor*)color radius:(CGFloat)r;
+
 @end
