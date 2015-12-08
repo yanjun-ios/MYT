@@ -52,11 +52,9 @@
 */
 
 - (IBAction)loginInto:(id)sender {
+    [self performSegueWithIdentifier:@"mainPage" sender:nil];
     [_TF_UserName resignFirstResponder];
     [_TF_Password resignFirstResponder];
-//    NSDictionary* parDic=@{@"username":@"",@"password":@""};
-//    [parDic setValue:_TF_UserName.text forKey:@"username"];
-//    [parDic setValue:_TF_Password forKey:@"password"];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:_TF_UserName.text forKey:@"username"];
     [parDic setValue:_TF_Password forKey:@"password"];
