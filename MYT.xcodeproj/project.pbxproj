@@ -20,14 +20,15 @@
 		18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A43C1C15187D00C380B5 /* UIImageView+Loading.m */; };
 		18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44D1C15187D00C380B5 /* UIViewController+Helper.m */; };
 		18C0A4591C15187D00C380B5 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44F1C15187D00C380B5 /* Utility.m */; };
-		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F17FA1C1663F400B48EFE /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F91C1663F400B48EFE /* BottomView.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FD1C166A9B00B48EFE /* IISideController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FF1C166A9B00B48EFE /* IIViewDeckController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18051C166A9B00B48EFE /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18011C166A9B00B48EFE /* IIWrapController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18081C167CFA00B48EFE /* CilentViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F180C1C167F8500B48EFE /* kongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180B1C167F8500B48EFE /* kongViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A82881C16D39E00C5BDB3 /* RemindViewController.m */; };
+		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; };
+		9C6F17FA1C1663F400B48EFE /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F91C1663F400B48EFE /* BottomView.m */; };
+		9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FD1C166A9B00B48EFE /* IISideController.m */; };
+		9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FF1C166A9B00B48EFE /* IIViewDeckController.m */; };
+		9C6F18051C166A9B00B48EFE /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18011C166A9B00B48EFE /* IIWrapController.m */; };
+		9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18081C167CFA00B48EFE /* CilentViewController.m */; };
+		9C6F180C1C167F8500B48EFE /* kongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180B1C167F8500B48EFE /* kongViewController.m */; };
+		9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		18C0A45A1C15194900C380B5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		2DF2547226180A97CAE380BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6DAA3D31AA655B689A679C69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		775A82871C16D39E00C5BDB3 /* RemindViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindViewController.h; sourceTree = "<group>"; };
+		775A82881C16D39E00C5BDB3 /* RemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindViewController.m; sourceTree = "<group>"; };
 		9C6F17F51C15812700B48EFE /* MYTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYTLoginViewController.h; sourceTree = "<group>"; };
 		9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYTLoginViewController.m; sourceTree = "<group>"; };
 		9C6F17F81C1663F400B48EFE /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 				18C0A4131C1515FD00C380B5 /* Main.storyboard */,
 				18C0A4161C1515FD00C380B5 /* Images.xcassets */,
 				18C0A4181C1515FD00C380B5 /* LaunchScreen.xib */,
+				775A82861C16D37100C5BDB3 /* YJPutremind */,
 				9C6F17FB1C166A9B00B48EFE /* ViewDeck */,
 				9C6F18061C167C8A00B48EFE /* YJClient */,
 				9C6F17F41C1580C100B48EFE /* YJLogin */,
@@ -224,6 +228,15 @@
 				18C0A44D1C15187D00C380B5 /* UIViewController+Helper.m */,
 			);
 			path = UIViewControllerHelper;
+			sourceTree = "<group>";
+		};
+		775A82861C16D37100C5BDB3 /* YJPutremind */ = {
+			isa = PBXGroup;
+			children = (
+				775A82871C16D39E00C5BDB3 /* RemindViewController.h */,
+				775A82881C16D39E00C5BDB3 /* RemindViewController.m */,
+			);
+			name = YJPutremind;
 			sourceTree = "<group>";
 		};
 		8F2DFE17B3E071144DF5AD9B /* Pods */ = {
@@ -417,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */,
+				775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */,
 				18C0A4361C1517CF00C380B5 /* PreRequestManager.m in Sources */,
 				18C0A4121C1515FD00C380B5 /* ViewController.m in Sources */,
 				9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */,
