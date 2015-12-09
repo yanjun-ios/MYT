@@ -14,6 +14,11 @@
 
 @implementation CilentViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=YES;
+}
+
 - (void)viewDidLoad {
     _tableview.delegate=self;
     _tableview.dataSource=self;
