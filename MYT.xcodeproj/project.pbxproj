@@ -22,6 +22,8 @@
 		18C0A4591C15187D00C380B5 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44F1C15187D00C380B5 /* Utility.m */; };
 		775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A82881C16D39E00C5BDB3 /* RemindViewController.m */; };
 		775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A828B1C17086700C5BDB3 /* MateProjectViewController.m */; };
+		77E38BAB1C18207C0046B72E /* XNTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E38BAA1C18207C0046B72E /* XNTabBarController.m */; };
+		77E38BAE1C1829850046B72E /* MateclientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E38BAD1C1829850046B72E /* MateclientViewController.m */; };
 		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; };
 		9C6F17FA1C1663F400B48EFE /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F91C1663F400B48EFE /* BottomView.m */; };
 		9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FD1C166A9B00B48EFE /* IISideController.m */; };
@@ -30,11 +32,10 @@
 		9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18081C167CFA00B48EFE /* CilentViewController.m */; };
 		9C6F180C1C167F8500B48EFE /* kongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180B1C167F8500B48EFE /* kongViewController.m */; };
 		9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */; };
-		9C6F18171C16DBB700B48EFE /* addTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18161C16DBB700B48EFE /* addTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181A1C17C31800B48EFE /* XNTabBar.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18201C17C31800B48EFE /* XNTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181C1C17C31800B48EFE /* XNTabBarButton.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18211C17C31800B48EFE /* XNTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181E1C17C31800B48EFE /* XNTabBarController.m */; settings = {ASSET_TAGS = (); }; };
-		9C6F18251C18104600B48EFE /* ClientDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18241C18104600B48EFE /* ClientDataTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9C6F18171C16DBB700B48EFE /* addTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18161C16DBB700B48EFE /* addTableViewController.m */; };
+		9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181A1C17C31800B48EFE /* XNTabBar.m */; };
+		9C6F18201C17C31800B48EFE /* XNTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181C1C17C31800B48EFE /* XNTabBarButton.m */; };
+		9C6F18251C18104600B48EFE /* ClientDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18241C18104600B48EFE /* ClientDataTableViewController.m */; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,10 @@
 		775A82881C16D39E00C5BDB3 /* RemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindViewController.m; sourceTree = "<group>"; };
 		775A828A1C17086700C5BDB3 /* MateProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MateProjectViewController.h; sourceTree = "<group>"; };
 		775A828B1C17086700C5BDB3 /* MateProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MateProjectViewController.m; sourceTree = "<group>"; };
+		77E38BA91C1820770046B72E /* XNTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XNTabBarController.h; sourceTree = "<group>"; };
+		77E38BAA1C18207C0046B72E /* XNTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNTabBarController.m; sourceTree = "<group>"; };
+		77E38BAC1C1829850046B72E /* MateclientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MateclientViewController.h; sourceTree = "<group>"; };
+		77E38BAD1C1829850046B72E /* MateclientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MateclientViewController.m; sourceTree = "<group>"; };
 		9C6F17F51C15812700B48EFE /* MYTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYTLoginViewController.h; sourceTree = "<group>"; };
 		9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYTLoginViewController.m; sourceTree = "<group>"; };
 		9C6F17F81C1663F400B48EFE /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
@@ -104,8 +109,6 @@
 		9C6F181A1C17C31800B48EFE /* XNTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNTabBar.m; sourceTree = "<group>"; };
 		9C6F181B1C17C31800B48EFE /* XNTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNTabBarButton.h; sourceTree = "<group>"; };
 		9C6F181C1C17C31800B48EFE /* XNTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNTabBarButton.m; sourceTree = "<group>"; };
-		9C6F181D1C17C31800B48EFE /* XNTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNTabBarController.h; sourceTree = "<group>"; };
-		9C6F181E1C17C31800B48EFE /* XNTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNTabBarController.m; sourceTree = "<group>"; };
 		9C6F18231C18104600B48EFE /* ClientDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientDataTableViewController.h; sourceTree = "<group>"; };
 		9C6F18241C18104600B48EFE /* ClientDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientDataTableViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 				18C0A4131C1515FD00C380B5 /* Main.storyboard */,
 				18C0A4161C1515FD00C380B5 /* Images.xcassets */,
 				18C0A4181C1515FD00C380B5 /* LaunchScreen.xib */,
+				77E38BB01C1860A00046B72E /* ZyxMyteam */,
 				775A82861C16D37100C5BDB3 /* ZyxPutremind */,
 				9C6F17FB1C166A9B00B48EFE /* ViewDeck */,
 				9C6F18181C17C2CF00B48EFE /* XNTabbarCustom */,
@@ -257,8 +261,17 @@
 				775A82881C16D39E00C5BDB3 /* RemindViewController.m */,
 				775A828A1C17086700C5BDB3 /* MateProjectViewController.h */,
 				775A828B1C17086700C5BDB3 /* MateProjectViewController.m */,
+				77E38BAC1C1829850046B72E /* MateclientViewController.h */,
+				77E38BAD1C1829850046B72E /* MateclientViewController.m */,
 			);
 			name = ZyxPutremind;
+			sourceTree = "<group>";
+		};
+		77E38BB01C1860A00046B72E /* ZyxMyteam */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ZyxMyteam;
 			sourceTree = "<group>";
 		};
 		8F2DFE17B3E071144DF5AD9B /* Pods */ = {
@@ -317,8 +330,8 @@
 				9C6F181A1C17C31800B48EFE /* XNTabBar.m */,
 				9C6F181B1C17C31800B48EFE /* XNTabBarButton.h */,
 				9C6F181C1C17C31800B48EFE /* XNTabBarButton.m */,
-				9C6F181D1C17C31800B48EFE /* XNTabBarController.h */,
-				9C6F181E1C17C31800B48EFE /* XNTabBarController.m */,
+				77E38BA91C1820770046B72E /* XNTabBarController.h */,
+				77E38BAA1C18207C0046B72E /* XNTabBarController.m */,
 			);
 			name = XNTabbarCustom;
 			sourceTree = "<group>";
@@ -488,9 +501,11 @@
 				9C6F17FA1C1663F400B48EFE /* BottomView.m in Sources */,
 				18C0A4501C15187D00C380B5 /* UIButton+Loading.m in Sources */,
 				18C0A4351C1517CF00C380B5 /* QQRequestManager.m in Sources */,
+				77E38BAB1C18207C0046B72E /* XNTabBarController.m in Sources */,
 				9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */,
 				9C6F18051C166A9B00B48EFE /* IIWrapController.m in Sources */,
 				9C6F18251C18104600B48EFE /* ClientDataTableViewController.m in Sources */,
+				77E38BAE1C1829850046B72E /* MateclientViewController.m in Sources */,
 				9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */,
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
 				9C6F180C1C167F8500B48EFE /* kongViewController.m in Sources */,
