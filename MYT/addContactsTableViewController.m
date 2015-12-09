@@ -1,30 +1,26 @@
 //
-//  ClientDataTableViewController.m
+//  addContactsTableViewController.m
 //  MYT
 //
 //  Created by 熊凯 on 15/12/9.
 //  Copyright © 2015年 YunRui. All rights reserved.
 //
 
-#import "ClientDataTableViewController.h"
+#import "addContactsTableViewController.h"
 
-@interface ClientDataTableViewController ()
+@interface addContactsTableViewController ()
 
 @end
 
-@implementation ClientDataTableViewController
+@implementation addContactsTableViewController
 
-
-
-
-
-- (void)viewDidLoad {
-    
+-(void)viewWillAppear:(BOOL)animated
+{
     [self.navigationController.navigationBar setTitleTextAttributes:
-     
-     @{NSFontAttributeName:[UIFont systemFontOfSize:16],
-       
-       NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    @{NSFontAttributeName:[UIFont systemFontOfSize:16],
+      
+      NSForegroundColorAttributeName:[UIColor whiteColor]}];
     if (currentVersion <= 6.1) {
         self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     } else {
@@ -34,13 +30,22 @@
         UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
         status.backgroundColor=[UIColor whiteColor];
         [self.navigationController.navigationBar addSubview:status];
-        
-        
     }
-    //导航栏这一波儿设置如果放在viewWillApear中会有第一次进入不加载的BUG，放在ViewDidLoad中导航栏会遮挡tableview,这句代码解决次问题
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-        [super viewDidLoad];
-    }
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

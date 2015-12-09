@@ -14,28 +14,10 @@
 
 @implementation XNTabBarController
 
-
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden=NO;
-    if (currentVersion <= 6.1) {
-        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    } else {
-        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
-        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
-        status.backgroundColor=[UIColor whiteColor];
-        [self.navigationController.navigationBar addSubview:status];
-    }
-
+    self.navigationController.navigationBarHidden=YES;
 }
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden=NO;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"%s",__func__);

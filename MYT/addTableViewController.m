@@ -22,6 +22,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden=NO;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     
+  @{NSFontAttributeName:[UIFont systemFontOfSize:16],
+    
+    NSForegroundColorAttributeName:[UIColor whiteColor]}];
     if (currentVersion <= 6.1) {
         self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     } else {
@@ -38,7 +43,10 @@
 }
 
 - (void)viewDidLoad {
-    
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
