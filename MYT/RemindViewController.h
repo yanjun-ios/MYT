@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface RemindViewController : UIViewController
+#import "MateProjectViewController.h"
+@interface RemindViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+
+@property (weak, nonatomic) IBOutlet UILabel *biaoti;
+
 
 @end
