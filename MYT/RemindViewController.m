@@ -48,6 +48,8 @@
     
     UIView *kindofpro=[[UIView alloc]initWithFrame:CGRectMake(0,25, _tableview.frame.size.width, 35)];
     kindofpro.backgroundColor=[UIColor whiteColor];//产品种类等
+    UITapGestureRecognizer*tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(Actiondo:)];
+    [kindofpro addGestureRecognizer:tapGesture];//添加view的点击事件
     
     UILabel *countofkind=[[UILabel alloc]initWithFrame:CGRectMake(15, 5, _tableview.frame.size.width/5, 20)];
     countofkind.textColor=[UIColor grayColor];
@@ -86,10 +88,27 @@
     [view addSubview:remindtime];
     return view;
 }
+-(void)Actiondo:(id)sender
+{
+    [self performSegueWithIdentifier:@"toclient" sender:self];
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"tomate" sender:self];
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"toclient"]) {
+        
+    }
+    else if ([segue.identifier isEqualToString:@"tomate"])
+    {
+    }
+}//有数据传参数
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell=[_tableview dequeueReusableCellWithIdentifier:@"cell"];
-    
+
     return cell;
 }
 
