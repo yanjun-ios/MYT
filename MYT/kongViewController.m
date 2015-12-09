@@ -14,6 +14,11 @@
 
 @implementation kongViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
