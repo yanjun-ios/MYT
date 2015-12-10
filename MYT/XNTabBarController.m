@@ -16,7 +16,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden=YES;
+    self.navigationController.navigationBarHidden=NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,13 +46,41 @@
     UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, myView.frame.size.width, 1)];
     line.backgroundColor=[UIColor lightTextColor];
     [myView addSubview:line];
+    if(_isAddContact)
+    {
+        self.selectedIndex=2;
+    }
+    
 }
 
 
 /*永远不要忘记设置代理*/
 -(void)tabBar:(XNTabBar *)tabBar selectedFrom:(NSInteger)from to:(NSInteger)to
 {
+    
     self.selectedIndex=to;
+    if(to==0)
+    {
+        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    switch (to) {
+        case 0:
+            self.title=@"客户资料";
+            break;
+        case 1:
+            self.title=@"修改";
+            break;
+        case 2:
+            self.title=@"添加联系人";
+            break;
+        case 3:
+            self.title=@"添加备注";
+            break;
+        default:
+            break;
+    }
+   
 }
 
 - (void)didReceiveMemoryWarning {

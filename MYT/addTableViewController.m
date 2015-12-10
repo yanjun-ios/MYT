@@ -21,24 +21,23 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden=NO;
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     
-  @{NSFontAttributeName:[UIFont systemFontOfSize:16],
-    
-    NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    if (currentVersion <= 6.1) {
-        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    } else {
-        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
-        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
-        status.backgroundColor=[UIColor whiteColor];
-        [self.navigationController.navigationBar addSubview:status];
-        
-        
-    }
+//    self.navigationController.navigationBarHidden=NO;
+//    [self.navigationController.navigationBar setTitleTextAttributes:
+//     
+//  @{NSFontAttributeName:[UIFont systemFontOfSize:16],
+//    
+//    NSForegroundColorAttributeName:[UIColor whiteColor]}];
+//    if (currentVersion <= 6.1) {
+//        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+//    } else {
+//        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+//        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
+//        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
+//        status.backgroundColor=[UIColor whiteColor];
+//        [self.navigationController.navigationBar addSubview:status];
+//                
+//    }
 
 }
 
@@ -47,6 +46,8 @@
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
+    //设置背景颜色
+    self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.

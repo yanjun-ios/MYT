@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "IIViewDeckController.h"
 @interface AppDelegate ()
 
 @end
@@ -18,6 +18,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self qq_demo];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UINavigationController *centerNav  = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"mainNavigationControlller"];
+    UIViewController *rightNav= (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"rightNav"];
+    
+    IIViewDeckController *vc= [[IIViewDeckController alloc]initWithCenterViewController:centerNav rightViewController:rightNav];
+    vc.rightSize=ScreenWidth/4;
+    self.window.rootViewController = vc;
+    
     return YES;
 }
 

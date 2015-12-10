@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface XNTabBarController : UITabBarController
-
+@property(nonatomic,assign)BOOL isAddContact;
 @end
