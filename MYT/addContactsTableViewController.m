@@ -1,55 +1,32 @@
 //
-//  addTableViewController.m
+//  addContactsTableViewController.m
 //  MYT
 //
-//  Created by 熊凯 on 15/12/8.
+//  Created by 熊凯 on 15/12/9.
 //  Copyright © 2015年 YunRui. All rights reserved.
 //
 
-#import "addTableViewController.h"
+#import "addContactsTableViewController.h"
 
-@interface addTableViewController ()
+@interface addContactsTableViewController ()
 
 @end
 
-@implementation addTableViewController
-
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
+@implementation addContactsTableViewController
 
 -(void)viewWillAppear:(BOOL)animated
 {
-//    self.navigationController.navigationBarHidden=NO;
-//    [self.navigationController.navigationBar setTitleTextAttributes:
-//     
-//  @{NSFontAttributeName:[UIFont systemFontOfSize:16],
-//    
-//    NSForegroundColorAttributeName:[UIColor whiteColor]}];
-//    if (currentVersion <= 6.1) {
-//        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-//    } else {
-//        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-//        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
-//        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
-//        status.backgroundColor=[UIColor whiteColor];
-//        [self.navigationController.navigationBar addSubview:status];
-//                
-//    }
-
-}
-
-- (void)viewDidLoad {
     //消除多余空白行
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
     //设置背景颜色
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -65,11 +42,12 @@
 //#pragma mark - Table view data source
 //
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//
+//#warning Incomplete implementation, return the number of sections
 //    return 0;
 //}
 //
 //- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//#warning Incomplete implementation, return the number of rows
 //    return 0;
 //}
 

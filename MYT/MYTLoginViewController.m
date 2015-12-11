@@ -10,6 +10,7 @@
 #import "Utility.h"
 #import "QQRequestManager.h"
 #import "UIViewController+Helper.h"
+#import "IIViewDeckController.h"
 #import <SVProgressHUD.h>
 @interface MYTLoginViewController ()
 
@@ -17,7 +18,13 @@
 
 @implementation MYTLoginViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=YES;
+}
+
 - (void)viewDidLoad {
+    [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
     [[Utility sharedInstance] setLayerView:_ViewForm borderW:1 borderColor:[UIColor lightGrayColor] radius:3];
     _TF_UserName.delegate=self;
     _TF_Password.delegate=self;

@@ -7,19 +7,23 @@
 //
 
 #import "CilentViewController.h"
-#import "IIViewDeckController.h"
+#import "XNTabBarController.h"
 @interface CilentViewController ()
-
+{
+    BOOL addContact;
+}
 @end
 
 @implementation CilentViewController
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden=YES;
+    self.navigationController.navigationBarHidden=NO;
+    
 }
 
 - (void)viewDidLoad {
+    
     _tableview.delegate=self;
     _tableview.dataSource=self;
     _tableview.sectionFooterHeight=0;
@@ -46,31 +50,46 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString* identif=@"cell";
+    UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
+    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(cell.contentView.frame.size.width, 60, 30, 30)];
     
-    static NSString* identerfier=@"cell";
-    UITableViewCell*  cell=[_tableview dequeueReusableCellWithIdentifier:identerfier];
-    if(cell==nil)
-    {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identerfier];
-    }
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor = [UIColor clearColor];
+    [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+    [cell.contentView addSubview:btnadd];
+    [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
     
 }
-/*
-#pragma mark - Navigation
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
+}
+
+
+-(void)addContactsClick:(id)sender
+{
+    [self performSegueWithIdentifier:@"toTab" sender:nil];
+    addContact=YES;
+}
+
+
+#pragma mark - Navigation
+//
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"toTab"])
+    {
+        XNTabBarController* destinationController=segue.destinationViewController;
+        destinationController.isAddContact=addContact;
+        
+    }
 }
-*/
 
-//导航栏左边返回按钮点击事件
-- (IBAction)rowBackClick:(id)sender {
-}
 
 //导航栏右边侧边栏展开按钮
 - (IBAction)rightMenuClick:(id)sender {
@@ -85,6 +104,7 @@
 }
 //添加客户按钮
 - (IBAction)addClientClick:(id)sender {
+    
 }
 
 //位置按钮
