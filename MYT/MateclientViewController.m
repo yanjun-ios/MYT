@@ -7,7 +7,7 @@
 //
 
 #import "MateclientViewController.h"
-
+#import "ButtomView.h"
 @interface MateclientViewController ()
 
 @end
@@ -15,10 +15,33 @@
 @implementation MateclientViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
     _tableview.delegate=self;
     _tableview.dataSource=self;
     // Do any additional setup after loading the view.
+    self.navigationController.navigationBarHidden=NO;
+    self.navigationItem.leftItemsSupplementBackButton=NO;
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     
+     @{NSFontAttributeName:[UIFont systemFontOfSize:16],
+       
+       NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    if (currentVersion <= 6.1) {
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    } else {
+        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
+        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
+        status.backgroundColor=[UIColor whiteColor];
+        [self.navigationController.navigationBar addSubview:status];
+    }
+    
+    ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
+    [self.view addSubview:BtmV];
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {

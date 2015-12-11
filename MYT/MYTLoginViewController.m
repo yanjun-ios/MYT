@@ -24,7 +24,9 @@
 }
 
 - (void)viewDidLoad {
+    //取消侧拉
     [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
+    
     [[Utility sharedInstance] setLayerView:_ViewForm borderW:1 borderColor:[UIColor lightGrayColor] radius:3];
     _TF_UserName.delegate=self;
     _TF_Password.delegate=self;
