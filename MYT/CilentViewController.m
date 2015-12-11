@@ -50,14 +50,13 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString* identif=@"cell";
+    UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
+    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(cell.contentView.frame.size.width, 60, 30, 30)];
     
-    NSString* identerfier=@"cell";
-    UITableViewCell*  cell=[_tableview dequeueReusableCellWithIdentifier:identerfier];
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor = [UIColor clearColor];
-    
-    UIButton* btnAdd = (UIButton*)[cell.contentView viewWithTag:1000];
-    [btnAdd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
+    [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+    [cell.contentView addSubview:btnadd];
+    [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
     
 }

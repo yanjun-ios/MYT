@@ -1,27 +1,26 @@
 //
-//  AddRemarksViewController.m
+//  MoreViewController.m
 //  MYT
 //
-//  Created by 熊凯 on 15/12/9.
+//  Created by 熊凯 on 15/12/11.
 //  Copyright © 2015年 YunRui. All rights reserved.
 //
 
-#import "AddRemarksViewController.h"
-
-@interface AddRemarksViewController ()
+#import "MoreViewController.h"
+#import "Utility.h"
+@interface MoreViewController ()
 
 @end
 
-@implementation AddRemarksViewController
+@implementation MoreViewController
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
+ [[Utility sharedInstance] setLayerView:_btnMore borderW:2 borderColor:[UIColor whiteColor] radius:40];
 }
 
 - (void)viewDidLoad {
    
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }

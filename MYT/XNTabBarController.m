@@ -48,7 +48,7 @@
     [myView addSubview:line];
     if(_isAddContact)
     {
-        self.selectedIndex=2;
+        [self tabBar:myView selectedFrom:0 to:2];
     }
     
 }

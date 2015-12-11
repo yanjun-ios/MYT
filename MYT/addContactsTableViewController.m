@@ -16,21 +16,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-//    [self.navigationController.navigationBar setTitleTextAttributes:
-//    
-//    @{NSFontAttributeName:[UIFont systemFontOfSize:16],
-//      
-//      NSForegroundColorAttributeName:[UIColor whiteColor]}];
-//    if (currentVersion <= 6.1) {
-//        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-//    } else {
-//        self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-//        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//        CGRect statusRe = [[UIApplication sharedApplication] statusBarFrame];
-//        UIView* status=[[UIView alloc]initWithFrame:CGRectMake(0, -20, statusRe.size.width, statusRe.size.height)];
-//        status.backgroundColor=[UIColor whiteColor];
-//        [self.navigationController.navigationBar addSubview:status];
-//    }
     //消除多余空白行
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];

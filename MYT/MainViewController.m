@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-
+#import "ButtomView.h"
 @interface MainViewController ()
 
 @end
@@ -37,7 +37,8 @@
         [self.navigationController.navigationBar addSubview:status];
     }
 
-    
+    ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
+    [self.view addSubview:BtmV];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
