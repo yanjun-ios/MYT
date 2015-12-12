@@ -10,9 +10,12 @@
 #import "ButtomView.h"
 #import "Utility.h"
 #import "KxMenu.h"
+#import "NIDropDown.h"
+#import "QuartzCore/QuartzCore.h"
 @interface MyteamViewController ()
 {
-    Boolean mo,mt,yr;//判断是否点开
+    //Boolean mo,mt,yr;//判断是否点开
+      NIDropDown *dropDown;
 }
 
 @end
@@ -22,20 +25,12 @@
 - (void)viewDidLoad {
     _tableview1.delegate=self;
     _tableview1.dataSource=self;
-    _tableview2.delegate=self;
-    _tableview2.dataSource=self;
-    _tableview3.dataSource=self;
-    _tableview3.delegate=self;
-    _tableview4.dataSource=self;
-    _tableview4.delegate=self;
+  
     
-    mo=0;//未打开
+    /*mo=0;//未打开
     mt=0;
-    yr=0;
-    _tableview2.hidden=YES;
-    _tableview3.hidden=YES;
-    _tableview4.hidden=YES;
-    
+    yr=0;*/
+   
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
     self.navigationController.navigationBarHidden=NO;
@@ -63,26 +58,49 @@
     [[Utility sharedInstance] setLayerView:_monthtwo borderW:1 borderColor:[UIColor redColor] radius:5];
     
     //navigationbar button 效果
- 
+    [_shi addTarget:self action:@selector(showMenu:) forControlEvents:UIControlEventTouchUpInside];
     [_Nabarbutton addTarget:self action:@selector(showMenu:) forControlEvents:UIControlEventTouchUpInside];
     [super viewDidLoad];
-    [super viewDidLoad];
+   
     // Do any additional setup after loading the view.
 }
+
+//下拉效果
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=YES;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=NO;
+}
+- (void) niDropDownDelegateMethod: (NIDropDown *) sender {
+    [self rel];
+}
+
+-(void)rel{
+    //    [dropDown release];
+    dropDown = nil;
+}
+//右上角navigationbar button
 - (void)showMenu:(UIButton *)sender
 {
     NSArray *menuItems =
     @[
       
-      [KxMenuItem menuItem:@"ACTION MENU"
+      [KxMenuItem menuItem:@"业绩排行"
                      image:[UIImage imageNamed:@"ok"]
                     target:nil
                     action:NULL],
       
-      [KxMenuItem menuItem:@"Share this"
+      [KxMenuItem menuItem:@"通讯录"
                      image:[UIImage imageNamed:@"ok"]
                     target:self
-                    action:NULL],
+                    action:@selector(phone:)],
       
       ];
     
@@ -98,21 +116,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)phone:(id)sender
+{
+    [self performSegueWithIdentifier:@"adresslist" sender:self];
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if([tableView isEqual:_tableview1])
-    {
-        return 10;    }//团队成员个数
-    else if([tableView isEqual:_tableview2])
-    {
-        return 12;
-    }
-    else if([tableView isEqual:_tableview3])
-    {
-        return 12;
-    }
-    else
-        return 5;
+    
+        return 10;
+   
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -120,28 +132,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([tableView isEqual:_tableview1]) {
+  
         UITableViewCell *cell4=[_tableview1 dequeueReusableCellWithIdentifier:@"cell"];
         return cell4;
-    }
-   else if([tableView isEqual:_tableview2])
-    {
-        UITableViewCell *cell1=[_tableview2 dequeueReusableCellWithIdentifier:@"monthcell1"];
-        ((UILabel*)[cell1.contentView viewWithTag:103]).text=[NSString stringWithFormat:@"%d月",indexPath.row+1];
-        return cell1;
-    }
-    else if([tableView isEqual:_tableview3])
-    {
-        UITableViewCell *cell2=[_tableview3 dequeueReusableCellWithIdentifier:@"monthcell2"];
-        ((UILabel*)[cell2.contentView viewWithTag:102]).text=[NSString stringWithFormat:@"%d月",indexPath.row+1];
-        return cell2;
-    }
-    else
-    {
-        UITableViewCell *cell3=[_tableview4 dequeueReusableCellWithIdentifier:@"yearcell"];
-        ((UILabel*)[cell3.contentView viewWithTag:101]).text=[NSString stringWithFormat:@"%d",indexPath.row+2015];
-        return cell3;
-    }
+ 
 
 }
 
@@ -149,19 +143,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if([tableView isEqual:_tableview1])
-    {
-        return 1;    }//团队成员个数
-    else if([tableView isEqual:_tableview2])
-    {
+   
         return 1;
-    }
-    else if([tableView isEqual:_tableview3])
-    {
-        return 1;
-    }
-    else
-        return 1;
+    
 
 }
 /*
@@ -175,41 +159,94 @@
 */
 
 - (IBAction)monthclickone:(id)sender {
-    if (!mo) {
-        _tableview2.hidden=NO;
-        [_tableview2 reloadData];
-        mo=1;
+    /* if (!mo) {
+     _tableview2.hidden=NO;
+     [_tableview2 reloadData];
+     mo=1;
+     }
+     else
+     {
+     _tableview2.hidden=YES;
+     mo=0;
+     }*/
+    NSArray * arr = [[NSArray alloc] init];
+    arr = [NSArray arrayWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月", @"6月", @"7月", @"8月", @"9月", @"10月",@"11月",@"12月",nil];
+    //    NSArray * arrImage = [[NSArray alloc] init];
+    //    arrImage = [NSArray arrayWithObjects:[UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], nil];
+    if(dropDown == nil) {
+        CGFloat f = 200;
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :nil :@"down"];
+        dropDown.delegate = self;
     }
-    else
-    {
-        _tableview2.hidden=YES;
-        mo=0;
+    else {
+        [dropDown hideDropDown:sender];
+        [self rel];
     }
+
 }
 
 - (IBAction)monthclicktwo:(id)sender {
-    if (!mt) {
-        _tableview3.hidden=NO;
-         [_tableview3 reloadData];
-        mt=1;
+    /*if (!mt) {
+     _tableview3.hidden=NO;
+     [_tableview3 reloadData];
+     mt=1;
+     }
+     else
+     {
+     _tableview3.hidden=YES;
+     mt=0;
+     }*/
+    NSArray * arr = [[NSArray alloc] init];
+    arr = [NSArray arrayWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月", @"6月", @"7月", @"8月", @"9月", @"10月",@"11月",@"12月",nil];
+    //    NSArray * arrImage = [[NSArray alloc] init];
+    //    arrImage = [NSArray arrayWithObjects:[UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], nil];
+    if(dropDown == nil) {
+        CGFloat f = 200;
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :nil :@"down"];
+        dropDown.delegate = self;
     }
-    else
-    {
-        _tableview3.hidden=YES;
-        mt=0;
+    else {
+        [dropDown hideDropDown:sender];
+        [self rel];
     }
 }
 
 - (IBAction)yearclick:(id)sender {
-    if (!yr) {
-        _tableview4.hidden=NO;
-         [_tableview4 reloadData];
-        yr=1;
+    /*   if (!yr) {
+     _tableview4.hidden=NO;
+     [_tableview4 reloadData];
+     yr=1;
+     }
+     else
+     {
+     _tableview4.hidden=YES;
+     yr=0;
+     }*/
+    NSArray * arr = [[NSArray alloc] init];
+    arr = [NSArray arrayWithObjects:@"2015", @"2016", @"2017", @"2018", @"2019", @"2020",nil];
+    //    NSArray * arrImage = [[NSArray alloc] init];
+    //    arrImage = [NSArray arrayWithObjects:[UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], [UIImage imageNamed:@"apple.png"], [UIImage imageNamed:@"apple2.png"], nil];
+    if(dropDown == nil) {
+        CGFloat f = 200;
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :nil :@"down"];
+        dropDown.delegate = self;
     }
-    else
-    {
-        _tableview4.hidden=YES;
-        yr=0;
+    else {
+        [dropDown hideDropDown:sender];
+           [self rel];
     }
+}
+- (IBAction)achievement_click:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Myindent"];
+    [self.navigationController pushViewController:myindent animated:YES];
+}
+
+- (IBAction)followcount_click:(id)sender {
+    [self performSegueWithIdentifier:@"follow" sender:self];
+}
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

@@ -7,19 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "NIDropDown.h"
 @interface MyteamViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview1;//主tableview
-@property (weak, nonatomic) IBOutlet UITableView *tableview2;//月份1
-@property (weak, nonatomic) IBOutlet UITableView *tableview3;//月份2
-@property (weak, nonatomic) IBOutlet UITableView *tableview4;//年
 - (IBAction)monthclickone:(id)sender;
 - (IBAction)monthclicktwo:(id)sender;
 - (IBAction)yearclick:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *monthone;
 @property (weak, nonatomic) IBOutlet UIButton *monthtwo;
 @property (weak, nonatomic) IBOutlet UIButton *year;
+- (IBAction)achievement_click:(id)sender;
+- (IBAction)followcount_click:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *Nabarbutton;
+@property (weak, nonatomic) IBOutlet UIButton *shi;
+- (IBAction)back:(id)sender;
 
 @end
