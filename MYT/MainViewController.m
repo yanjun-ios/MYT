@@ -36,7 +36,7 @@
         status.backgroundColor=[UIColor whiteColor];
         [self.navigationController.navigationBar addSubview:status];
     }
-
+    //添加底部菜单栏
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
     [super viewDidLoad];

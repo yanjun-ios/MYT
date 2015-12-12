@@ -40,6 +40,8 @@
 		9CBF339D1C1A98B400F7E1DC /* ButtomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF339C1C1A98B400F7E1DC /* ButtomView.m */; settings = {ASSET_TAGS = (); }; };
 		9CBF33A11C1AAC2200F7E1DC /* MyOderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33A01C1AAC2200F7E1DC /* MyOderViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33A41C1ABED400F7E1DC /* MoreViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +125,10 @@
 		9CBF33A01C1AAC2200F7E1DC /* MyOderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOderViewController.m; sourceTree = "<group>"; };
 		9CBF33A31C1ABED400F7E1DC /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		9CBF33A41C1ABED400F7E1DC /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
+		9CBF33A91C1ADC9E00F7E1DC /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		9CBF33AD1C1B082B00F7E1DC /* messageCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageCenterViewController.h; sourceTree = "<group>"; };
+		9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageCenterViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +192,7 @@
 				9C6F17F41C1580C100B48EFE /* YJLogin */,
 				9CBF33A21C1ABEAF00F7E1DC /* YJMore */,
 				9CBF339E1C1AABF100F7E1DC /* YJMyOder */,
+				9CBF33AC1C1B071F00F7E1DC /* messageCenter */,
 				9CBF339A1C1A984700F7E1DC /* BottomView */,
 				18C0A4091C1515FD00C380B5 /* Supporting Files */,
 			);
@@ -385,8 +392,20 @@
 			children = (
 				9CBF33A31C1ABED400F7E1DC /* MoreViewController.h */,
 				9CBF33A41C1ABED400F7E1DC /* MoreViewController.m */,
+				9CBF33A91C1ADC9E00F7E1DC /* SettingViewController.h */,
+				9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */,
 			);
 			name = YJMore;
+			sourceTree = "<group>";
+		};
+		9CBF33AC1C1B071F00F7E1DC /* messageCenter */ = {
+			isa = PBXGroup;
+			children = (
+				9CBF33AD1C1B082B00F7E1DC /* messageCenterViewController.h */,
+				9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */,
+			);
+			name = messageCenter;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
@@ -545,6 +564,7 @@
 				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				9CA6D8F21C1965B2007E7D7A /* MainViewController.m in Sources */,
+				9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */,
 				18C0A4501C15187D00C380B5 /* UIButton+Loading.m in Sources */,
 				18C0A4351C1517CF00C380B5 /* QQRequestManager.m in Sources */,
 				9CA6D8EF1C1836D2007E7D7A /* AddRemarksViewController.m in Sources */,
@@ -559,6 +579,7 @@
 				18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */,
 				9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */,
 				775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */,
+				9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,
 				9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */,
 			);

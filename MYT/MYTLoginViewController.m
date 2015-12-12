@@ -21,6 +21,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden=YES;
+    _layCon.constant=160;
+    _btnLogin.alpha=0.0f;
+    _ViewForm.alpha=0.0f;
+    [UIView animateWithDuration:2.0f animations:^{
+        _layCon.constant=40;
+        _btnLogin.alpha=1.0f;
+        _ViewForm.alpha=1.0f;
+    }];
+    
+    
 }
 
 - (void)viewDidLoad {

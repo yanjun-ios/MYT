@@ -9,8 +9,11 @@
 #import "MyOderViewController.h"
 #import "MainViewController.h"
 #import "ButtomView.h"
+#import "MJRefresh.h"
 @interface MyOderViewController ()
-
+{
+    MJRefreshHeader* header;
+}
 @end
 
 @implementation MyOderViewController
@@ -18,12 +21,15 @@
 - (void)viewDidLoad {
     _mytableview.delegate=self;
     _mytableview.dataSource=self;
+    [super viewDidLoad];
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
-    [super viewDidLoad];
-    [_mytableview reloadData];
+    
+    
     // Do any additional setup after loading the view.
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -43,7 +49,10 @@
 {
     NSString* identif=@"cell";
     UITableViewCell* cell=[_mytableview dequeueReusableCellWithIdentifier:identif];
-    ((UILabel*)[cell.contentView viewWithTag:101]).text=@"严军";
+    if(indexPath.row%2==0)
+    {
+        ((UILabel*)[cell.contentView viewWithTag:101]).text=@"严军";
+    }
     return cell;
     
 }

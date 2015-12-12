@@ -14,4 +14,6 @@
 - (IBAction)loginInto:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *ViewForm;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnLogin;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layCon;
 @end

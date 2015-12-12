@@ -27,7 +27,7 @@
 //    }];
     [self qq_performSVHUDBlock:^{
         //[SVProgressHUD show];
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        //[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
          //[SVProgressHUD showInfoWithStatus:@"你好！"];
          //[SVProgressHUD showWithStatus:@"加载中。。。"];
         //[SVProgressHUD showErrorWithStatus:@"登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误！"];

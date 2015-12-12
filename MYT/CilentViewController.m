@@ -52,7 +52,7 @@
 {
     NSString* identif=@"cell";
     UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(cell.contentView.frame.size.width, 60, 30, 30)];
+    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 60, 30, 30)];
     
     [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [cell.contentView addSubview:btnadd];
