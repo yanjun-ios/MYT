@@ -144,6 +144,8 @@
 		9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageCenterViewController.m; sourceTree = "<group>"; };
 		9CBF33B11C1BB99E00F7E1DC /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
+		9CBF33B41C1C509700F7E1DC /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
+		9CBF33B51C1C509700F7E1DC /* PerformanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -340,6 +342,8 @@
 			children = (
 				776E00731C1AE3E700956E8C /* MyteamViewController.h */,
 				776E00741C1AE3E700956E8C /* MyteamViewController.m */,
+				9CBF33B41C1C509700F7E1DC /* PerformanceViewController.h */,
+				9CBF33B51C1C509700F7E1DC /* PerformanceViewController.m */,
 			);
 			name = ZyxMyteam;
 			sourceTree = "<group>";
@@ -619,6 +623,7 @@
 				9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */,
 				9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */,
 				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
+				9CBF33B61C1C509700F7E1DC /* PerformanceViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				9CA6D8F21C1965B2007E7D7A /* MainViewController.m in Sources */,
 				77B5CEF51C1C5E860044D0F6 /* PhoneTableViewController.m in Sources */,
