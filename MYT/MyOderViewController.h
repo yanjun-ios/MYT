@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MyOderViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+#import "NIDropDown.h"
+@interface MyOderViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,NIDropDownDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *mytableview;
+@property (weak, nonatomic) IBOutlet UIButton *btn_year;
+@property (weak, nonatomic) IBOutlet UIButton *btn_FirstMonth;
+@property (weak, nonatomic) IBOutlet UIButton *btn_endMonth;
 @end

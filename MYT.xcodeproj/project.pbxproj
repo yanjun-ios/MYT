@@ -44,6 +44,7 @@
 		9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33A41C1ABED400F7E1DC /* MoreViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -135,6 +136,8 @@
 		9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		9CBF33AD1C1B082B00F7E1DC /* messageCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageCenterViewController.h; sourceTree = "<group>"; };
 		9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageCenterViewController.m; sourceTree = "<group>"; };
+		9CBF33B11C1BB99E00F7E1DC /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
+		9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,6 +183,7 @@
 		18C0A4081C1515FD00C380B5 /* MYT */ = {
 			isa = PBXGroup;
 			children = (
+				9CBF33B01C1BB98000F7E1DC /* UpDownMenu */,
 				77D52A811C1B009C00FAFA48 /* Kcmenu */,
 				18C0A42F1C1517CF00C380B5 /* Core */,
 				18C0A4371C15187D00C380B5 /* Utility */,
@@ -426,6 +430,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		9CBF33B01C1BB98000F7E1DC /* UpDownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				9CBF33B11C1BB99E00F7E1DC /* NIDropDown.h */,
+				9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */,
+			);
+			name = UpDownMenu;
+			sourceTree = "<group>";
+		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +611,7 @@
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
 				18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */,
 				9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */,
+				9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */,
 				775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */,
 				9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,

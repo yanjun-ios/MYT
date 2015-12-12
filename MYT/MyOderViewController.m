@@ -10,27 +10,71 @@
 #import "MainViewController.h"
 #import "ButtomView.h"
 #import "MJRefresh.h"
+#import "Utility.h"
+#import "QuartzCore/QuartzCore.h"
 @interface MyOderViewController ()
 {
-    MJRefreshHeader* header;
+
+    NIDropDown *dropDown;
 }
 @end
 
 @implementation MyOderViewController
-
+@synthesize btn_year;
 - (void)viewDidLoad {
     _mytableview.delegate=self;
     _mytableview.dataSource=self;
     [super viewDidLoad];
+    //添加底部菜单栏
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-50, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
     
-    
-    // Do any additional setup after loading the view.
+    //设置年月下拉按钮
+    [[Utility sharedInstance]setLayerView:btn_year borderW:1 borderColor:[UIColor redColor] radius:3];
+    [[Utility sharedInstance]setLayerView:_btn_FirstMonth borderW:1 borderColor:[UIColor redColor] radius:3];
+    [[Utility sharedInstance]setLayerView:_btn_endMonth borderW:1 borderColor:[UIColor redColor] radius:3];
+    [btn_year addTarget:self action:@selector(clickBtnYear:) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_FirstMonth addTarget:self action:@selector(clickBtnYear:) forControlEvents:UIControlEventTouchUpInside];
+    [_btn_endMonth addTarget:self action:@selector(clickBtnYear:) forControlEvents:UIControlEventTouchUpInside];
+   
+}
+- (void)viewDidUnload {
+    //    [btnSelect release];
+    btn_year = nil;
+    [super viewDidUnload];
 }
 
 
+-(void)clickBtnYear:(UIButton*)sender
+{
+    NSArray * arr = [[NSArray alloc] init];
+    if(sender.tag==1000)
+    {
+        arr = [NSArray arrayWithObjects:@"2015年", @"2016年", @"2017年", @"2018年", @"2019年", @"2020年", @"2021年", @"2022年", @"2023年", @"2024年",nil];
+    }else
+    {
+        arr = [NSArray arrayWithObjects:@"01月", @"02月", @"03月", @"04月", @"05月", @"06月", @"07月", @"08月", @"09月", @"10月",@"11月",@"12月",nil];
+    }
+   
+        if(dropDown == nil) {
+        CGFloat f = 200;
+        dropDown = [[NIDropDown alloc]showDropDown:sender :&f :arr :nil :@"down"];
+        dropDown.delegate = self;
+        }
+    else {
+        [dropDown hideDropDown:sender];
+        [self rel];
+    }
+}
 
+- (void) niDropDownDelegateMethod: (NIDropDown *) sender {
+   
+    [self rel];
+}
+-(void)rel{
+    //    [dropDown release];
+    dropDown = nil;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
