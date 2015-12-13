@@ -92,6 +92,10 @@
             CGFloat width = self.bounds.size.width / btncount;
             CGFloat height = self.bounds.size.height;
             btn.frame = CGRectMake(x, y, width, height);
+            
+            if (btn.tag==_myindex&&_myindex!=0) {
+                [self clickBtn:btn];
+            }
 
         }
            }

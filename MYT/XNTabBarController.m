@@ -17,6 +17,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden=NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,6 +29,7 @@
     
     //2.测试添加自己的视图
     XNTabBar* myView = [[XNTabBar alloc]init];
+    myView.myindex=_index;
     myView.delegate=self;
     myView.frame=rect;
     myView.backgroundColor=[UIColor whiteColor];
@@ -46,9 +48,9 @@
     UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, myView.frame.size.width, 1)];
     line.backgroundColor=[UIColor lightTextColor];
     [myView addSubview:line];
-    if(_isAddContact)
+    if(_index)
     {
-        [self tabBar:myView selectedFrom:0 to:2];
+        [self tabBar:myView selectedFrom:0 to:_index];
     }
     
 }

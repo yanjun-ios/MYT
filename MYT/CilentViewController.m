@@ -10,7 +10,7 @@
 #import "XNTabBarController.h"
 @interface CilentViewController ()
 {
-    BOOL addContact;
+    int  toIndex;
 }
 @end
 
@@ -52,11 +52,19 @@
 {
     NSString* identif=@"cell";
     UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 60, 30, 30)];
     
+    //添加联系人按钮
+    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 60, 30, 30)];
     [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [cell.contentView addSubview:btnadd];
     [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //添加联系人按钮
+    UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
+    [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
+    [cell.contentView addSubview:btnto];
+    [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
     
 }
@@ -70,11 +78,17 @@
     return 0;
 }
 
+-(void)clickToTaba:(id)sender
+{
+    toIndex=0;
+    [self performSegueWithIdentifier:@"toTab" sender:nil];
+}
 
 -(void)addContactsClick:(id)sender
 {
+    toIndex=2;
     [self performSegueWithIdentifier:@"toTab" sender:nil];
-    addContact=YES;
+    
 }
 
 
@@ -85,7 +99,7 @@
     if([segue.identifier isEqualToString:@"toTab"])
     {
         XNTabBarController* destinationController=segue.destinationViewController;
-        destinationController.isAddContact=addContact;
+        destinationController.index=toIndex;
         
     }
 }

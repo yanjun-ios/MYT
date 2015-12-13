@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
  if(currentVersion>=7)
  {
-     self.edgesForExtendedLayout = UIRectEdgeNone;    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
  }
     
     //设置背景颜色
