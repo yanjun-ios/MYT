@@ -9,7 +9,11 @@
 #import "PerformanceViewController.h"
 #import "Utility.h"
 @interface PerformanceViewController ()
-
+{
+    /*UILabel* rank;
+    UILabel* name;
+    UILabel* mony;*/
+}
 @end
 
 @implementation PerformanceViewController
@@ -43,33 +47,53 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* identif=@"cell";
-    //排名
+    static NSString* identif=@"cell";
+    
     UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    UILabel* rank=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
-    rank.textColor=[UIColor darkGrayColor];
-    rank.font=[UIFont systemFontOfSize:14];
-    rank.text=@"第一名";
-    rank.textAlignment=NSTextAlignmentCenter;
+    if (cell==nil) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identif];
+        //排名
+        UILabel* rank;
+        rank=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
+        rank.tag=10;
+        rank.textColor=[UIColor darkGrayColor];
+        rank.font=[UIFont systemFontOfSize:14];
+        rank.textAlignment=NSTextAlignmentCenter;
+        [cell.contentView addSubview:rank];
+        //姓名
+        UILabel* name;
+        name=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
+        name.center=cell.center;
+        name.tag=11;
+        name.textColor=[UIColor darkGrayColor];
+        name.font=[UIFont systemFontOfSize:14];
+        name.textAlignment=NSTextAlignmentCenter;
+        [cell.contentView addSubview:name];
+        //业绩
+        UILabel* mony;
+        mony=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-100, 15, 100, 15)];
+        mony.tag=12;
+        mony.textColor=[UIColor darkGrayColor];
+        mony.font=[UIFont systemFontOfSize:14];
+        mony.textAlignment=NSTextAlignmentCenter;
+        [cell.contentView addSubview:mony];
+    }
     
-    //姓名
-    UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
-    name.center=cell.center;
-    name.textColor=[UIColor darkGrayColor];
-    name.font=[UIFont systemFontOfSize:14];
-    name.text=@"张三";
-    name.textAlignment=NSTextAlignmentCenter;
+    UILabel* label1=(UILabel*)[cell.contentView viewWithTag:10];
+    label1.text=@"第一名";
+    UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
+    label2.text=@"张三";
+    UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
+    label3.text=@"500万";
     
-    //业绩
-    UILabel* mony=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-100, 15, 100, 15)];
-    mony.textColor=[UIColor darkGrayColor];
-    mony.font=[UIFont systemFontOfSize:14];
-    mony.text=@"28万元";
-    mony.textAlignment=NSTextAlignmentCenter;
+   
+
     
-    [cell addSubview:rank];
-    [cell addSubview:name];
-    [cell addSubview:mony];
+
+    
+    
+    
+    
     return cell;
     
 }

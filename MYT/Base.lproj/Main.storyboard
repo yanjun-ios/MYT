@@ -2084,7 +2084,9 @@
                             <constraint firstItem="FTr-C0-dHI" firstAttribute="top" secondItem="Plp-bS-lXW" secondAttribute="bottom" id="TyI-Yt-Shq">
                                 <variation key="heightClass=regular-widthClass=compact" constant="50"/>
                             </constraint>
-                            <constraint firstItem="8Cs-Zd-Zcq" firstAttribute="leading" secondItem="2cu-V5-Kqp" secondAttribute="leadingMargin" constant="-8" id="avX-qe-kLO"/>
+                            <constraint firstItem="8Cs-Zd-Zcq" firstAttribute="leading" secondItem="2cu-V5-Kqp" secondAttribute="leadingMargin" constant="-8" id="avX-qe-kLO">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-14"/>
+                            </constraint>
                             <constraint firstItem="hYT-DJ-jf6" firstAttribute="top" secondItem="Jj5-0S-BwN" secondAttribute="bottom" constant="31" id="nDQ-3k-TjW">
                                 <variation key="heightClass=regular-widthClass=compact" constant="83"/>
                             </constraint>
@@ -2346,7 +2348,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="50" id="WGn-J0-lZt">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="WGn-J0-lZt">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WGn-J0-lZt" id="4GU-h4-J2q">
