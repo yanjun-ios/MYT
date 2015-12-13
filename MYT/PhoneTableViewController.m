@@ -7,7 +7,7 @@
 //
 
 #import "PhoneTableViewController.h"
-
+#import "XNTabBarController.h"
 @interface PhoneTableViewController ()
 
 @end
@@ -110,7 +110,10 @@
 - (IBAction)addphone:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"addmen"];
-    [self.navigationController pushViewController:myindent animated:YES];
+   
+    XNTabBarController *tabbat=(XNTabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabbar"];
+    tabbat.index=2;
+    [self.navigationController pushViewController:tabbat animated:YES];
 }
+
 @end

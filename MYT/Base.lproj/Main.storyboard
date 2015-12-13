@@ -372,6 +372,9 @@
                                         <include reference="maG-vT-ewJ"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <segue destination="l5y-SJ-0cM" kind="push" id="6mx-gT-1U8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zzi-o2-Sjh">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -2570,6 +2573,24 @@
             </objects>
             <point key="canvasLocation" x="3135.75" y="1528.125"/>
         </scene>
+        <!--公司库存-->
+        <scene sceneID="aMK-gR-3Hw">
+            <objects>
+                <viewController id="l5y-SJ-0cM" customClass="StockViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xfj-RS-7Ek"/>
+                        <viewControllerLayoutGuide type="bottom" id="GlK-Mk-ieR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vwf-ke-BWe">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="公司库存" id="Ujq-6b-YmU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M9P-kT-Drw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3144.75" y="2136.375"/>
+        </scene>
         <!--匹配产品明细-->
         <scene sceneID="K4D-vZ-8jK">
             <objects>
@@ -3144,6 +3165,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="addphone:" destination="e0K-V0-wt0" eventType="touchUpInside" id="FpP-0q-9hq"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -5456,16 +5480,16 @@
                                                     <exclude reference="tUr-zT-kuw"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="9xA-3z-Z3y"/>
+                                                    <exclude reference="SIR-Nr-VnV"/>
+                                                    <exclude reference="dXY-XD-gzL"/>
+                                                    <exclude reference="rII-U3-8AY"/>
                                                     <exclude reference="0fG-5d-mTf"/>
                                                     <exclude reference="MGZ-ie-EU1"/>
                                                     <exclude reference="SED-ZG-7wu"/>
                                                     <exclude reference="beU-00-9CS"/>
                                                     <exclude reference="ceo-GB-nxO"/>
                                                     <exclude reference="ea5-j5-oHM"/>
-                                                    <exclude reference="9xA-3z-Z3y"/>
-                                                    <exclude reference="SIR-Nr-VnV"/>
-                                                    <exclude reference="dXY-XD-gzL"/>
-                                                    <exclude reference="rII-U3-8AY"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -5475,16 +5499,16 @@
                                                     <include reference="tUr-zT-kuw"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="9xA-3z-Z3y"/>
+                                                    <exclude reference="SIR-Nr-VnV"/>
+                                                    <include reference="dXY-XD-gzL"/>
+                                                    <include reference="rII-U3-8AY"/>
                                                     <include reference="0fG-5d-mTf"/>
                                                     <include reference="MGZ-ie-EU1"/>
                                                     <exclude reference="SED-ZG-7wu"/>
                                                     <include reference="beU-00-9CS"/>
                                                     <include reference="ceo-GB-nxO"/>
                                                     <include reference="ea5-j5-oHM"/>
-                                                    <include reference="9xA-3z-Z3y"/>
-                                                    <exclude reference="SIR-Nr-VnV"/>
-                                                    <include reference="dXY-XD-gzL"/>
-                                                    <include reference="rII-U3-8AY"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -6347,7 +6371,7 @@
         <!--添加联系人-->
         <scene sceneID="OPt-1e-qed">
             <objects>
-                <tableViewController storyboardIdentifier="addmen" id="bQn-0S-cCZ" customClass="addContactsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="bQn-0S-cCZ" customClass="addContactsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Kvn-Nb-kkj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -6764,7 +6788,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="jAF-Ls-ngG">
             <objects>
-                <tabBarController id="YYD-Re-aqo" customClass="XNTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabbar" id="YYD-Re-aqo" customClass="XNTabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="qhn-WD-yTB"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="aha-W4-VT8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -7391,4 +7415,7 @@
         <image name="touxiang" width="117" height="117"/>
         <image name="位置图标" width="20" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="isS-60-a2j"/>
+    </inferredMetricsTieBreakers>
 </document>

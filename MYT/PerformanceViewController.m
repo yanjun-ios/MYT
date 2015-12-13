@@ -21,6 +21,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [[Utility sharedInstance] setLayerView:_topView borderW:2 borderColor:[UIColor redColor] radius:5];
+    self.navigationController.navigationBarHidden=NO;
 }
 
 - (void)viewDidLoad {

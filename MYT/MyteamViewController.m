@@ -21,6 +21,16 @@
 @end
 
 @implementation MyteamViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-49, ScreenWidth, 50)];
+    [self.view addSubview:BtmV];
+    self.navigationController.navigationBarHidden=YES;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=NO;
+}
 
 - (void)viewDidLoad {
     _tableview1.delegate=self;
@@ -51,8 +61,7 @@
         [self.navigationController.navigationBar addSubview:status];
     }
     
-    ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
-    [self.view addSubview:BtmV];
+    
     
     [[Utility sharedInstance] setLayerView:_monthone borderW:1 borderColor:[UIColor redColor] radius:5];
     [[Utility sharedInstance] setLayerView:_monthtwo borderW:1 borderColor:[UIColor redColor] radius:5];
@@ -69,14 +78,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden=YES;
-}
--(void)viewDidDisappear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden=NO;
 }
 - (void) niDropDownDelegateMethod: (NIDropDown *) sender {
     [self rel];

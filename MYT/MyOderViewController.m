@@ -44,7 +44,10 @@
     [super viewDidUnload];
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=NO;
+}
 -(void)clickBtnYear:(UIButton*)sender
 {
     NSArray * arr = [[NSArray alloc] init];
