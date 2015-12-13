@@ -94,8 +94,8 @@
       
       [KxMenuItem menuItem:@"业绩排行"
                      image:[UIImage imageNamed:@"ok"]
-                    target:nil
-                    action:NULL],
+                    target:self
+                    action:@selector(performanceClick:)],
       
       [KxMenuItem menuItem:@"通讯录"
                      image:[UIImage imageNamed:@"ok"]
@@ -157,6 +157,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+//业绩排行按钮点击事件
+-(void)performanceClick:(UIButton*)btn
+{
+    [self performSegueWithIdentifier:@"performance" sender:nil];
+}
 
 - (IBAction)monthclickone:(id)sender {
     /* if (!mo) {

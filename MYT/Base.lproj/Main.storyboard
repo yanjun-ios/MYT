@@ -2221,6 +2221,7 @@
                         <outlet property="year" destination="ler-zN-LIh" id="Rwu-Nc-bzR"/>
                         <segue destination="e0K-V0-wt0" kind="push" identifier="adresslist" id="lxp-RM-CiD"/>
                         <segue destination="PRK-PV-r2P" kind="push" identifier="follow" id="jn0-nP-0Jw"/>
+                        <segue destination="fTJ-gv-6kh" kind="push" identifier="performance" id="bpi-RX-d0u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZgU-pz-4of" userLabel="First Responder" sceneMemberID="firstResponder"/>

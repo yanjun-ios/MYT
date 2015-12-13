@@ -23,6 +23,7 @@
 		775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A82881C16D39E00C5BDB3 /* RemindViewController.m */; };
 		775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A828B1C17086700C5BDB3 /* MateProjectViewController.m */; };
 		776E00751C1AE3E700956E8C /* MyteamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776E00741C1AE3E700956E8C /* MyteamViewController.m */; };
+		77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77725C681C1D07960018AB07 /* PerformanceViewController.m */; };
 		77B5CEF51C1C5E860044D0F6 /* PhoneTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B5CEF41C1C5E860044D0F6 /* PhoneTableViewController.m */; };
 		77B5CEF91C1C612A0044D0F6 /* FollowcTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B5CEF81C1C612A0044D0F6 /* FollowcTableViewController.m */; };
 		77D52A831C1B014E00FAFA48 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D52A821C1B014E00FAFA48 /* KxMenu.m */; };
@@ -95,6 +96,8 @@
 		775A828B1C17086700C5BDB3 /* MateProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MateProjectViewController.m; sourceTree = "<group>"; };
 		776E00731C1AE3E700956E8C /* MyteamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyteamViewController.h; sourceTree = "<group>"; };
 		776E00741C1AE3E700956E8C /* MyteamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyteamViewController.m; sourceTree = "<group>"; };
+		77725C671C1D07960018AB07 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
+		77725C681C1D07960018AB07 /* PerformanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceViewController.m; sourceTree = "<group>"; };
 		77B5CEF31C1C5E860044D0F6 /* PhoneTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneTableViewController.h; sourceTree = "<group>"; };
 		77B5CEF41C1C5E860044D0F6 /* PhoneTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneTableViewController.m; sourceTree = "<group>"; };
 		77B5CEF71C1C612A0044D0F6 /* FollowcTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowcTableViewController.h; sourceTree = "<group>"; };
@@ -144,8 +147,6 @@
 		9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageCenterViewController.m; sourceTree = "<group>"; };
 		9CBF33B11C1BB99E00F7E1DC /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
-		9CBF33B41C1C509700F7E1DC /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
-		9CBF33B51C1C509700F7E1DC /* PerformanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -342,8 +343,8 @@
 			children = (
 				776E00731C1AE3E700956E8C /* MyteamViewController.h */,
 				776E00741C1AE3E700956E8C /* MyteamViewController.m */,
-				9CBF33B41C1C509700F7E1DC /* PerformanceViewController.h */,
-				9CBF33B51C1C509700F7E1DC /* PerformanceViewController.m */,
+				77725C671C1D07960018AB07 /* PerformanceViewController.h */,
+				77725C681C1D07960018AB07 /* PerformanceViewController.m */,
 			);
 			name = ZyxMyteam;
 			sourceTree = "<group>";
@@ -623,7 +624,6 @@
 				9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */,
 				9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */,
 				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
-				9CBF33B61C1C509700F7E1DC /* PerformanceViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				9CA6D8F21C1965B2007E7D7A /* MainViewController.m in Sources */,
 				77B5CEF51C1C5E860044D0F6 /* PhoneTableViewController.m in Sources */,
@@ -641,6 +641,7 @@
 				77E38BAE1C1829850046B72E /* MateclientViewController.m in Sources */,
 				9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */,
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
+				77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */,
 				18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */,
 				9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */,
 				9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */,
