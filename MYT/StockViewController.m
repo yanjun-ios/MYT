@@ -10,7 +10,7 @@
 #import "ButtomView.h"
 #import "Node.h"
 #import "TreeTableView.h"
-#import "ProductdetailsTableViewController.h"
+#import "ProductdetalViewController.h"
 @interface StockViewController ()<TreeTableCellDelegate>
 {
     NSString *parent;
@@ -126,7 +126,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqual:@"product"]) {
-        ProductdetailsTableViewController *product=segue.destinationViewController;
+        ProductdetalViewController *product=segue.destinationViewController;
         product.depth0=pparent;
         product.depth1=parent;
         product.depth2=child;
