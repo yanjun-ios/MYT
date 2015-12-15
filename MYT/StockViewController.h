@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface StockViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIView *view;
 
 
 @end

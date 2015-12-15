@@ -20,8 +20,10 @@
 		18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A43C1C15187D00C380B5 /* UIImageView+Loading.m */; };
 		18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44D1C15187D00C380B5 /* UIViewController+Helper.m */; };
 		18C0A4591C15187D00C380B5 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44F1C15187D00C380B5 /* Utility.m */; };
+		7714096D1C1ED16000DC8F58 /* ProductdetailsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7714096C1C1ED16000DC8F58 /* ProductdetailsTableViewController.m */; };
 		775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A82881C16D39E00C5BDB3 /* RemindViewController.m */; };
 		775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A828B1C17086700C5BDB3 /* MateProjectViewController.m */; };
+		77661B701C20127600BCBDB2 /* NeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77661B6F1C20127600BCBDB2 /* NeedViewController.m */; };
 		776E00751C1AE3E700956E8C /* MyteamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776E00741C1AE3E700956E8C /* MyteamViewController.m */; };
 		77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77725C681C1D07960018AB07 /* PerformanceViewController.m */; };
 		77A805CD1C1DABF300F9B15D /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A805CC1C1DABF300F9B15D /* StockViewController.m */; };
@@ -93,10 +95,14 @@
 		18C0A45A1C15194900C380B5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		2DF2547226180A97CAE380BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6DAA3D31AA655B689A679C69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7714096B1C1ED16000DC8F58 /* ProductdetailsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductdetailsTableViewController.h; sourceTree = "<group>"; };
+		7714096C1C1ED16000DC8F58 /* ProductdetailsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductdetailsTableViewController.m; sourceTree = "<group>"; };
 		775A82871C16D39E00C5BDB3 /* RemindViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindViewController.h; sourceTree = "<group>"; };
 		775A82881C16D39E00C5BDB3 /* RemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindViewController.m; sourceTree = "<group>"; };
 		775A828A1C17086700C5BDB3 /* MateProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MateProjectViewController.h; sourceTree = "<group>"; };
 		775A828B1C17086700C5BDB3 /* MateProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MateProjectViewController.m; sourceTree = "<group>"; };
+		77661B6E1C20127600BCBDB2 /* NeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedViewController.h; sourceTree = "<group>"; };
+		77661B6F1C20127600BCBDB2 /* NeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedViewController.m; sourceTree = "<group>"; };
 		776E00731C1AE3E700956E8C /* MyteamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyteamViewController.h; sourceTree = "<group>"; };
 		776E00741C1AE3E700956E8C /* MyteamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyteamViewController.m; sourceTree = "<group>"; };
 		77725C671C1D07960018AB07 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
@@ -201,11 +207,11 @@
 		18C0A4081C1515FD00C380B5 /* MYT */ = {
 			isa = PBXGroup;
 			children = (
+				77B5CEEF1C1C5E440044D0F6 /* Zyxphone */,
 				77A805CE1C1DACB200F9B15D /* Model */,
 				77A805D21C1DACBF00F9B15D /* TreeTableView */,
 				77A805CA1C1DABB900F9B15D /* Zyxstock */,
 				77B5CEF61C1C610E0044D0F6 /* Zyxfollow */,
-				77B5CEEF1C1C5E440044D0F6 /* Zyxphone */,
 				9CBF33B01C1BB98000F7E1DC /* UpDownMenu */,
 				77D52A811C1B009C00FAFA48 /* Kcmenu */,
 				18C0A42F1C1517CF00C380B5 /* Core */,
@@ -328,6 +334,10 @@
 			children = (
 				77A805CB1C1DABF300F9B15D /* StockViewController.h */,
 				77A805CC1C1DABF300F9B15D /* StockViewController.m */,
+				7714096B1C1ED16000DC8F58 /* ProductdetailsTableViewController.h */,
+				7714096C1C1ED16000DC8F58 /* ProductdetailsTableViewController.m */,
+				77661B6E1C20127600BCBDB2 /* NeedViewController.h */,
+				77661B6F1C20127600BCBDB2 /* NeedViewController.m */,
 			);
 			name = Zyxstock;
 			sourceTree = "<group>";
@@ -654,6 +664,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CBF33A11C1AAC2200F7E1DC /* MyOderViewController.m in Sources */,
+				7714096D1C1ED16000DC8F58 /* ProductdetailsTableViewController.m in Sources */,
 				18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */,
 				775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */,
 				18C0A4361C1517CF00C380B5 /* PreRequestManager.m in Sources */,
@@ -666,6 +677,7 @@
 				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				9CA6D8F21C1965B2007E7D7A /* MainViewController.m in Sources */,
+				77661B701C20127600BCBDB2 /* NeedViewController.m in Sources */,
 				77B5CEF51C1C5E860044D0F6 /* PhoneTableViewController.m in Sources */,
 				9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */,
 				77A805CD1C1DABF300F9B15D /* StockViewController.m in Sources */,

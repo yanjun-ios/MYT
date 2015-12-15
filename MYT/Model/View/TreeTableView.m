@@ -56,8 +56,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *NODE_CELL_ID = @"node_cell_id";
-    Node *node = [_tempData objectAtIndex:indexPath.row];
+   
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
+     Node *node = [_tempData objectAtIndex:indexPath.row];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
         //数量
@@ -72,7 +73,7 @@
 
         //匹配客户
         UILabel* men;
-        men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-50, 15, 50, 15)];
+        men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
         men.tag=12;
         men.textColor=[UIColor greenColor];
         men.font=[UIFont systemFontOfSize:14];
@@ -82,6 +83,7 @@
         UIImageView *image;
         if (node.depth==0) {
              image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 12,15, 15)];
+           
         }
        else if (node.depth==1)
        {
@@ -93,8 +95,9 @@
 
         
         [cell.contentView addSubview:image];
-
+//
     }
+    //
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
     label2.text=@"200";
 
@@ -103,15 +106,11 @@
  
    UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
     if (node.depth!=2) {
-        if (node.depth==0) {
+        
             image.image=[UIImage imageNamed:@"left"];
-        }
-        else
-        {
-            image.image=[UIImage imageNamed:@"ok"];
-        }
+       
     }
-   
+   //
     // cell有缩进的方法
     cell.indentationLevel = node.depth; // 缩进级别
     cell.indentationWidth = 30.f; // 每个缩进级别的距离
@@ -126,7 +125,6 @@
     
     return cell;
 }
-
 
 #pragma mark - Optional
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -150,7 +148,7 @@
     if (_treeTableCellDelegate && [_treeTableCellDelegate respondsToSelector:@selector(cellClick:)]) {
         [_treeTableCellDelegate cellClick:parentNode];
     }
-    
+    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
     NSUInteger startPosition = indexPath.row+1;
     NSUInteger endPosition = startPosition;
     BOOL expand = NO;
@@ -162,14 +160,22 @@
                 [_tempData insertObject:node atIndex:endPosition];
                 expand = YES;
                 endPosition++;
+                UIImageView *image=[cell.contentView viewWithTag:13];
+                image.image=[UIImage imageNamed:@"ok"];
+                
+                
             }else{
                 expand = NO;
                 endPosition = [self removeAllNodesAtParentNode:parentNode];
+                UIImageView *image=[cell.contentView viewWithTag:13];
+                image.image=[UIImage imageNamed:@"left"];
                 break;
+               
+             
             }
         }
     }
-    
+   
     //获得需要修正的indexPath
     NSMutableArray *indexPathArray = [NSMutableArray array];
     for (NSUInteger i=startPosition; i<endPosition; i++) {

@@ -10,14 +10,43 @@
 #import "ButtomView.h"
 #import "Node.h"
 #import "TreeTableView.h"
+#import "ProductdetailsTableViewController.h"
 @interface StockViewController ()<TreeTableCellDelegate>
-
+{
+    NSString *parent;
+    NSString *pparent;
+    NSString *child;
+    NSArray  *data1;
+}
 @end
 
 @implementation StockViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    UILabel *nameofpro=[[UILabel alloc]initWithFrame:CGRectMake(14, 0, ScreenWidth/3, 30)];
+    nameofpro.text=@"产品名称";
+    nameofpro.font=[UIFont fontWithName:@"ArialMT" size:14];
+    [view addSubview:nameofpro];
+    
+    UILabel *count=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth/3, 30)];
+    count.text=@"产品名称";
+    count.font=[UIFont fontWithName:@"ArialMT" size:14];
+    count.center=view.center;
+    count.textAlignment=NSTextAlignmentCenter;
+    [view addSubview:count];
+    
+    UIButton *mate=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-80, 0, 80, 30)];
+    [mate setTitle:@"匹配客户" forState:UIControlStateNormal];
+    mate.titleLabel.font=[UIFont fontWithName:@"ArialMT" size:14];
+    mate.titleLabel.textAlignment=NSTextAlignmentCenter;
+    [mate setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [mate addTarget:self action:@selector(Actiondo:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:mate];
+    
+    [self.view addSubview:view];
     [self initData];
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
@@ -26,6 +55,10 @@
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
     // Do any additional setup after loading the view.
+}
+-(void)Actiondo:(id)sender
+{
+    [self performSegueWithIdentifier:@"need" sender:self];
 }
 -(void)initData{
     
@@ -63,9 +96,9 @@
     //NSArray *data = [NSArray arrayWithObjects:country1,province1,province2,province3,country2,province4,province5,province6,country3, nil];
     
     NSArray *data = [NSArray arrayWithObjects:country1,province1,city1,city2,city3,province2,city4,city5,province3,city6,country2,province4,province5,city7,province6,city8,city9,country3,province7,province8,province9, nil];
+    data1=[NSArray arrayWithArray:data];
     
-    
-    TreeTableView *tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 20, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
+    TreeTableView *tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
     tableview.treeTableCellDelegate = self;
     [self.view addSubview:tableview];
 }
@@ -73,6 +106,32 @@
 #pragma mark - TreeTableCellDelegate
 -(void)cellClick:(Node *)node{
     NSLog(@"%@",node.name);
+    if(node.depth==2)
+    {
+        for(Node *nd in data1)
+        {
+            if (nd.nodeId==node.parentId) {
+                parent=nd.name;
+                for (Node *ndd in data1) {
+                    if (ndd.nodeId==nd.parentId) {
+                        pparent=ndd.name;
+                        child=node.name;
+                    }
+                }
+            }
+        }
+    [self performSegueWithIdentifier:@"product" sender:self];
+    }
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqual:@"product"]) {
+        ProductdetailsTableViewController *product=segue.destinationViewController;
+        product.depth0=pparent;
+        product.depth1=parent;
+        product.depth2=child;
+        
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
