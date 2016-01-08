@@ -5138,9 +5138,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.96502200859999998" green="0.96838061630000005" blue="0.97845643940000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="120" y="61" width="51" height="21"/>
-                                        </variation>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.93769728535353536" green="0.24556460903804228" blue="0.26295370147295222" alpha="1" colorSpace="calibratedRGB"/>
