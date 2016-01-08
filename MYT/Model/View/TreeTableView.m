@@ -10,6 +10,9 @@
 #import "Node.h"
 
 @interface TreeTableView ()<UITableViewDataSource,UITableViewDelegate>
+{
+    NSArray *arr;
+}
 
 @property (nonatomic , strong) NSArray *data;//传递过来已经组织好的数据（全量数据）
 
@@ -21,6 +24,7 @@
 @implementation TreeTableView
 
 -(instancetype)initWithFrame:(CGRect)frame withData : (NSArray *)data{
+    
     self = [super initWithFrame:frame style:UITableViewStyleGrouped];
     if (self) {
         self.dataSource = self;
@@ -55,61 +59,153 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *NODE_CELL_ID = @"node_cell_id";
-   
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
      Node *node = [_tempData objectAtIndex:indexPath.row];
+    
+    static NSString *NODE_CELL_ID ;
+    if (node.depth==0||node.depth==1) {
+        NODE_CELL_ID = @"node_cell_id0";
+        
+        
+
+    }
+    /*else if(node.depth==1)
+    {
+        NODE_CELL_ID = @"node_cell_id1";
+    }*/
+     else if(node.depth==2)
+    {
+        NODE_CELL_ID = @"node_cell_id2";
+    }
+    UITableViewCell *cell=cell = [tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
-        //数量
-        UILabel* count;
-        count=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 50, 15)];
-        count.center=cell.center;
-        count.tag=11;
-        count.textColor=[UIColor redColor];
-        count.font=[UIFont systemFontOfSize:14];
-        count.textAlignment=NSTextAlignmentCenter;
-        [cell.contentView addSubview:count];
-
-        //匹配客户
-        UILabel* men;
-        men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
-        men.tag=12;
-        men.textColor=[UIColor greenColor];
-        men.font=[UIFont systemFontOfSize:14];
-        men.textAlignment=NSTextAlignmentCenter;
-        [cell.contentView addSubview:men];
         
-        UIImageView *image;
-        if (node.depth==0) {
-             image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 12,15, 15)];
+        if (node.depth==0||node.depth==1) {
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+            //数量
+            UILabel* count;
+            count=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 50, 15)];
+            count.center=cell.center;
+            count.tag=11;
+            count.textColor=[UIColor redColor];
+            count.font=[UIFont systemFontOfSize:14];
+            count.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:count];
+            
+            //匹配客户
+            UILabel* men;
+            men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
+            men.tag=12;
+            men.textColor=[UIColor greenColor];
+            men.font=[UIFont systemFontOfSize:14];
+            men.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:men];
+            
+            UIImageView *image=[[UIImageView alloc] init];
+            image.tag=13;
+            //if(node.child)
+            // {
+            
+                if (node.depth==0) {
+                    image.frame=CGRectMake(0, 12,15, 15);
+                }
+                
+                else
+                    image.frame=CGRectMake(25, 15,15, 15);
+            
+            
            
+            //image.image=[UIImage imageNamed:@"left"];
+            [cell.contentView addSubview:image];
         }
-       else if (node.depth==1)
-       {
-           image=[[UIImageView alloc]initWithFrame:CGRectMake(25, 15,15, 15)];
-
-       }
-       image.tag=13;
+       /* else if(node.depth==1)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+            //数量
+            UILabel* count;
+            count=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 50, 15)];
+            count.center=cell.center;
+            count.tag=11;
+            count.textColor=[UIColor redColor];
+            count.font=[UIFont systemFontOfSize:14];
+            count.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:count];
+            
+            //匹配客户
+            UILabel* men;
+            men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
+            men.tag=12;
+            men.textColor=[UIColor greenColor];
+            men.font=[UIFont systemFontOfSize:14];
+            men.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:men];
+            
+            UIImageView *image=[[UIImageView alloc] init];
+            image.tag=13;
+            //if(node.child)
+            // {
+            if (node.child) {
+                
+                //image.frame=CGRectMake(0, 12,15, 15);
+                
+                image.frame=CGRectMake(25, 15,15, 15);
+            }
+            
+            
+            //image.image=[UIImage imageNamed:@"left"];
+            [cell.contentView addSubview:image];
+        }*/
+        else if (node.depth==2)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+                    UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
+                     text.borderStyle = UITextBorderStyleRoundedRect;
+                    text.text=@"1";
+                    [cell.contentView addSubview:text];
+                    //设置边框样式，只有设置了才会显示边框样式
+                    
+                    text.borderStyle = UITextBorderStyleRoundedRect;
+        }
        
-
+           // if (node.depth==0) {
         
-        [cell.contentView addSubview:image];
+            // [cell.contentView addSubview:image];
+            //}
+        
+            //else if (node.depth==1)
+           // {
+          // image.frame=CGRectMake(25, 15,15, 15);
+            //[cell.contentView addSubview:image];
+          //  }
+      //  }
+     
 //
     }
+//    else
+//    {  cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+//        UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
+//         text.borderStyle = UITextBorderStyleRoundedRect;
+//        text.text=@"1";
+//        [cell.contentView addSubview:text];
+//        
+//        
+//        //设置边框样式，只有设置了才会显示边框样式
+//        
+//        text.borderStyle = UITextBorderStyleRoundedRect;
+//    }
     //
+   
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
-    label2.text=@"200";
+    label2.text=node.name;
 
     UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
-    label3.text=@"50";
+    label3.text=node.name;
  
-   UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-    if (node.depth!=2) {
-        
-            image.image=[UIImage imageNamed:@"left"];
-       
-    }
+        UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+        image.image=[UIImage imageNamed:@"left"];
+    
+  
+  
    //
     // cell有缩进的方法
     cell.indentationLevel = node.depth; // 缩进级别
@@ -120,9 +216,9 @@
 //    for (int i=0; i<node.depth; i++) {
 //        [name appendString:@"     "];
 //    }
+    
 //    [name appendString:node.name];
     cell.textLabel.text = node.name;
-    
     return cell;
 }
 
@@ -144,10 +240,12 @@
 #pragma mark - Optional
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //先修改数据源
+    
     Node *parentNode = [_tempData objectAtIndex:indexPath.row];
     if (_treeTableCellDelegate && [_treeTableCellDelegate respondsToSelector:@selector(cellClick:)]) {
         [_treeTableCellDelegate cellClick:parentNode];
     }
+    NSLog(@"%d,%hhd",parentNode.depth,parentNode.child);
     UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
     NSUInteger startPosition = indexPath.row+1;
     NSUInteger endPosition = startPosition;
@@ -161,14 +259,23 @@
                 expand = YES;
                 endPosition++;
                 UIImageView *image=[cell.contentView viewWithTag:13];
-                image.image=[UIImage imageNamed:@"ok"];
                 
+                    image.image=[UIImage imageNamed:@"ok"];
+                
+                
+                
+    
                 
             }else{
                 expand = NO;
                 endPosition = [self removeAllNodesAtParentNode:parentNode];
                 UIImageView *image=[cell.contentView viewWithTag:13];
-                image.image=[UIImage imageNamed:@"left"];
+                
+                    image.image=[UIImage imageNamed:@"left"];
+                
+                
+                
+                
                 break;
                
              

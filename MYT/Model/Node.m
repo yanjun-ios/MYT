@@ -10,7 +10,7 @@
 
 @implementation Node
 
-- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand{
+- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child{
     self = [self init];
     if (self) {
         self.parentId = parentId;
@@ -18,6 +18,7 @@
         self.name = name;
         self.depth = depth;
         self.expand = expand;
+        self.child=child;
     }
     return self;
 }

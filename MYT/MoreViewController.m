@@ -7,6 +7,7 @@
 //
 
 #import "MoreViewController.h"
+#import "BaseDB.h"
 #import "Utility.h"
 @interface MoreViewController ()
 
@@ -22,6 +23,34 @@
 - (void)viewDidLoad {
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"username"]&&[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"])
+    {
+        _user_na=[[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
+        _user_id=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+        NSLog(@"%@",_user_na);
+        NSLog(@"%@",_user_id);
+        NSString *fileName=[NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@.sqlite",_user_na];//数据库名字
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fileName]) {
+            BaseDB *db=[[BaseDB alloc] init];
+            NSString *selectTable=[NSString stringWithFormat:@"select user_name,professional from %@ where user_id=?",_user_na];
+            NSArray *selectParam=@[_user_id];
+            NSArray *result=[db selectSql:selectTable parmas:selectParam dataBaseName:[NSString stringWithFormat:@"%@.sqlite",_user_na]];
+            NSLog(@"2%@",result);
+            NSDictionary *infor=[result objectAtIndex:0];
+            _user_name.text=[infor objectForKey:@"user_name"];
+            _user_profess.text=[infor objectForKey:@"professional"];
+
+        }
+
+    }
+   else
+   {
+       _user_name.text=@"";
+       _user_profess.text=@"";
+   }
+   
+   
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [_tableview setTableFooterView:view];

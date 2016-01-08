@@ -23,3 +23,5 @@
 
 //获取当前系统版本
 #define currentVersion [[[UIDevice currentDevice] systemVersion] floatValue]
+
+#define  SEVER_URL  @"http://202.136.60.150/wdtd/"

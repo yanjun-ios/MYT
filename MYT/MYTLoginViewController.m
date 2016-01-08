@@ -12,7 +12,13 @@
 #import "UIViewController+Helper.h"
 #import "IIViewDeckController.h"
 #import <SVProgressHUD.h>
+#import "MoreViewController.h"
+#import "BaseDB.h"
 @interface MYTLoginViewController ()
+{
+    NSString *name;
+    NSString *profess;
+}
 
 @end
 
@@ -29,7 +35,7 @@
         _btnLogin.alpha=1.0f;
         _ViewForm.alpha=1.0f;
     }];
-    
+    NSLog(@"path1:%@", NSHomeDirectory());
     
 }
 
@@ -43,6 +49,7 @@
     if([[NSUserDefaults standardUserDefaults]objectForKey:@"username"])
     {
         _TF_UserName.text=[[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
+        _TF_Password.text=[[NSUserDefaults standardUserDefaults]objectForKey:@"password"];
     }
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -71,19 +78,59 @@
 */
 
 - (IBAction)loginInto:(id)sender {
-    [self performSegueWithIdentifier:@"mainPage" sender:nil];
+   
     [_TF_UserName resignFirstResponder];
     [_TF_Password resignFirstResponder];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:_TF_UserName.text forKey:@"username"];
-    [parDic setValue:_TF_Password forKey:@"password"];
-    [[QQRequestManager sharedRequestManager] GET:@"" parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [parDic setValue:_TF_UserName.text forKey:@"usercode"];
+    [parDic setValue:_TF_Password.text forKey:@"password"];
+    [[NSUserDefaults standardUserDefaults ]setObject:_TF_UserName.text forKey:@"username"];
+    [[NSUserDefaults standardUserDefaults ]setObject:_TF_Password.text forKey:@"password"];
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/appLogin.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        NSLog(@"%@",responseObject);
+        NSNumber* status=[responseObject objectForKey:@"status"];
+        int statusint = [status intValue];
+        if (statusint==1) {
+            NSDictionary *user=[responseObject objectForKey:@"user"];
+            NSString *user_id=[user objectForKey:@"user_id"];
+             [[NSUserDefaults standardUserDefaults ]setObject:user_id  forKey:@"user_id"];
+            //存user_id
+             NSString *dep_id=[user objectForKey:@"dep_id"];
+             NSString *user_name=[user objectForKey:@"user_name"];
+            name=user_name;
+            NSString *gender=[user objectForKey:@"gender"];
+             NSString *professional=[user objectForKey:@"professional"];
+            profess=professional;
+            NSString *profess_state=[user objectForKey:@"profess_state"];
+            NSString *fileName=[NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@.sqlite",_TF_UserName.text];//数据库名字
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if (![fileManager fileExistsAtPath:fileName]) {
+                BaseDB *db=[[BaseDB alloc] init];
+                //创建表
+                NSString *dbCreate=[NSString stringWithFormat:@"create table %@( user_id text primary key,dep_id test,user_name test,gender test,professional test,profess_state test)",_TF_UserName.text];//表名字及字段
+                NSString *dbName=[NSString stringWithFormat:@"%@.sqlite",_TF_UserName.text];//文件名字为
+                [db createTable:dbCreate dataBaseName:dbName];
+                //此处还应添信息
+                NSString *insertTable=[NSString stringWithFormat:@"insert into %@(user_id,dep_id,user_name,gender,professional,profess_state) values (?,?,?,?,?,?)",_TF_UserName.text];
+                NSArray  *insertParmas=@[user_id,dep_id,user_name,gender,professional,profess_state];
+                 [db execSql:insertTable parmas:insertParmas dataBaseName:dbName];
+            }
+
+            [self performSegueWithIdentifier:@"mainPage" sender:self];
+        }
+        else if(statusint==0)
+        {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号不存在"];
+            }];
+        }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         
         [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"登陆失败！"];
+            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
         }];
     }];
 }
