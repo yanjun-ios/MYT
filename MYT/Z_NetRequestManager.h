@@ -10,9 +10,8 @@
 
 @interface Z_NetRequestManager : NSObject
 /**
- *  工具类单例
+ *  工具类单例 这是工具类，将需要多次请求的类放到这里来
  */
 + (Z_NetRequestManager *)sharedInstance;
-
--(NSDictionary*)getClientList:(NSDictionary*) paraDic;
+-(NSDictionary*)getClientList:(NSDictionary *)paraDic;
 @end

@@ -28,7 +28,7 @@ static Z_NetRequestManager * sharedInstance = nil;
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         [self.superclass qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
         }];
        
     }];
