@@ -9,39 +9,163 @@
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
 #import "MJRefresh.h"
+#import "Utility.h"
+#import <SVProgressHUD.h>
+#import "QQRequestManager.h"
 @interface CilentViewController ()
 {
     int  toIndex;
+    NSMutableArray *data;
+    int j;
 }
+
 @end
 
 @implementation CilentViewController
-
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
+    [_tableview reloadData];
+}
+-(void)viewWillAppear:(BOOL)animated
+
+{
+    
+    [self initinfor];
+    [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
+   
+    
     
 }
-
+-(void)initinfor
+{ j=1;
+    
+    if (!data&&[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
+        data = [[NSMutableArray alloc]init];
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:@"5" forKey:@"pageSize"];
+        NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+        [parDic setValue:stringJ forKey:@"pageNum"];
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSLog(@"%@",responseObject);
+            NSArray *init=[responseObject objectForKey:@"list"];
+            for (int i = 0; i<init.count; i++) {
+                [data addObject:[init objectAtIndex:i]];
+            }
+            [_tableview reloadData];
+            //NSLog(@"%d",data.count);
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            }];
+        }];
+    }
+   
+   // [_tableview.mj_footer beginRefreshing];
+    
+}
 - (void)viewDidLoad {
+   
+    
     
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    _tableview.mj_footer.automaticallyHidden = NO;
+   
     _tableview.sectionFooterHeight=0;
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
-    _tableview.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // 结束刷新
-            [_tableview.mj_header endRefreshing];
-        });
-    }];
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
+    [_tableview reloadData];
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
 }
+/*- (void)example01
+{
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    _tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [_tableview loadNewData];
+    }];
+    
+    // 马上进入刷新状态
+    [_tableview.mj_header beginRefreshing];
+}*/
 
+
+/*- (void)example01
+{
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    _tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [_tableview loadNewData];
+    }];
+    
+    // 马上进入刷新状态
+    [_tableview.mj_header beginRefreshing];
+}*/
+/*- (void)example11
+{
+   // [self example01];
+    
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    _tableview.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self loadMoreData];
+    }];
+}*/
+
+- (void)loadMoreData
+{
+    // 1.添加假数据
+    j++;
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+    [parDic setValue:@"5" forKey:@"pageSize"];
+    NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+    [parDic setValue:@"1" forKey:@"pageNum"];
+     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {        
+        NSLog(@"%@",responseObject);
+        NSArray *init=[responseObject objectForKey:@"list"];
+        for (int i = 0; i<init.count; i++) {
+            [data addObject:[init objectAtIndex:i]];
+        }
+         [_tableview reloadData];
+        //NSLog(@"%d",data.count);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+        }];
+    }];
+
+
+    
+    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+    
+        // 刷新表格
+    
+        
+        // 拿到当前的上拉刷新控件，结束刷新状态
+        [_tableview.mj_footer endRefreshing];
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -49,7 +173,8 @@
 
 #pragma mark - tableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    NSLog(@"%lu",(unsigned long)data.count);
+    return data.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -58,9 +183,53 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"%@",data);
     NSString* identif=@"cell";
     UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    
+    NSDictionary* customer=[data objectAtIndex:[indexPath row]];
+    NSString* custo_id=[customer objectForKey:@"id"];//获取客户id
+    NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
+     ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
+    NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
+    NSString* contacts_phone,*contacts_name,*contacts_id;
+    //多的话默认显示前3个
+    if (contacts.count>=3) {
+        for (int i=0; i<3; i++) {
+            NSDictionary * contact=[contacts objectAtIndex:i];
+            contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
+            contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
+           
+            contacts_id=[contact objectForKey:@"CONTACTS_ID"];
+            int jgx=0;
+            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 70, 60, 25)];
+            [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+            [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+            [btn_contact setBackgroundImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+            btn_contact.tag=[indexPath row]*100+i;
+            jgx=+100;
+            [cell.contentView addSubview:btn_contact];
+        }
+    }
+    else
+    {
+        for (int i=0; i<contacts.count; i++) {
+            NSDictionary * contact=[contacts objectAtIndex:i];
+            contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
+            contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
+            contacts_id=[contact objectForKey:@"CONTACTS_ID"];
+            int jgx=0;
+            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 70, 60, 25)];
+            [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+            [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+            btn_contact.titleLabel.font = [UIFont systemFontOfSize: 14.0];
+            [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [btn_contact setBackgroundImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+
+            btn_contact.tag=[indexPath row]*100+i;
+            jgx=+100;
+            [cell.contentView addSubview:btn_contact];
+        }
+    }
     //添加联系人按钮
     UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 60, 30, 30)];
     [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
@@ -76,7 +245,10 @@
     return cell;
     
 }
-
+-(void)call
+{
+    NSLog(@"打电话中");
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 15;
