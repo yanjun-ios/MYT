@@ -192,6 +192,7 @@
      ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
     NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
     NSString* contacts_phone,*contacts_name,*contacts_id;
+    int jgx=0;
     //多的话默认显示前3个
     if (contacts.count>=3) {
         for (int i=0; i<3; i++) {
@@ -217,14 +218,15 @@
             contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
             contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
             contacts_id=[contact objectForKey:@"CONTACTS_ID"];
-            int jgx=0;
+            
             UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 70, 60, 25)];
             [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
             [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+            btn_contact.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
             btn_contact.titleLabel.font = [UIFont systemFontOfSize: 14.0];
             [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn_contact setBackgroundImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
-
+            [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
             btn_contact.tag=[indexPath row]*100+i;
             jgx=+100;
             [cell.contentView addSubview:btn_contact];
