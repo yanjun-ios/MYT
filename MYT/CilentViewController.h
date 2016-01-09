@@ -11,6 +11,8 @@
 #import "MJRefresh.h"
 @interface CilentViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UIButton *Button_connect;
+@property (weak, nonatomic) IBOutlet UILabel *Label_customer;
 - (IBAction)rightMenuClick:(id)sender;
 - (IBAction)addClientClick:(id)sender;
 - (IBAction)locationClick:(id)sender;
