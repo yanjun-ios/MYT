@@ -8,7 +8,8 @@
 
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
-
+#import"Utility.h"
+#import "Z_NetRequestManager.h"
 @interface CilentViewController ()
 {
     int  toIndex;
@@ -26,6 +27,8 @@
 -(void)viewWillAppear:(BOOL)animated
 
 {
+    _tableview.rowHeight=UITableViewAutomaticDimension;
+    _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
     [self initinfor];
     [_tableview reloadData];
@@ -44,27 +47,43 @@
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
         [parDic setValue:@"5" forKey:@"pageSize"];
         NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+        
         [parDic setValue:stringJ forKey:@"pageNum"];
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            
-            NSLog(@"%@",responseObject);
+        NSDictionary* responseObject= [[Z_NetRequestManager sharedInstance] getClientList:parDic];
+        if(responseObject)
+        {
             NSArray *init=[responseObject objectForKey:@"list"];
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
             [_tableview reloadData];
-            //NSLog(@"%d",data.count);
             
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            
+        }else
+        {
             [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                [SVProgressHUD showErrorWithStatus:@"暂时没有任何数据！"];
             }];
-        }];
+        }
+//        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+//            
+//            NSLog(@"%@",responseObject);
+//            NSArray *init=[responseObject objectForKey:@"list"];
+//            for (int i = 0; i<init.count; i++) {
+//                [data addObject:[init objectAtIndex:i]];
+//            }
+//            [_tableview reloadData];
+            //NSLog(@"%d",data.count);
+//
+//        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//            
+//            
+//            [self qq_performSVHUDBlock:^{
+//                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+//            }];
+//        }];
     }
    
-   // [_tableview.mj_footer beginRefreshing];
+   [_tableview.mj_footer beginRefreshing];
     
 }
 - (void)viewDidLoad {
@@ -170,6 +189,10 @@
     NSLog(@"%lu",(unsigned long)data.count);
     return data.count;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
@@ -196,12 +219,14 @@
            
             contacts_id=[contact objectForKey:@"CONTACTS_ID"];
             int jgx=0;
-            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 70, 60, 25)];
+            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 70, 25)];
             [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+            [btn_contact.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            
             [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
-            [btn_contact setBackgroundImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+            [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
             btn_contact.tag=[indexPath row]*100+i;
-            jgx=+100;
+            jgx=+90;
             [cell.contentView addSubview:btn_contact];
         }
     }
@@ -213,26 +238,25 @@
             contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
             contacts_id=[contact objectForKey:@"CONTACTS_ID"];
             
-            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 70, 60, 25)];
+            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 60, 70, 25)];
             [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
             [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
-            btn_contact.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-            btn_contact.titleLabel.font = [UIFont systemFontOfSize: 14.0];
+            btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
             [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn_contact setBackgroundImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+            [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
             [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
             btn_contact.tag=[indexPath row]*100+i;
-            jgx=+100;
+            jgx=+90;
             [cell.contentView addSubview:btn_contact];
         }
     }
     //添加联系人按钮
-    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 60, 30, 30)];
+    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
     [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     [cell.contentView addSubview:btnadd];
     [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    //添加联系人按钮
+    //客户详情按钮
     UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
     [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
     [cell.contentView addSubview:btnto];

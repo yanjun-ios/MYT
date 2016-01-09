@@ -56,6 +56,7 @@
 		9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */; };
 		9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */; };
 		9CD75FE71C40DF6F001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
+		9CD75FEA1C40FB15001C7C98 /* Z_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FE91C40FB15001C7C98 /* Z_NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,8 @@
 		9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
 		9CD75FE51C40DF6F001C7C98 /* NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRequestManager.h; sourceTree = "<group>"; };
 		9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestManager.m; sourceTree = "<group>"; };
+		9CD75FE81C40FB15001C7C98 /* Z_NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Z_NetRequestManager.h; sourceTree = "<group>"; };
+		9CD75FE91C40FB15001C7C98 /* Z_NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Z_NetRequestManager.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -537,6 +540,8 @@
 			children = (
 				9CD75FE51C40DF6F001C7C98 /* NetRequestManager.h */,
 				9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */,
+				9CD75FE81C40FB15001C7C98 /* Z_NetRequestManager.h */,
+				9CD75FE91C40FB15001C7C98 /* Z_NetRequestManager.m */,
 			);
 			name = NetRequest;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 				77A805D11C1DACB200F9B15D /* Node.m in Sources */,
 				77E38BAE1C1829850046B72E /* MateclientViewController.m in Sources */,
 				9CD75FE71C40DF6F001C7C98 /* NetRequestManager.m in Sources */,
+				9CD75FEA1C40FB15001C7C98 /* Z_NetRequestManager.m in Sources */,
 				9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */,
 				773C66BC1C3F5349008450AF /* BaseDB.m in Sources */,
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
