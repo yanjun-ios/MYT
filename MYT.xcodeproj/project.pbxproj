@@ -174,8 +174,8 @@
 		9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Z_NetRequestManager.m; sourceTree = "<group>"; };
 		9CD75FEE1C414771001C7C98 /* Z_NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Z_NetRequestManager.h; sourceTree = "<group>"; };
 		9CD75FEF1C414771001C7C98 /* NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestManager.m; sourceTree = "<group>"; };
-		9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Y_NetRequestManager.h; path = ../MYTNetRequest/Y_NetRequestManager.h; sourceTree = "<group>"; };
-		9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Y_NetRequestManager.m; path = ../MYTNetRequest/Y_NetRequestManager.m; sourceTree = "<group>"; };
+		9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_NetRequestManager.h; sourceTree = "<group>"; };
+		9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_NetRequestManager.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -222,7 +222,6 @@
 		18C0A4081C1515FD00C380B5 /* MYT */ = {
 			isa = PBXGroup;
 			children = (
-				9CD75FF51C414AEA001C7C98 /* NetRequest */,
 				9CD75FEB1C414752001C7C98 /* MYTNetRequest */,
 				77B5CEEF1C1C5E440044D0F6 /* Zyxphone */,
 				77A805CE1C1DACB200F9B15D /* Model */,
@@ -546,17 +545,10 @@
 				9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */,
 				9CD75FEE1C414771001C7C98 /* Z_NetRequestManager.h */,
 				9CD75FEF1C414771001C7C98 /* NetRequestManager.m */,
-			);
-			path = MYTNetRequest;
-			sourceTree = "<group>";
-		};
-		9CD75FF51C414AEA001C7C98 /* NetRequest */ = {
-			isa = PBXGroup;
-			children = (
 				9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */,
 				9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */,
 			);
-			path = NetRequest;
+			path = MYTNetRequest;
 			sourceTree = "<group>";
 		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
