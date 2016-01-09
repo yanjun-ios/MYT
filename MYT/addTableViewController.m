@@ -24,6 +24,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+
 }
 
 - (void)viewDidLoad {
@@ -61,5 +66,8 @@
     btnSelected=_btn_qiye;
 }
 - (IBAction)click_person:(id)sender {
+    btnSelected.selected=NO;
+    _btn_person.selected=YES;
+    btnSelected=_btn_person;
 }
 @end
