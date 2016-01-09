@@ -8,7 +8,7 @@
 
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
-#import "MJRefresh.h"
+
 @interface CilentViewController ()
 {
     int  toIndex;
@@ -31,13 +31,6 @@
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
-    _tableview.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // 结束刷新
-            [_tableview.mj_header endRefreshing];
-        });
-    }];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }

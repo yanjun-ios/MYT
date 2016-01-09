@@ -55,6 +55,7 @@
 		9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */; };
 		9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */; };
 		9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */; };
+		9CD75FE71C40DF6F001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,8 @@
 		9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageCenterViewController.m; sourceTree = "<group>"; };
 		9CBF33B11C1BB99E00F7E1DC /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
+		9CD75FE51C40DF6F001C7C98 /* NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetRequestManager.h; sourceTree = "<group>"; };
+		9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestManager.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,6 +216,7 @@
 		18C0A4081C1515FD00C380B5 /* MYT */ = {
 			isa = PBXGroup;
 			children = (
+				9CD75FE41C40DF1C001C7C98 /* NetRequest */,
 				77B5CEEF1C1C5E440044D0F6 /* Zyxphone */,
 				77A805CE1C1DACB200F9B15D /* Model */,
 				77A805D21C1DACBF00F9B15D /* TreeTableView */,
@@ -528,6 +532,15 @@
 			name = UpDownMenu;
 			sourceTree = "<group>";
 		};
+		9CD75FE41C40DF1C001C7C98 /* NetRequest */ = {
+			isa = PBXGroup;
+			children = (
+				9CD75FE51C40DF6F001C7C98 /* NetRequestManager.h */,
+				9CD75FE61C40DF6F001C7C98 /* NetRequestManager.m */,
+			);
+			name = NetRequest;
+			sourceTree = "<group>";
+		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,6 +714,7 @@
 				776E00751C1AE3E700956E8C /* MyteamViewController.m in Sources */,
 				77A805D11C1DACB200F9B15D /* Node.m in Sources */,
 				77E38BAE1C1829850046B72E /* MateclientViewController.m in Sources */,
+				9CD75FE71C40DF6F001C7C98 /* NetRequestManager.m in Sources */,
 				9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */,
 				773C66BC1C3F5349008450AF /* BaseDB.m in Sources */,
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
