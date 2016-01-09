@@ -9,7 +9,7 @@
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
 #import"Utility.h"
-#import "Z_NetRequestManager.h"
+#import "Y_NetRequestManager.h"
 @interface CilentViewController ()
 {
     int  toIndex;
@@ -49,7 +49,7 @@
         NSString *stringJ = [NSString stringWithFormat:@"%d",j];
         
         [parDic setValue:stringJ forKey:@"pageNum"];
-        NSDictionary* responseObject= [[Z_NetRequestManager sharedInstance] getClientList:parDic];
+        NSDictionary* responseObject= [[Y_NetRequestManager sharedInstance] getClientList:parDic];
        if(responseObject)
         {
             NSArray *init=[responseObject objectForKey:@"list"];
