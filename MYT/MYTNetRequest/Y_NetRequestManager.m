@@ -31,7 +31,7 @@ static Y_NetRequestManager * sharedInstance = nil;
         }];
         
     }];
-    
+    NSLog(@"我在这里加了一行代码，看到请回复！");
     return dic;
 }
 
