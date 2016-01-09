@@ -55,9 +55,9 @@
 		9CBF33AB1C1ADC9E00F7E1DC /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AA1C1ADC9E00F7E1DC /* SettingViewController.m */; };
 		9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33AE1C1B082B00F7E1DC /* messageCenterViewController.m */; };
 		9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CBF33B21C1BB99E00F7E1DC /* NIDropDown.m */; };
-		9CD75FF01C414771001C7C98 /* Z_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
-		9CD75FF11C414771001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FEF1C414771001C7C98 /* NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
-		9CD75FF41C4149B3001C7C98 /* Y_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */; settings = {ASSET_TAGS = (); }; };
+		9CD75FF01C414771001C7C98 /* Z_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */; };
+		9CD75FF11C414771001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FEF1C414771001C7C98 /* NetRequestManager.m */; };
+		9CD75FF41C4149B3001C7C98 /* Y_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -541,12 +541,12 @@
 		9CD75FEB1C414752001C7C98 /* MYTNetRequest */ = {
 			isa = PBXGroup;
 			children = (
+				9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */,
+				9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */,
 				9CD75FEC1C414771001C7C98 /* NetRequestManager.h */,
 				9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */,
 				9CD75FEE1C414771001C7C98 /* Z_NetRequestManager.h */,
 				9CD75FEF1C414771001C7C98 /* NetRequestManager.m */,
-				9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */,
-				9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */,
 			);
 			path = MYTNetRequest;
 			sourceTree = "<group>";
