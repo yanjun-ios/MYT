@@ -9,7 +9,6 @@
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
 #import"Utility.h"
-#import "Z_NetRequestManager.h"
 @interface CilentViewController ()
 {
     int  toIndex;
@@ -49,38 +48,38 @@
         NSString *stringJ = [NSString stringWithFormat:@"%d",j];
         
         [parDic setValue:stringJ forKey:@"pageNum"];
-        NSDictionary* responseObject= [[Z_NetRequestManager sharedInstance] getClientList:parDic];
-        if(responseObject)
-        {
-            NSArray *init=[responseObject objectForKey:@"list"];
-            for (int i = 0; i<init.count; i++) {
-                [data addObject:[init objectAtIndex:i]];
-            }
-            [_tableview reloadData];
-            
-        }else
-        {
-            [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"暂时没有任何数据！"];
-            }];
-        }
-//        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-//            
-//            NSLog(@"%@",responseObject);
+//        NSDictionary* responseObject= [[Z_NetRequestManager sharedInstance] getClientList:parDic];
+//        if(responseObject)
+//        {
 //            NSArray *init=[responseObject objectForKey:@"list"];
 //            for (int i = 0; i<init.count; i++) {
 //                [data addObject:[init objectAtIndex:i]];
 //            }
 //            [_tableview reloadData];
-            //NSLog(@"%d",data.count);
-//
-//        } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //            
-//            
+//        }else
+//        {
 //            [self qq_performSVHUDBlock:^{
-//                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+//                [SVProgressHUD showErrorWithStatus:@"暂时没有任何数据！"];
 //            }];
-//        }];
+//        }
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSLog(@"%@",responseObject);
+            NSArray *init=[responseObject objectForKey:@"list"];
+            for (int i = 0; i<init.count; i++) {
+                [data addObject:[init objectAtIndex:i]];
+            }
+            [_tableview reloadData];
+            NSLog(@"%d",data.count);
+
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            }];
+        }];
     }
    
    [_tableview.mj_footer beginRefreshing];

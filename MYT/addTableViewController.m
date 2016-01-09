@@ -9,7 +9,9 @@
 #import "addTableViewController.h"
 
 @interface addTableViewController ()
-
+{
+    UIButton* btnSelected;
+}
 @end
 
 @implementation addTableViewController
@@ -32,7 +34,14 @@
     //设置背景颜色
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     
-    //设置各个输入框
+    //设置各个输入框代理方法
+    _TF_CusCode.delegate=self;
+    _TF_CusName.delegate=self;
+    _TF_CusTtName.delegate=self;
+    _TF_MobilePhone.delegate=self;
+    _TF_Phone.delegate=self;
+    _TF_website.delegate=self;
+    
     [super viewDidLoad];
     
 }
@@ -47,6 +56,9 @@
 - (IBAction)Click_GetLocation:(id)sender {
 }
 - (IBAction)click_qiye:(id)sender {
+    btnSelected.selected=NO;
+    _btn_qiye.selected=YES;
+    btnSelected=_btn_qiye;
 }
 - (IBAction)click_person:(id)sender {
 }
