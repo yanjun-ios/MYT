@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface Z_NetRequestManager : NSObject
+#import <CoreLocation/CoreLocation.h>
+#import "KCAnnotation.h"
+@interface Z_NetRequestManager : NSObject<CLLocationManagerDelegate,MKMapViewDelegate>
 /**
  *  工具类单例 这是工具类，将需要多次请求的类放到这里来
  */
 + (Z_NetRequestManager *)sharedInstance;
 -(NSDictionary*)getClientList:(NSDictionary *)paraDic;
+-(void)getlongandlati;
+-(NSDictionary *)getlongla;
+-(NSDictionary *)postJson:(NSDictionary *)paradic url:(NSString*)url;
 @end
