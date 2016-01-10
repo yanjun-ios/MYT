@@ -7,7 +7,6 @@
 //
 
 #import "addContactsTableViewController.h"
-
 @interface addContactsTableViewController ()
 {
     BOOL bKeyBoardHide;
@@ -39,10 +38,24 @@
     __TF_other.delegate=self;
     NSLog(@"%@",self.navigationController);
     UIImage *searchimage=[UIImage imageNamed:@"ok"];
-    UIBarButtonItem *barbtn=[[UIBarButtonItem alloc] initWithImage:searchimage style:UIBarButtonItemStyleDone target:self action:@selector(finishclick)];
-    barbtn.image=searchimage;
-    self.navigationItem.rightBarButtonItem=barbtn;
-    [super viewDidLoad];
+ //   UIBarButtonItem *barbtn=[[UIBarButtonItem alloc] initWithImage:searchimage style:UIBarButtonItemStylePlain target:self action:@selector(finishclick)];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@"OK"
+                                 
+                                 style:UIBarButtonItemStyleBordered
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
+  
+    //UIBarButtonItem *btn=[[UIBarButtonItem alloc]init];
+    //btn=self.navigationItem.rightBarButtonItem;
+    //[btn ];
+    //[super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -67,7 +80,7 @@
 
 -(void)finishclick
 {
-    
+    NSLog(@"俺是添加联系人");
 }
 
 - (void)didReceiveMemoryWarning {

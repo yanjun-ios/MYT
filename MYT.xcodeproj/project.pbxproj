@@ -32,6 +32,7 @@
 		776ADB6D1C41670B0084401F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB6C1C41670B0084401F /* MapViewController.m */; };
 		776ADB6F1C4167760084401F /* KCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB6E1C4167760084401F /* KCAnnotation.m */; };
 		776ADB811C428DE90084401F /* ChangeinfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB801C428DE90084401F /* ChangeinfoTableViewController.m */; };
+		776ADB831C429BCE0084401F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776ADB821C429BCE0084401F /* CoreTelephony.framework */; };
 		776E00751C1AE3E700956E8C /* MyteamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776E00741C1AE3E700956E8C /* MyteamViewController.m */; };
 		77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77725C681C1D07960018AB07 /* PerformanceViewController.m */; };
 		77A805CD1C1DABF300F9B15D /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A805CC1C1DABF300F9B15D /* StockViewController.m */; };
@@ -126,6 +127,7 @@
 		776ADB701C41677C0084401F /* KCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCAnnotation.h; sourceTree = "<group>"; };
 		776ADB7F1C428DE90084401F /* ChangeinfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeinfoTableViewController.h; sourceTree = "<group>"; };
 		776ADB801C428DE90084401F /* ChangeinfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeinfoTableViewController.m; sourceTree = "<group>"; };
+		776ADB821C429BCE0084401F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		776E00731C1AE3E700956E8C /* MyteamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyteamViewController.h; sourceTree = "<group>"; };
 		776E00741C1AE3E700956E8C /* MyteamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyteamViewController.m; sourceTree = "<group>"; };
 		77725C671C1D07960018AB07 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				776ADB831C429BCE0084401F /* CoreTelephony.framework in Frameworks */,
 				776ADB691C4166580084401F /* MapKit.framework in Frameworks */,
 				776ADB671C4166500084401F /* CoreLocation.framework in Frameworks */,
 				776ADB651C4166460084401F /* QuartzCore.framework in Frameworks */,
@@ -586,6 +589,7 @@
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				776ADB821C429BCE0084401F /* CoreTelephony.framework */,
 				776ADB681C4166580084401F /* MapKit.framework */,
 				776ADB661C4166500084401F /* CoreLocation.framework */,
 				776ADB641C4166460084401F /* QuartzCore.framework */,
@@ -646,7 +650,7 @@
 				TargetAttributes = {
 					18C0A4051C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 9276E3TBPE;
+						DevelopmentTeam = 6YS9NAWMMK;
 					};
 					18C0A41E1C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -911,7 +915,7 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -927,7 +931,7 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

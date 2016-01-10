@@ -10,13 +10,21 @@
 #import "XNTabBarController.h"
 #import"Utility.h"
 #import "NetRequestManager.h"
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
 @interface CilentViewController ()
 {
     int  toIndex;
     NSMutableArray *data;//客户数据都在这儿
     int j;
-    
+    CTCallCenter *callCenter;
     int clientId;
+    NSString* begin_hour;
+    NSString* begin_minute;
+    NSString* begin_ms;
+    NSString* end_hour;
+    NSString* end_minute;
+    NSString* end_ms;
 }
 
 @end
@@ -99,7 +107,7 @@
 - (void)viewDidLoad {
    
     
-    
+    callCenter = [[CTCallCenter alloc] init];
     _tableview.delegate=self;
     _tableview.dataSource=self;
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
@@ -304,7 +312,7 @@
                 contacts_id=[contact objectForKey:@"CONTACTS_ID"];
                 int jgx=0;
                 UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 70, 25)];
-                [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+                [btn_contact addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
                 [btn_contact.titleLabel setFont:[UIFont systemFontOfSize:12]];
                 
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
@@ -323,13 +331,15 @@
                 contacts_id=[contact objectForKey:@"CONTACTS_ID"];
                 
                 UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 60, 70, 25)];
-                [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+                [btn_contact addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
                 btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
-                btn_contact.tag=[indexPath row]*100+i;
+                int phonenumber=((NSNumber*)contacts_phone).intValue;
+                btn_contact.tag=phonenumber;
+                //[indexPath row]*100+i;
                 jgx=+90;
                 [cell.contentView addSubview:btn_contact];
             }
@@ -341,9 +351,69 @@
     return cell;
     
 }
--(void)call
+-(void)call:(id)sender
 {
+    
+    UIButton* btn =  (UIButton*)sender;
+    int phonenumber=(int)btn.tag;
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%d",phonenumber];
+    UIWebView * callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+    [self.view addSubview:callWebview];
+  
+    
+    callCenter.callEventHandler=^(CTCall* call){
+        
+        if (call.callState == CTCallStateDialing){
+            
+            NSLog(@"Call Dialing");
+            [self performSelectorOnMainThread:@selector(beginTalktime) withObject:nil waitUntilDone:YES];
+        }
+        
+        if (call.callState == CTCallStateConnected){
+            
+            NSLog(@"Call Connected");
+            
+            
+            
+            
+            
+        }
+        
+        if (call.callState == CTCallStateDisconnected){
+            
+            [self performSelectorOnMainThread:@selector(closeTalktime) withObject:nil waitUntilDone:YES];
+            
+            NSLog(@"Call Disconnected");
+            
+        }
+        
+    };
     NSLog(@"打电话中");
+}
+-(void)beginTalktime
+{
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+ // NSString hour=[formatter stringFromDate:[NSDate date]];
+    begin_hour = [formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"mm"];
+    begin_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    begin_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",begin_hour,begin_minute,begin_ms);
+}
+-(void)closeTalktime
+{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+    end_hour = [formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"mm"];
+    end_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    end_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",end_hour,end_minute,end_ms);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
