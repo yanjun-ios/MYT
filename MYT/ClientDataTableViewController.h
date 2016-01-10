@@ -26,4 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lab_talk_time;
 
 @property (weak, nonatomic) IBOutlet UILabel *lab_remark;
+- (IBAction)clickLocation:(id)sender;
+
 @end
