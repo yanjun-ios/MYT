@@ -12,7 +12,7 @@
 @interface CilentViewController ()
 {
     int  toIndex;
-    NSMutableArray *data;
+    NSMutableArray *data;//客户数据都在这儿
     int j;
 }
 
@@ -138,7 +138,31 @@
         [self loadMoreData];
     }];
 }*/
-
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    NSString *find=[_findcust.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"pageNum"];//user_id
+    
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/queryCuss.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSArray *init=[responseObject objectForKey:@"list"];
+        for (int i = 0; i<init.count; i++) {
+            [data addObject:[init objectAtIndex:i]];
+        }
+        [_tableview reloadData];
+        //NSLog(@"%d",data.count);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+        }];
+    }];
+  
+    
+}
 - (void)loadMoreData
 {
     // 1.添加假数据
@@ -201,53 +225,56 @@
     NSLog(@"%@",data);
     NSString* identif=@"cell";
     UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    NSDictionary* customer=[data objectAtIndex:[indexPath row]];
-    NSString* custo_id=[customer objectForKey:@"id"];//获取客户id
-    NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
-     ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
-    NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
-    NSString* contacts_phone,*contacts_name,*contacts_id;
-    int jgx=0;
-    //多的话默认显示前3个
-    if (contacts.count>=3) {
-        for (int i=0; i<3; i++) {
-            NSDictionary * contact=[contacts objectAtIndex:i];
-            contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
-            contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
-           
-            contacts_id=[contact objectForKey:@"CONTACTS_ID"];
-            int jgx=0;
-            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 70, 25)];
-            [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
-            [btn_contact.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            
-            [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
-            [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
-            btn_contact.tag=[indexPath row]*100+i;
-            jgx=+90;
-            [cell.contentView addSubview:btn_contact];
+    
+        NSDictionary* customer=[data objectAtIndex:[indexPath row]];
+        NSString* custo_id=[customer objectForKey:@"id"];//获取客户id
+        NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
+        ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
+        NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
+        NSString* contacts_phone,*contacts_name,*contacts_id;
+        int jgx=0;
+        //多的话默认显示前3个
+        if (contacts.count>=3) {
+            for (int i=0; i<3; i++) {
+                NSDictionary * contact=[contacts objectAtIndex:i];
+                contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
+                contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
+                
+                contacts_id=[contact objectForKey:@"CONTACTS_ID"];
+                int jgx=0;
+                UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 70, 25)];
+                [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+                [btn_contact.titleLabel setFont:[UIFont systemFontOfSize:12]];
+                
+                [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+                [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+                btn_contact.tag=[indexPath row]*100+i;
+                jgx=+90;
+                [cell.contentView addSubview:btn_contact];
+            }
         }
-    }
-    else
-    {
-        for (int i=0; i<contacts.count; i++) {
-            NSDictionary * contact=[contacts objectAtIndex:i];
-            contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
-            contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
-            contacts_id=[contact objectForKey:@"CONTACTS_ID"];
-            
-            UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 60, 70, 25)];
-            [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
-            [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
-            btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
-            [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
-            [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
-            btn_contact.tag=[indexPath row]*100+i;
-            jgx=+90;
-            [cell.contentView addSubview:btn_contact];
+        else
+        {
+            for (int i=0; i<contacts.count; i++) {
+                NSDictionary * contact=[contacts objectAtIndex:i];
+                contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
+                contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
+                contacts_id=[contact objectForKey:@"CONTACTS_ID"];
+                
+                UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 60, 70, 25)];
+                [btn_contact addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+                [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+                btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
+                [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+                [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
+                btn_contact.tag=[indexPath row]*100+i;
+                jgx=+90;
+                [cell.contentView addSubview:btn_contact];
+            }
         }
-    }
+    
+    
     //添加联系人按钮
     UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
     [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];

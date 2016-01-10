@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "IIViewDeckController.h"
 #import "MJRefresh.h"
-@interface CilentViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface CilentViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *Button_connect;
+@property (weak, nonatomic) IBOutlet UISearchBar *findcust;
 @property (weak, nonatomic) IBOutlet UILabel *Label_customer;
 - (IBAction)rightMenuClick:(id)sender;
 - (IBAction)addClientClick:(id)sender;

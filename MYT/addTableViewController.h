@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_qiye;
 - (IBAction)click_qiye:(id)sender;
 
+- (IBAction)click_finish:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btn_person;
 - (IBAction)click_person:(id)sender;
 @end
