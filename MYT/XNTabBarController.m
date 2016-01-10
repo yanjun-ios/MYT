@@ -8,6 +8,7 @@
 
 #import "XNTabBarController.h"
 #import "XNTabBar.h"
+#import "ClientDataTableViewController.h"
 @interface XNTabBarController ()<XNTabBarDelegate>
 
 @end
@@ -62,9 +63,9 @@
     
     self.selectedIndex=to;
     if(to==0)
-    {
-        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
-        [alert show];
+   {
+//        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
+//        [alert show];
     }
     switch (to) {
         case 0:

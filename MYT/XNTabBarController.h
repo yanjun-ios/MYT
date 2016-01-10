@@ -10,4 +10,5 @@
 
 @interface XNTabBarController : UITabBarController
 @property(nonatomic,assign)int index;
+
 @end

@@ -9,5 +9,21 @@
 #import <UIKit/UIKit.h>
 
 @interface ClientDataTableViewController : UITableViewController
+@property(nonatomic,assign)int clientId;
+@property (weak, nonatomic) IBOutlet UILabel *lab_cusname;
+@property (weak, nonatomic) IBOutlet UILabel *lab_custtname;
+@property (weak, nonatomic) IBOutlet UILabel *lab_telephone;
+@property (weak, nonatomic) IBOutlet UILabel *lab_creatTime;
 
+@property (weak, nonatomic) IBOutlet UILabel *lab_dlvdate;
+@property (weak, nonatomic) IBOutlet UILabel *lab_code;
+@property (weak, nonatomic) IBOutlet UILabel *lab_money;
+@property (weak, nonatomic) IBOutlet UILabel *lab_visite_time;
+@property (weak, nonatomic) IBOutlet UILabel *lab_receiver;
+@property (weak, nonatomic) IBOutlet UILabel *lab_contactsname;
+@property (weak, nonatomic) IBOutlet UILabel *lab_call_phone;
+@property (weak, nonatomic) IBOutlet UILabel *lab_call_time;
+@property (weak, nonatomic) IBOutlet UILabel *lab_talk_time;
+
+@property (weak, nonatomic) IBOutlet UILabel *lab_remark;
 @end
