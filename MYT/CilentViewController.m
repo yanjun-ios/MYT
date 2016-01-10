@@ -223,9 +223,37 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%@",data);
-    NSString* identif=@"cell";
-    UITableViewCell* cell=[_tableview dequeueReusableCellWithIdentifier:identif];
-    
+    static NSString *CellIdentifier = @"cell";
+    // 通过indexPath创建cell实例 每一个cell都是单独的
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    // 判断为空进行初始化  --（当拉动页面显示超过主页面内容的时候就会重用之前的cell，而不会再次初始化）
+    if (!cell) {
+        
+        //创建客户名称lab
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        UILabel* lab=[[UILabel alloc]initWithFrame:CGRectMake(8, 16, 300, 21)];
+        lab.font=[UIFont systemFontOfSize:16];
+        lab.textColor=[UIColor redColor];
+        lab.tag=148;
+        [cell.contentView addSubview:lab];
+        //创建下划线
+        
+        UIView* line=[[UIView alloc]initWithFrame:CGRectMake(0, 45, ScreenWidth, 1)];
+        line.backgroundColor=[UIColor lightGrayColor];
+        [cell.contentView addSubview:line];
+        
+        //创建添加联系人按钮
+        UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
+        [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        [cell.contentView addSubview:btnadd];
+        [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //创建客户详情按钮
+        UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
+        [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
+        [cell.contentView addSubview:btnto];
+        [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
+    }
         NSDictionary* customer=[data objectAtIndex:[indexPath row]];
         NSString* custo_id=[customer objectForKey:@"id"];//获取客户id
         NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
@@ -275,17 +303,7 @@
         }
     
     
-    //添加联系人按钮
-    UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
-    [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-    [cell.contentView addSubview:btnadd];
-    [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    //客户详情按钮
-    UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
-    [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
-    [cell.contentView addSubview:btnto];
-    [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
     
