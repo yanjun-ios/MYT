@@ -353,9 +353,14 @@
     //判断是否打开，做出不同响应
     if ([self.viewDeckController isSideOpen:IIViewDeckRightSide]) {//已经打开
         [self.viewDeckController closeRightView];//则关闭左视图
+        
+        //打开左边主视图的交互效果
+        [self.view setUserInteractionEnabled:YES];
     }
     else {//未打开
         [self.viewDeckController openRightView];//则打开左视图
+        //屏蔽左边主视图的交互效果，只有关闭右边菜单栏才能和主菜单栏交互
+        [self.view setUserInteractionEnabled:NO];
     }
 
 }
