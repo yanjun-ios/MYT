@@ -63,6 +63,7 @@
 		9CD75FF01C414771001C7C98 /* Z_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */; };
 		9CD75FF11C414771001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FEF1C414771001C7C98 /* NetRequestManager.m */; };
 		9CD75FF41C4149B3001C7C98 /* Y_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */; };
+		9CD75FF81C42A97A001C7C98 /* TradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF71C42A97A001C7C98 /* TradingViewController.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +189,8 @@
 		9CD75FEF1C414771001C7C98 /* NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetRequestManager.m; sourceTree = "<group>"; };
 		9CD75FF21C4149B3001C7C98 /* Y_NetRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_NetRequestManager.h; sourceTree = "<group>"; };
 		9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_NetRequestManager.m; sourceTree = "<group>"; };
+		9CD75FF61C42A97A001C7C98 /* TradingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradingViewController.h; sourceTree = "<group>"; };
+		9CD75FF71C42A97A001C7C98 /* TradingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradingViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -513,6 +516,8 @@
 				9CA6D8EB1C1831FC007E7D7A /* addContactsTableViewController.m */,
 				9CA6D8ED1C1836D2007E7D7A /* AddRemarksViewController.h */,
 				9CA6D8EE1C1836D2007E7D7A /* AddRemarksViewController.m */,
+				9CD75FF61C42A97A001C7C98 /* TradingViewController.h */,
+				9CD75FF71C42A97A001C7C98 /* TradingViewController.m */,
 			);
 			name = YJCrud;
 			sourceTree = "<group>";
@@ -770,6 +775,7 @@
 				9CBF33B31C1BB99E00F7E1DC /* NIDropDown.m in Sources */,
 				775A828C1C17086800C5BDB3 /* MateProjectViewController.m in Sources */,
 				77B5CEF91C1C612A0044D0F6 /* FollowcTableViewController.m in Sources */,
+				9CD75FF81C42A97A001C7C98 /* TradingViewController.m in Sources */,
 				9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */,
 				77A805D51C1DACBF00F9B15D /* TreeTableView.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,
