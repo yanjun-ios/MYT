@@ -28,6 +28,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+
 }
 
 - (void)viewDidLoad {
