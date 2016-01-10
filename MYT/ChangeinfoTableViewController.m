@@ -1,91 +1,57 @@
 //
-//  addContactsTableViewController.m
+//  ChangeinfoTableViewController.m
 //  MYT
 //
-//  Created by 熊凯 on 15/12/9.
-//  Copyright © 2015年 YunRui. All rights reserved.
+//  Created by YUNRUIMAC on 16/1/10.
+//  Copyright © 2016年 YunRui. All rights reserved.
 //
 
-#import "addContactsTableViewController.h"
+#import "ChangeinfoTableViewController.h"
 
-@interface addContactsTableViewController ()
-{
-    BOOL bKeyBoardHide;
-}
+@interface ChangeinfoTableViewController ()
+
 @end
 
-@implementation addContactsTableViewController
-
--(void)viewWillAppear:(BOOL)animated
-{
-    bKeyBoardHide=YES;
-    
-    //消除多余空白行
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor clearColor];
-    [self.tableView setTableFooterView:view];
-    //设置背景颜色
-    self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
-
-}
+@implementation ChangeinfoTableViewController
 
 - (void)viewDidLoad {
-    __TF_Company.delegate=self;
-    __TF_Email.delegate=self;
-    __TF_Name.delegate=self;
-    __TF_Phone.delegate=self;
-    __TF_QQ.delegate=self;
-    __TF_Telephone.delegate=self;
-    __TF_other.delegate=self;
-    NSLog(@"%@",self.navigationController);
-    UIImage *searchimage=[UIImage imageNamed:@"ok"];
-    UIBarButtonItem *barbtn=[[UIBarButtonItem alloc] initWithImage:searchimage style:UIBarButtonItemStyleDone target:self action:@selector(finishclick)];
-    barbtn.image=searchimage;
-    self.navigationItem.rightBarButtonItem=barbtn;
+    _TF_ChuanZ.delegate=self;
+    _TF_name.delegate=self;
+    _TF_need.delegate=self;
+    _TF_phone.delegate=self;
+    _TF_singlename.delegate=self;
+    _TF_Website.delegate=self;
     [super viewDidLoad];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    bKeyBoardHide = NO;
-    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[textField convertRect:textField.bounds toView:window];
-    float y1=rect.origin.y;
-    if(y1>200)
-    {
-    self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
-    }
-}
--(void)textFieldDidEndEditing:(UITextField *)textField
-{    bKeyBoardHide = YES;
-    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-50);
-}
-
--(void)finishclick
-{
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+   
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[textField convertRect:textField.bounds toView:window];
+    float y1=rect.origin.y;
+    if(y1>200)
+    {
+        self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-50);
+}
+#pragma mark - Table view data source
 
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Incomplete implementation, return the number of sections
-//    return 0;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete implementation, return the number of rows
-//    return 0;
-//}
+
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

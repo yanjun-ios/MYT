@@ -83,6 +83,7 @@
     }];
     
 }
+//延迟一会才调用而不是之间启动跟踪定位后立马调用
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     switch (status) {

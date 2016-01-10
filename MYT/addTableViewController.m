@@ -51,7 +51,8 @@
     _TF_MobilePhone.delegate=self;
     _TF_Phone.delegate=self;
     _TF_website.delegate=self;
-    
+    btnSelected=_btn_qiye;//默认为企业
+  
     [super viewDidLoad];
     
 }
@@ -62,7 +63,21 @@
 }
 
 
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[textField convertRect:textField.bounds toView:window];
+    float y1=rect.origin.y;
+    if(y1>200)
+    {
+        self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.tableView.frame=CGRectMake(0, 60, ScreenWidth, ScreenHeight-50);
+}
 - (IBAction)Click_GetLocation:(id)sender {
     [[Z_NetRequestManager sharedInstance]getlongandlati];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -75,15 +90,19 @@
         [SVProgressHUD showSuccessWithStatus:@"获取位置成功"];
         
         
-    });
+    });//得到经纬度得时间会有延迟 详情见map方法
 
     
     //
 }
+
 - (IBAction)click_qiye:(id)sender {
     btnSelected.selected=NO;
+    [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
     _btn_qiye.selected=YES;
     btnSelected=_btn_qiye;
+    
+    [btnSelected setImage:[UIImage imageNamed:@"cusTypeSel"] forState:UIControlStateSelected];
 }
 
 - (IBAction)click_finish:(id)sender {
@@ -126,25 +145,34 @@
              // NSDictionary --> NSData
              NSData *data = [NSJSONSerialization dataWithJSONObject:addcusjson options:NSJSONWritingPrettyPrinted error:nil];
              request.HTTPBody = data;
-        
+                
              // 4.发送请求
              [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                 NSDictionary* jsonDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
                  NSLog(@"%@",[jsonDic objectForKey:@"message"]);
 
             }];
-      
+        if (1) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:NO];
+            });
+            }
     }
     else
     {
-        
+        [SVProgressHUD showSuccessWithStatus:@"请填写完信息再提交"];
     }
     
 }
+
 - (IBAction)click_person:(id)sender {
+    
     btnSelected.selected=NO;
+    [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
     _btn_person.selected=YES;
     btnSelected=_btn_person;
+    
+    [btnSelected setImage:[UIImage imageNamed:@"cusTypeSel"] forState:UIControlStateSelected];
 }
 
 @end

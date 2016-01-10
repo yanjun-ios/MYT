@@ -31,6 +31,7 @@
 		776ADB691C4166580084401F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776ADB681C4166580084401F /* MapKit.framework */; };
 		776ADB6D1C41670B0084401F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB6C1C41670B0084401F /* MapViewController.m */; };
 		776ADB6F1C4167760084401F /* KCAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB6E1C4167760084401F /* KCAnnotation.m */; };
+		776ADB811C428DE90084401F /* ChangeinfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776ADB801C428DE90084401F /* ChangeinfoTableViewController.m */; };
 		776E00751C1AE3E700956E8C /* MyteamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 776E00741C1AE3E700956E8C /* MyteamViewController.m */; };
 		77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77725C681C1D07960018AB07 /* PerformanceViewController.m */; };
 		77A805CD1C1DABF300F9B15D /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A805CC1C1DABF300F9B15D /* StockViewController.m */; };
@@ -123,6 +124,8 @@
 		776ADB6C1C41670B0084401F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		776ADB6E1C4167760084401F /* KCAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCAnnotation.m; sourceTree = "<group>"; };
 		776ADB701C41677C0084401F /* KCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCAnnotation.h; sourceTree = "<group>"; };
+		776ADB7F1C428DE90084401F /* ChangeinfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeinfoTableViewController.h; sourceTree = "<group>"; };
+		776ADB801C428DE90084401F /* ChangeinfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeinfoTableViewController.m; sourceTree = "<group>"; };
 		776E00731C1AE3E700956E8C /* MyteamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyteamViewController.h; sourceTree = "<group>"; };
 		776E00741C1AE3E700956E8C /* MyteamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyteamViewController.m; sourceTree = "<group>"; };
 		77725C671C1D07960018AB07 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
@@ -155,7 +158,7 @@
 		9C6F180D1C168F6000B48EFE /* rightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightMenuViewController.h; sourceTree = "<group>"; };
 		9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightMenuViewController.m; sourceTree = "<group>"; };
 		9C6F18151C16DBB700B48EFE /* addTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addTableViewController.h; sourceTree = "<group>"; };
-		9C6F18161C16DBB700B48EFE /* addTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addTableViewController.m; sourceTree = "<group>"; };
+		9C6F18161C16DBB700B48EFE /* addTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = addTableViewController.m; path = MYT/addTableViewController.m; sourceTree = SOURCE_ROOT; };
 		9C6F18191C17C31800B48EFE /* XNTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNTabBar.h; sourceTree = "<group>"; };
 		9C6F181A1C17C31800B48EFE /* XNTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XNTabBar.m; sourceTree = "<group>"; };
 		9C6F181B1C17C31800B48EFE /* XNTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNTabBarButton.h; sourceTree = "<group>"; };
@@ -487,6 +490,8 @@
 				9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */,
 				9C6F18151C16DBB700B48EFE /* addTableViewController.h */,
 				9C6F18161C16DBB700B48EFE /* addTableViewController.m */,
+				776ADB7F1C428DE90084401F /* ChangeinfoTableViewController.h */,
+				776ADB801C428DE90084401F /* ChangeinfoTableViewController.m */,
 			);
 			name = YJClient;
 			sourceTree = "<group>";
@@ -772,6 +777,7 @@
 				77B5CEF91C1C612A0044D0F6 /* FollowcTableViewController.m in Sources */,
 				9CBF33AF1C1B082B00F7E1DC /* messageCenterViewController.m in Sources */,
 				77A805D51C1DACBF00F9B15D /* TreeTableView.m in Sources */,
+				776ADB811C428DE90084401F /* ChangeinfoTableViewController.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,
 				9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */,
 			);
