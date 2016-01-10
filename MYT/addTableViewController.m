@@ -100,7 +100,7 @@
         [addcusjson setObject:lati forKey:@"website"];
         [addcusjson setObject:lati forKey:@"type"];
         [addcusjson setObject:lati forKey:@"phone"];
-        [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCus.action"] parameters:addcusjson showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        /*[[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCus.action"] parameters:addcusjson showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"%@",responseObject);
            
             
@@ -110,8 +110,8 @@
             [self qq_performSVHUDBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
             }];
-        }];
-  /*      // 1.创建请求
+        }];*/
+        // 1.创建请求
              NSURL *url = [NSURL URLWithString:[SEVER_URL stringByAppendingString:@"yd/addCus.action"]];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
              request.HTTPMethod = @"POST";
@@ -138,8 +138,8 @@
     else
     {
         
-    }*/
     }
+    
 }
 - (IBAction)click_person:(id)sender {
     btnSelected.selected=NO;

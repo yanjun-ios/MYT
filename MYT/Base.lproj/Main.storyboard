@@ -4745,8 +4745,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sEg-pU-tXf">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="OOO-QJ-kaF"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="OOO-QJ-kaF"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="61" y="8" width="307" height="41"/>
+                                                        <mask key="constraints">
+                                                            <include reference="OOO-QJ-kaF"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -4805,8 +4819,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入客户全称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Dc-NC-vrP">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="8aT-n2-cIy"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="8aT-n2-cIy"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="8aT-n2-cIy"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -4865,8 +4893,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入联系电话" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A3U-tF-DkK">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="lfp-it-9Rj"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="lfp-it-9Rj"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="88" y="16" width="279" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="lfp-it-9Rj"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -4925,8 +4967,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入客户编码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XHo-dT-ZW7">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="pVT-K6-I2O"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="pVT-K6-I2O"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="pVT-K6-I2O"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -5271,8 +5327,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DxO-5p-yeh">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="9Ba-0F-gHx"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="9Ba-0F-gHx"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="9Ba-0F-gHx"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -5331,8 +5401,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HGV-EJ-HrG">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="aij-7n-ZRI"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="aij-7n-ZRI"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="aij-7n-ZRI"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -7349,63 +7433,82 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7d7-hA-nY9">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g77-HX-Upw">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="UVf-Eg-j3N"/>
+                                                        <constraint firstAttribute="width" constant="42" id="wf5-5X-lnj"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入姓名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CuN-pt-DZh">
-                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="260" id="CvQ-ha-K7U"/>
-                                                    </constraints>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="CvQ-ha-K7U"/>
+                                                            <exclude reference="UVf-Eg-j3N"/>
+                                                            <exclude reference="wf5-5X-lnj"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="CvQ-ha-K7U"/>
+                                                            <include reference="UVf-Eg-j3N"/>
+                                                            <include reference="wf5-5X-lnj"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入姓名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9t0-Le-oI6">
+                                                    <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="8jO-ch-iS8">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="8jO-ch-iS8"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="8jO-ch-iS8"/>
                                                         </mask>
                                                     </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="7d7-hA-nY9" firstAttribute="leading" secondItem="WJO-d7-Axa" secondAttribute="leadingMargin" constant="8" id="3ti-xP-2es"/>
-                                                <constraint firstItem="CuN-pt-DZh" firstAttribute="top" secondItem="WJO-d7-Axa" secondAttribute="topMargin" constant="2" id="Eoi-We-3xU"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="CuN-pt-DZh" secondAttribute="trailing" constant="24" id="FUF-PD-RC1"/>
-                                                <constraint firstItem="7d7-hA-nY9" firstAttribute="centerY" secondItem="WJO-d7-Axa" secondAttribute="centerY" id="gWb-xQ-z6Z"/>
-                                                <constraint firstItem="CuN-pt-DZh" firstAttribute="leading" secondItem="7d7-hA-nY9" secondAttribute="trailing" constant="39" id="zYr-4b-qmF"/>
+                                                <constraint firstItem="g77-HX-Upw" firstAttribute="top" secondItem="WJO-d7-Axa" secondAttribute="topMargin" constant="6" id="1mw-Rk-ZL9"/>
+                                                <constraint firstItem="g77-HX-Upw" firstAttribute="leading" secondItem="WJO-d7-Axa" secondAttribute="leadingMargin" constant="7" id="Msd-mo-6ra"/>
+                                                <constraint firstItem="9t0-Le-oI6" firstAttribute="leading" secondItem="g77-HX-Upw" secondAttribute="trailing" constant="24" id="UEq-hB-EwZ"/>
+                                                <constraint firstItem="9t0-Le-oI6" firstAttribute="top" secondItem="WJO-d7-Axa" secondAttribute="topMargin" constant="2" id="hgq-di-izY">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9t0-Le-oI6" secondAttribute="trailing" constant="26" id="yc3-6S-EBS"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="7d7-hA-nY9"/>
-                                                    <exclude reference="CuN-pt-DZh"/>
+                                                    <exclude reference="g77-HX-Upw"/>
+                                                    <exclude reference="9t0-Le-oI6"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="Eoi-We-3xU"/>
-                                                    <exclude reference="FUF-PD-RC1"/>
-                                                    <exclude reference="zYr-4b-qmF"/>
-                                                    <exclude reference="3ti-xP-2es"/>
-                                                    <exclude reference="gWb-xQ-z6Z"/>
+                                                    <exclude reference="1mw-Rk-ZL9"/>
+                                                    <exclude reference="Msd-mo-6ra"/>
+                                                    <exclude reference="UEq-hB-EwZ"/>
+                                                    <exclude reference="hgq-di-izY"/>
+                                                    <exclude reference="yc3-6S-EBS"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
-                                                    <include reference="7d7-hA-nY9"/>
-                                                    <include reference="CuN-pt-DZh"/>
+                                                    <include reference="g77-HX-Upw"/>
+                                                    <include reference="9t0-Le-oI6"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="Eoi-We-3xU"/>
-                                                    <include reference="FUF-PD-RC1"/>
-                                                    <include reference="zYr-4b-qmF"/>
-                                                    <include reference="3ti-xP-2es"/>
-                                                    <include reference="gWb-xQ-z6Z"/>
+                                                    <include reference="1mw-Rk-ZL9"/>
+                                                    <include reference="Msd-mo-6ra"/>
+                                                    <include reference="UEq-hB-EwZ"/>
+                                                    <include reference="hgq-di-izY"/>
+                                                    <include reference="yc3-6S-EBS"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -7424,12 +7527,13 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入公司名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGE-Qb-UHn">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入公司名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kGE-Qb-UHn">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Qcc-cX-sZP"/>
+                                                        <constraint firstAttribute="height" constant="30" id="Qcc-cX-sZP">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="41"/>
+                                                        </constraint>
                                                     </constraints>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <variation key="default">
@@ -7445,9 +7549,13 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="kGE-Qb-UHn" firstAttribute="top" secondItem="nYH-r5-Wnp" secondAttribute="topMargin" constant="2" id="Fm5-h1-ibh"/>
+                                                <constraint firstItem="kGE-Qb-UHn" firstAttribute="top" secondItem="nYH-r5-Wnp" secondAttribute="topMargin" constant="2" id="Fm5-h1-ibh">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
                                                 <constraint firstAttribute="trailingMargin" secondItem="kGE-Qb-UHn" secondAttribute="trailing" constant="26" id="G4j-vH-aPq"/>
-                                                <constraint firstItem="kGE-Qb-UHn" firstAttribute="leading" secondItem="26Y-CO-aRh" secondAttribute="trailing" constant="37" id="Lzp-AZ-qDR"/>
+                                                <constraint firstItem="kGE-Qb-UHn" firstAttribute="leading" secondItem="26Y-CO-aRh" secondAttribute="trailing" constant="37" id="Lzp-AZ-qDR">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                </constraint>
                                                 <constraint firstItem="26Y-CO-aRh" firstAttribute="leading" secondItem="nYH-r5-Wnp" secondAttribute="leadingMargin" constant="8" id="TeZ-Di-KKr"/>
                                                 <constraint firstItem="26Y-CO-aRh" firstAttribute="centerY" secondItem="nYH-r5-Wnp" secondAttribute="centerY" id="gOs-Aw-ZgS"/>
                                             </constraints>
@@ -7536,10 +7644,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kam-EJ-AIm">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kam-EJ-AIm">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="7bp-hT-3HN"/>
+                                                        <constraint firstAttribute="height" constant="30" id="7bp-hT-3HN">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -7604,10 +7714,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-yP-LsN">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入座机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-yP-LsN">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="2D0-vs-I9f"/>
+                                                        <constraint firstAttribute="height" constant="30" id="2D0-vs-I9f">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -7672,10 +7784,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-fq-wOu">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入QQ号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-fq-wOu">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="8cR-h7-R2j"/>
+                                                        <constraint firstAttribute="height" constant="30" id="8cR-h7-R2j">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -7740,10 +7854,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sd7-AV-j02">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sd7-AV-j02">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="8dk-bx-dmy"/>
+                                                        <constraint firstAttribute="height" constant="30" id="8dk-bx-dmy">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -7808,10 +7924,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cuu-xq-Iho">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="备注" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cuu-xq-Iho">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="7dV-H9-KpO"/>
+                                                        <constraint firstAttribute="height" constant="30" id="7dV-H9-KpO">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -7881,6 +7999,15 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="_TF_Company" destination="kGE-Qb-UHn" id="Jd0-Tr-c3f"/>
+                        <outlet property="_TF_Email" destination="Sd7-AV-j02" id="mgb-i0-axI"/>
+                        <outlet property="_TF_Name" destination="9t0-Le-oI6" id="5kY-yp-aD1"/>
+                        <outlet property="_TF_Phone" destination="hlo-yP-LsN" id="12b-gn-Gtp"/>
+                        <outlet property="_TF_QQ" destination="3Zb-fq-wOu" id="MXF-he-KkW"/>
+                        <outlet property="_TF_Telephone" destination="kam-EJ-AIm" id="fJf-gD-CDN"/>
+                        <outlet property="_TF_other" destination="cuu-xq-Iho" id="4am-ht-a06"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6tE-5t-CKQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -8000,8 +8127,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xrE-Id-9bU">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="DDs-8M-rMA"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="DDs-8M-rMA"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="DDs-8M-rMA"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -8060,8 +8201,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dsc-7z-TaB">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="72J-cZ-aKR"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="72J-cZ-aKR"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="72J-cZ-aKR"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -8120,8 +8275,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ka8-9P-hAW">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="4Ee-7w-c2B"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4Ee-7w-c2B"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="88" y="16" width="279" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="4Ee-7w-c2B"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -8366,8 +8535,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pwy-kd-mQ7">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="I2C-W2-Bih"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="I2C-W2-Bih"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="88" y="16" width="279" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="I2C-W2-Bih"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -8430,8 +8613,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-he-44i">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="kKU-wb-udg"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="kKU-wb-udg"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="kKU-wb-udg"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -8490,8 +8687,22 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fE3-Hs-E5N">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="dp8-zt-mRf"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="dp8-zt-mRf"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="60" y="16" width="307" height="17"/>
+                                                        <mask key="constraints">
+                                                            <include reference="dp8-zt-mRf"/>
+                                                        </mask>
+                                                    </variation>
                                                 </textField>
                                             </subviews>
                                             <constraints>
