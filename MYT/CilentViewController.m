@@ -9,11 +9,14 @@
 #import "CilentViewController.h"
 #import "XNTabBarController.h"
 #import"Utility.h"
+#import "NetRequestManager.h"
 @interface CilentViewController ()
 {
     int  toIndex;
     NSMutableArray *data;//客户数据都在这儿
     int j;
+    
+    int clientId;
 }
 
 @end
@@ -79,7 +82,7 @@
                 [data addObject:[init objectAtIndex:i]];
             }
             [_tableview reloadData];
-            NSLog(@"%d",data.count);
+           // NSLog(@"%d",data.count);
 
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -106,6 +109,10 @@
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
+    
+    
+    //设置搜索框的代理
+    _findcust.delegate=self;
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
@@ -149,10 +156,22 @@
 }*/
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSString *find=[_findcust.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"pageNum"];//user_id
-    
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];//user_id
+    [parDic setValue:find forKey:@"cusname"];
+    [parDic setValue:@1 forKey:@"pageNum"];
+    [parDic setValue:@10 forKey:@"pageSize"];
+    [parDic setValue:nil forKey:@"province"];
+    [parDic setValue:nil forKey:@"city"];
+    [parDic setValue:nil forKey:@"district"];
+    [parDic setValue:@"N" forKey:@"isneed"];
+    [self searchClient:parDic];
+}
+
+
+-(void)searchClient:(NSDictionary*)parDic
+{
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/queryCuss.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
         NSArray *init=[responseObject objectForKey:@"list"];
@@ -166,12 +185,13 @@
         
         
         [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
         }];
     }];
-  
-    
+
+
 }
+
 - (void)loadMoreData
 {
     // 1.添加假数据
@@ -261,10 +281,14 @@
         UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
         [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnto];
+        btnto.tag=190;
         [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
     }
         NSDictionary* customer=[data objectAtIndex:[indexPath row]];
-        NSString* custo_id=[customer objectForKey:@"id"];//获取客户id
+        int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
+    
+        ((UIButton*)[cell.contentView viewWithTag:190]).tag=custo_id;
+    
         NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
         ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
         NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
@@ -330,10 +354,14 @@
     return 0;
 }
 
+//点击按钮到客户详情
 -(void)clickToTaba:(id)sender
 {
+   UIButton* btn =  (UIButton*)sender;
+    clientId=(int)btn.tag;
     toIndex=0;
     [self performSegueWithIdentifier:@"toTab" sender:nil];
+    [NetRequestManager sharedInstance].clientId=clientId;
 }
 
 -(void)addContactsClick:(id)sender
@@ -371,6 +399,8 @@
 }
 
 
+
+
 //添加客户按钮
 - (IBAction)addClientClick:(id)sender {
     
@@ -379,4 +409,7 @@
 //位置按钮
 - (IBAction)locationClick:(id)sender {
 }
+
+
+
 @end
