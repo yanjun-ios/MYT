@@ -212,29 +212,35 @@
 - (void)loadMoreData
 {
     // 1.添加假数据
-    j++;
-    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-    [parDic setValue:@"5" forKey:@"pageSize"];
-    NSString *stringJ = [NSString stringWithFormat:@"%d",j];
-    [parDic setValue:@"1" forKey:@"pageNum"];
-     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {        
-        NSLog(@"%@",responseObject);
-        NSArray *init=[responseObject objectForKey:@"list"];
-        for (int i = 0; i<init.count; i++) {
-            [data addObject:[init objectAtIndex:i]];
-        }
-         [_tableview reloadData];
-        //NSLog(@"%d",data.count);
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        
-        [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+    if (j<5) {
+        j++;
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:@"5" forKey:@"pageSize"];
+        NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+        [parDic setValue:stringJ forKey:@"pageNum"];
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSArray *init=[responseObject objectForKey:@"list"];
+            for (int i = 0; i<init.count; i++) {
+                [data addObject:[init objectAtIndex:i]];
+            }
+            [_tableview reloadData];
+            //NSLog(@"%d",data.count);
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            }];
         }];
-    }];
+    }
+    else
+    {
+         [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
 
 
     
