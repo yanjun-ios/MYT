@@ -1,26 +1,28 @@
 //
-//  TradingViewController.m
+//  TradingLogViewController.m
 //  MYT
 //
-//  Created by 熊凯 on 16/1/10.
+//  Created by 熊凯 on 16/1/11.
 //  Copyright © 2016年 YunRui. All rights reserved.
 //
 
-#import "TradingViewController.h"
+#import "TradingLogViewController.h"
 #import "NetRequestManager.h"
 #import "QQRequestManager.h"
-@interface TradingViewController ()
+#import "MJRefresh.h"
+@interface TradingLogViewController ()
 {
     int clientId;
     int num;
     NSMutableArray* arry;
+
 }
 @end
 
-@implementation TradingViewController
+@implementation TradingLogViewController
 
 - (void)viewDidLoad {
-    self.title=@"交易记录";
+    self.title=@"业务日志";
     arry=[[NSMutableArray alloc]init];
     num=1;
     clientId=[NetRequestManager sharedInstance].clientId;
@@ -29,6 +31,9 @@
     [_tableview.mj_footer beginRefreshing];
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    [super viewDidLoad];
+
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -42,10 +47,11 @@
     [parDic setObject:cusid forKey:@"cusid"];
     [parDic setObject:@5 forKey:@"pageSize"];
     [parDic setObject:NUM forKey:@"pageNum"];
+    //接口有问题
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusbusinessList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         num++;
         NSDictionary* dic=responseObject;
-        NSArray* trading_record=[dic objectForKey:@"trading_record"];
+        NSArray* trading_record=[dic objectForKey:@"businessLog"];
         [arry addObjectsFromArray:trading_record];
         [_tableview reloadData];
         [_tableview.mj_footer endRefreshing];
@@ -64,66 +70,51 @@
     if(!cell)
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-        //交易时间
-        UILabel* trading_dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 20)];
+        //业务日志
+        UILabel* trading_dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
         trading_dlvdate.font=[UIFont systemFontOfSize:14];
         trading_dlvdate.textColor=[UIColor darkGrayColor];
-        trading_dlvdate.text=@"交易时间";
+        trading_dlvdate.text=@"拜访时间";
         [cell.contentView addSubview:trading_dlvdate];
-        //交易时间lab
-        UILabel* dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(105, 10, 200, 20)];
+        //拜访时间lab
+        UILabel* dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(100, 10, 200, 20)];
         dlvdate.font=[UIFont systemFontOfSize:14];
         dlvdate.textColor=[UIColor darkGrayColor];
         dlvdate.tag=1000;
         [cell.contentView addSubview:dlvdate];
         
-        //订单编码
-        UILabel* trading_obdcode=[[UILabel alloc]initWithFrame:CGRectMake(20, 30, 100, 20)];
+        //接待人
+        UILabel* trading_obdcode=[[UILabel alloc]initWithFrame:CGRectMake(20, 40, 100, 20)];
         trading_obdcode.font=[UIFont systemFontOfSize:14];
         trading_obdcode.textColor=[UIColor darkGrayColor];
-        trading_obdcode.text=@"订单编码";
-         [cell.contentView addSubview:trading_obdcode];
+        trading_obdcode.text=@"接待人";
+        [cell.contentView addSubview:trading_obdcode];
         
-        //订单编码lab
-        UILabel* obdcode=[[UILabel alloc]initWithFrame:CGRectMake(105, 30, 300, 20)];
+        //接待人lab
+        UILabel* obdcode=[[UILabel alloc]initWithFrame:CGRectMake(105, 40, 300, 20)];
         obdcode.font=[UIFont systemFontOfSize:14];
         obdcode.textColor=[UIColor darkGrayColor];
         obdcode.tag=1001;
         [cell.contentView addSubview:obdcode];
-        
-        //金额
-        UILabel* trading_money=[[UILabel alloc]initWithFrame:CGRectMake(20, 60, 200, 20)];
-        trading_money.font=[UIFont systemFontOfSize:14];
-        trading_money.textColor=[UIColor redColor];
-        trading_money.text=@"交易金额";
-         [cell.contentView addSubview:trading_money];
-        //金额lab
-        UILabel* money=[[UILabel alloc]initWithFrame:CGRectMake(105, 60, 100, 20)];
-        money.font=[UIFont systemFontOfSize:14];
-        money.textColor=[UIColor redColor];
-        money.tag=1002;
-        [cell.contentView addSubview:money];
     }
     
-//    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_dlvdate"];
-//     ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_obdcode"];
-//     ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_money"];
-        ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2012-12-31";
-         ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"32b425h4u5b5b4u3";
-    ((UILabel*)[cell.contentView viewWithTag:1002]).text=@"1000元";
-
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"visite_time"];
+         ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"receiver"];
+//    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2012-12-31";
+//    ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"张娟丽";
+    
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return [arry count];
-    return 10;
+    return [arry count];
+   // return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 80;
 }
 
 - (void)didReceiveMemoryWarning {
