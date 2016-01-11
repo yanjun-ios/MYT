@@ -22,6 +22,7 @@ static NetRequestManager * sharedInstance = nil;
     
     NSString *jsonString = nil;
     NSError *error;
+    NSLog(@"%@",object);
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object
                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
                                                          error:&error];
