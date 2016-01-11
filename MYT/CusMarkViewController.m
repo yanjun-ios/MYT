@@ -28,6 +28,12 @@
 }
 
 - (void)viewDidLoad {
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+
      [super viewDidLoad];
     self.title=@"备注列表";
     arry=[[NSMutableArray alloc]init];
@@ -76,38 +82,6 @@
     if(!cell)
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-//        //姓名
-//        UILabel* trading_dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 50, 20)];
-//        trading_dlvdate.font=[UIFont systemFontOfSize:14];
-//        trading_dlvdate.textColor=[UIColor darkGrayColor];
-//        trading_dlvdate.tag=1000;
-//        [cell.contentView addSubview:trading_dlvdate];
-//        //电话
-//        UILabel* dlvdate=[[UILabel alloc]initWithFrame:CGRectMake(80, 10, 200, 20)];
-//        dlvdate.font=[UIFont systemFontOfSize:14];
-//        dlvdate.textColor=[UIColor darkGrayColor];
-//        dlvdate.tag=1001;
-//        [cell.contentView addSubview:dlvdate];
-//        
-//        //时间
-//        UILabel* trading_obdcode=[[UILabel alloc]initWithFrame:CGRectMake(20, 40, 150, 20)];
-//        trading_obdcode.font=[UIFont systemFontOfSize:14];
-//        trading_obdcode.textColor=[UIColor darkGrayColor];
-//        trading_obdcode.tag=1002;
-//        [cell.contentView addSubview:trading_obdcode];
-//        
-//        //通话时长
-//        UILabel* talk_time=[[UILabel alloc]initWithFrame:CGRectMake(180, 40, 70, 20)];
-//        talk_time.font=[UIFont systemFontOfSize:14];
-//        talk_time.textColor=[UIColor darkGrayColor];
-//        talk_time.text=@"通话时长：";
-//        [cell.contentView addSubview:talk_time];
-//        //通话时间
-//        UILabel* obdcode=[[UILabel alloc]initWithFrame:CGRectMake(260, 40, 60, 20)];
-//        obdcode.font=[UIFont systemFontOfSize:14];
-//        obdcode.textColor=[UIColor darkGrayColor];
-//        obdcode.tag=1003;
-//        [cell.contentView addSubview:obdcode];
     }
     
     ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2013-23-89";
