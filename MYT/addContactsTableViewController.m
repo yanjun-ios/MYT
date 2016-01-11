@@ -51,7 +51,7 @@
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
                                  initWithTitle:@"完成"
-                                 
+
                                  style:UIBarButtonItemStyleDone
                                  
                                  target:self

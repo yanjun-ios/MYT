@@ -21,6 +21,12 @@
 @implementation CallLogViewController
 
 - (void)viewDidLoad {
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+
     self.title=@"通话记录";
     arry=[[NSMutableArray alloc]init];
     num=1;

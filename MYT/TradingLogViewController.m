@@ -22,6 +22,12 @@
 @implementation TradingLogViewController
 
 - (void)viewDidLoad {
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+
     self.title=@"业务日志";
     arry=[[NSMutableArray alloc]init];
     num=1;

@@ -20,7 +20,13 @@
 @implementation TradingViewController
 
 - (void)viewDidLoad {
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     self.title=@"交易记录";
+    
     arry=[[NSMutableArray alloc]init];
     num=1;
     clientId=[NetRequestManager sharedInstance].clientId;
@@ -118,7 +124,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return [arry count];
-    return 10;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
