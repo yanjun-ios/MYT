@@ -25,10 +25,36 @@
     [self.tableView setTableFooterView:view];
     //设置背景颜色
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@"完成"
+                                 
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;//这儿需要load和appear都写 我也不知道为啥 否则bug
+
 
 }
 
 - (void)viewDidLoad {
+    self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@"完成"
+                                 
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
     __TF_Company.delegate=self;
     __TF_Email.delegate=self;
     __TF_Name.delegate=self;
@@ -39,19 +65,7 @@
     NSLog(@"%@",self.navigationController);
     UIImage *searchimage=[UIImage imageNamed:@"ok"];
  //   UIBarButtonItem *barbtn=[[UIBarButtonItem alloc] initWithImage:searchimage style:UIBarButtonItemStylePlain target:self action:@selector(finishclick)];
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
-                                 
-                                 initWithTitle:@"OK"
-                                 
-                                 style:UIBarButtonItemStyleBordered
-                                 
-                                 target:self
-                                 
-                                 action:@selector(finishclick)];
-    //barbtn.image=searchimage;
-    //self.navigationItem.rightBarButtonItem=barbtn;
-    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
-  
+    
     //UIBarButtonItem *btn=[[UIBarButtonItem alloc]init];
     //btn=self.navigationItem.rightBarButtonItem;
     //[btn ];

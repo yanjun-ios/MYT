@@ -13,14 +13,43 @@
 @end
 
 @implementation ChangeinfoTableViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@""
+                                 
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
+    
+   
+}
 - (void)viewDidLoad {
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@""
+                                 
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
     _TF_ChuanZ.delegate=self;
     _TF_name.delegate=self;
     _TF_need.delegate=self;
     _TF_phone.delegate=self;
     _TF_singlename.delegate=self;
     _TF_Website.delegate=self;
+    
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -33,6 +62,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)finishclick
+{
+    NSLog(@"俺是修改联系人");
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
