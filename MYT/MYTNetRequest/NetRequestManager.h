@@ -14,4 +14,5 @@
  *  工具类单例
  */
 + (NetRequestManager *)sharedInstance;
+-(NSString*)DataToJsonString:(id)object;
 @end

@@ -174,11 +174,15 @@
     [parDic setValue:find forKey:@"cusname"];
     [parDic setValue:@1 forKey:@"pageNum"];
     [parDic setValue:@10 forKey:@"pageSize"];
-    [parDic setValue:nil forKey:@"province"];
-    [parDic setValue:nil forKey:@"city"];
-    [parDic setValue:nil forKey:@"district"];
-    [parDic setValue:@"N" forKey:@"isneed"];
-    [self searchClient:parDic];
+    [parDic setValue:@"" forKey:@"province"];
+    [parDic setValue:@"" forKey:@"city"];
+    [parDic setValue:@"" forKey:@"district"];
+    [parDic setValue:@"ALL" forKey:@"isneed"];
+    NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:parDic];
+    
+    NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
+    [DIC setObject:parStr forKey:@"paraMap"];
+    [self searchClient:DIC];
 }
 
 
@@ -187,6 +191,7 @@
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/queryCuss.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
         NSArray *init=[responseObject objectForKey:@"list"];
+        [data removeAllObjects];
         for (int i = 0; i<init.count; i++) {
             [data addObject:[init objectAtIndex:i]];
         }

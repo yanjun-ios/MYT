@@ -21,13 +21,20 @@
 
 @implementation CusMarkViewController
 
+-(void)viewWillLayoutSubviews
+{
+   
+
+}
+
 - (void)viewDidLoad {
-    self.title=@"通话记录";
+     [super viewDidLoad];
+    self.title=@"备注列表";
     arry=[[NSMutableArray alloc]init];
     num=1;
     clientId=[NetRequestManager sharedInstance].clientId;
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loaData)];
-    _tableview.mj_footer.automaticallyHidden = NO;
+    _tableview.mj_footer.automaticallyHidden =YES;
     [_tableview.mj_footer beginRefreshing];
     _tableview.delegate=self;
     _tableview.dataSource=self;
@@ -36,7 +43,6 @@
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
-    [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 -(void)loaData
@@ -48,18 +54,18 @@
     [parDic setObject:cusid forKey:@"cusid"];
     [parDic setObject:@5 forKey:@"pageSize"];
     [parDic setObject:NUM forKey:@"pageNum"];
-    //获取备注列表的接口没有
-//    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusCallLogList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+   // 获取备注列表的接口没有
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusCallLogList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
 //        num++;
 //        NSDictionary* dic=responseObject;
 //        NSArray* trading_record=[dic objectForKey:@"cus_remark"];
 //        [arry addObjectsFromArray:trading_record];
-//        [_tableview reloadData];
-//        [_tableview.mj_footer endRefreshing];
-//    
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        
-//    }];
+        [_tableview reloadData];
+        [_tableview.mj_footer endRefreshing];
+    
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
 }
 //taleview代理方法
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +119,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return [arry count];
-        return 10;
+        return 5;
 }
 
 
