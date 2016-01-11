@@ -7,9 +7,12 @@
 //
 
 #import "addContactsTableViewController.h"
+#import "NetRequestManager.h"
+#import "QQRequestManager.h"
 @interface addContactsTableViewController ()
 {
     BOOL bKeyBoardHide;
+     NSMutableDictionary* addcusjson;
 }
 @end
 
@@ -42,6 +45,8 @@
 }
 
 - (void)viewDidLoad {
+    addcusjson=[[NSMutableDictionary alloc]init];
+    _clientId= [NetRequestManager sharedInstance].clientId;
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
@@ -93,8 +98,51 @@
 }
 
 -(void)finishclick
+{ if (__TF_Company.text&&__TF_Email.text&&__TF_Name.text&&__TF_other.text&&__TF_Phone.text&&__TF_QQ.text&&__TF_Telephone) {
+    NSString *clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+    [addcusjson setObject:__TF_Name.text forKey:@"contactsName"];
+    [addcusjson setObject:__TF_Email.text forKey:@"email"];
+    [addcusjson setObject:__TF_Telephone.text forKey:@"mobilePhone"];
+    [addcusjson setObject:__TF_QQ.text forKey:@"qq"];
+    [addcusjson setObject:@"男" forKey:@"sex"];
+    [addcusjson setObject:@".." forKey:@"remark"];//经度
+    [addcusjson setObject:__TF_Phone.text forKey:@"phone"];//纬度
+    [addcusjson setObject:clientidstr forKey:@"cusid"];
+    NSLog(@"%@",clientidstr);
+    [addcusjson setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    
+    NSString*  datastr=[[NetRequestManager sharedInstance]DataToJsonString:addcusjson];
+    NSMutableDictionary *pir=[[NSMutableDictionary alloc]init];
+    [pir setObject:datastr forKey:@"paraMap"];
+    
+    [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addContacts.action"] parameters:pir showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",datastr);
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+        }];
+        if([responseObject objectForKey:@"status"])
+        {
+            /*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:NO];
+                // 2秒后异步执行这里的代码...
+                
+            });*/
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"添加失败"];
+        }];
+    }];
+ 
+}
+else
 {
-    NSLog(@"俺是添加联系人");
+    [SVProgressHUD showSuccessWithStatus:@"请填写完信息再提交"];
+}
+
 }
 
 - (void)didReceiveMemoryWarning {

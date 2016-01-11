@@ -71,9 +71,9 @@
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqual:@"cilentmanage"]) {
-       CilentViewController * cilent=segue.destinationViewController;
-        cilent.ifrefresh=YES;
-    }
+    //if ([segue.identifier isEqual:@"cilentmanage"]) {
+     //  CilentViewController * cilent=segue.destinationViewController;
+       // cilent.ifrefresh=YES;
+    //}
 }
 @end
