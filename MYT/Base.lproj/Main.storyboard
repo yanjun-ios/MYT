@@ -191,6 +191,9 @@
                                 <state key="normal" title="登陆">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="40" y="578" width="320" height="51"/>
+                                </variation>
                                 <connections>
                                     <action selector="loginInto:" destination="okU-J7-ZtE" eventType="touchUpInside" id="Sad-J1-LY9"/>
                                 </connections>
@@ -338,7 +341,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Mzv-WY-uGE" kind="push" id="S5d-Fy-frG"/>
+                                    <action selector="click_put:" destination="yOu-zh-Qhb" eventType="touchUpInside" id="BTc-AN-Xdt"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="入库提醒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPE-nH-fIs">
@@ -605,6 +608,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="ga0-8n-Gav" kind="push" id="peS-34-2fH"/>
+                        <segue destination="Mzv-WY-uGE" kind="push" identifier="cilentmanage" id="NfW-5C-1Pu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3Q-JZ-Vys" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4537,7 +4541,8 @@
                                                 <exclude reference="zl6-wy-76c"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="79" y="15" width="244" height="21"/>
                                             <mask key="constraints">
                                                 <include reference="zl6-wy-76c"/>
                                             </mask>
@@ -6312,6 +6317,9 @@
                                                 <include reference="5hP-VZ-Ur0"/>
                                                 <include reference="iGw-oc-X4q"/>
                                             </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="192" y="13" width="1" height="30"/>
                                         </variation>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGS-Ob-yZ4">

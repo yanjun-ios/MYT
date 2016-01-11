@@ -32,7 +32,11 @@
 @implementation CilentViewController
 -(void)viewDidAppear:(BOOL)animated
 {
-    [_tableview reloadData];
+    if (_ifrefresh) {
+        [_tableview reloadData];
+        
+    }
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -50,7 +54,7 @@
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
     [self initinfor];
-    [_tableview reloadData];
+   // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
    
     
@@ -89,8 +93,8 @@
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
-            [_tableview reloadData];
-           // NSLog(@"%d",data.count);
+           // [_tableview reloadData];
+            NSLog(@"%@",data);
 
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -101,7 +105,7 @@
         }];
    }
    
-   [_tableview.mj_footer beginRefreshing];
+  // [_tableview.mj_footer beginRefreshing];
     
 }
 - (void)viewDidLoad {
@@ -292,7 +296,10 @@
         btnto.tag=190;
         [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
     }
-        NSDictionary* customer=[data objectAtIndex:[indexPath row]];
+        NSDictionary* customer=[data objectAtIndex:[indexPath section]];
+  //  NSString *d=[NSString stringWithFormat:@"%ld",(long)[indexPath row]];
+    
+  //  NSLog(@"%@",d);
         int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
     
         ((UIButton*)[cell.contentView viewWithTag:190]).tag=custo_id;
@@ -300,6 +307,7 @@
         NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
         ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
         NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
+    NSLog(@"%@",contacts);
         NSString* contacts_phone,*contacts_name,*contacts_id;
         int jgx=0;
         //多的话默认显示前3个
