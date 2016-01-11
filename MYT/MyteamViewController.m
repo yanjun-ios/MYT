@@ -80,7 +80,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 - (void) niDropDownDelegateMethod: (NIDropDown *) sender {
-    [self rel];
+    UIButton* btn=sender.btnSender;
+    NSString* tempStr = btn.titleLabel.text;
+    switch (btn.tag) {
+        case 110:
+            //点击年
+            break;
+        case 111:
+            //点击起始月份
+            
+            break;
+        case 112:
+            //点击结束月份
+            break;
+        default:
+            break;
+    }        [self rel];
 }
 
 -(void)rel{

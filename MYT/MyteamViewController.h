@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NIDropDown.h"
-@interface MyteamViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MyteamViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NIDropDownDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview1;//主tableview
 - (IBAction)monthclickone:(id)sender;
 - (IBAction)monthclicktwo:(id)sender;
