@@ -9,12 +9,15 @@
 #import "addTableViewController.h"
 #import "Z_NetRequestManager.h"
 #import <SVProgressHUD.h>
+#import <AFNetworking.h>
 @interface addTableViewController ()
 {
     UIButton* btnSelected;
     NSString* lati;
     NSString* longi;
     NSMutableDictionary* addcusjson;
+    NSDictionary* dic;
+    int qiyeorperson;
 }
 @end
 
@@ -37,6 +40,7 @@
 
 - (void)viewDidLoad {
     //消除多余空白行
+    qiyeorperson=1;
     addcusjson=[[NSMutableDictionary alloc]init];
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
@@ -97,6 +101,7 @@
 }
 
 - (IBAction)click_qiye:(id)sender {
+    qiyeorperson=1;
     btnSelected.selected=NO;
     [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
     _btn_qiye.selected=YES;
@@ -106,57 +111,61 @@
 }
 
 - (IBAction)click_finish:(id)sender {
-    if (_TF_CusName.text&&_TF_CusTtName.text&&_TF_MobilePhone.text&&lati&&longi&&_TF_website.text&&_TF_CusCode&&_TF_Phone) {
-        [addcusjson setObject:lati forKey:@"cusName"];
-        [addcusjson setObject:lati forKey:@"cusCode"];
-        [addcusjson setObject:lati forKey:@"cusTtName"];
-        [addcusjson setObject:lati forKey:@"mobilePhone"];
+    if (_TF_CusName.text&&_TF_CusTtName.text&&_TF_MobilePhone.text&&lati&&longi&&_TF_website.text&&_TF_CusCode.text&&_TF_Phone.text) {
+        [addcusjson setObject:_TF_CusName.text forKey:@"cusName"];
+        [addcusjson setObject:_TF_CusCode.text forKey:@"cusCode"];
+        [addcusjson setObject:_TF_MobilePhone.text forKey:@"cusTtName"];
+       [addcusjson setObject:_TF_MobilePhone.text forKey:@"mobilePhone"];
+         [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
         [addcusjson setObject:lati forKey:@"longitude"];//经度
         [addcusjson setObject:longi forKey:@"latitude"];//纬度
-        [addcusjson setObject:lati forKey:@"province"];
-        [addcusjson setObject:lati forKey:@"city"];
-        [addcusjson setObject:lati forKey:@"district"];
-        [addcusjson setObject:lati forKey:@"website"];
-        [addcusjson setObject:lati forKey:@"type"];
-        [addcusjson setObject:lati forKey:@"phone"];
-        /*[[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCus.action"] parameters:addcusjson showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"%@",responseObject);
-           
+        [addcusjson setObject:@"0" forKey:@"province"];
+        [addcusjson setObject:@"0" forKey:@"city"];
+        [addcusjson setObject:@"0" forKey:@"district"];
+        [addcusjson setObject:_TF_website.text forKey:@"website"];
+        if (qiyeorperson==1) {
+            [addcusjson setObject:@"1" forKey:@"type"];
+        }
+        else
+        {
+             [addcusjson setObject:@"0" forKey:@"type"];
+        }
+        //[addcusjson setObject:@"0" forKey:@"remark"];
+        //[addcusjson setObject:@"0" forKey:@"memcCode"];
+    //[addcusjson setObject:@"0" forKey:@"address"];
+    //[addcusjson setObject:@"0" forKey:@"bank"];
+    //[addcusjson setObject:@"0" forKey:@"account"];
+        //有数据时SET这个[[NSUserDefaults standardUserDefaults]objectForKey:@"username"]
+    [addcusjson setObject:@"2" forKey:@"userid"];
+     
+             NSData *data = [NSJSONSerialization dataWithJSONObject:addcusjson options:NSJSONWritingPrettyPrinted error:nil];
+        NSString*  datastr=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+           // dic=[[NSDictionary alloc]initWithObjectsAndKeys:datastr,@"paraMap", nil];
+    NSMutableDictionary *pir=[[NSMutableDictionary alloc]init];
+    [pir setObject:datastr forKey:@"paraMap"];
+    
+        [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCus.action"] parameters:pir showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@",datastr);
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+            }];
+            if([responseObject objectForKey:@"status"])
+            {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:NO];
+                // 2秒后异步执行这里的代码...
+                
+            });
+            }
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
             
             [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                [SVProgressHUD showErrorWithStatus:@"添加失败"];
             }];
-        }];*/
-        // 1.创建请求
-             NSURL *url = [NSURL URLWithString:[SEVER_URL stringByAppendingString:@"yd/addCus.action"]];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-             request.HTTPMethod = @"POST";
-        
-             // 2.设置请求头
-             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        
-             // 3.设置请求体
-        
-        NSLog(@"%@",addcusjson);
-         //    NSData --> NSDictionary
-             // NSDictionary --> NSData
-             NSData *data = [NSJSONSerialization dataWithJSONObject:addcusjson options:NSJSONWritingPrettyPrinted error:nil];
-             request.HTTPBody = data;
-                
-             // 4.发送请求
-             [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                NSDictionary* jsonDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                 NSLog(@"%@",[jsonDic objectForKey:@"message"]);
-
-            }];
-        if (1) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:NO];
-            });
-            }
+        }];
+       
     }
     else
     {
@@ -166,7 +175,7 @@
 }
 
 - (IBAction)click_person:(id)sender {
-    
+    qiyeorperson=0;
     btnSelected.selected=NO;
     [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
     _btn_person.selected=YES;

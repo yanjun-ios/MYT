@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "ButtomView.h"
 #import "RemindViewController.h"
+#import "CilentViewController.h"
 @interface MainViewController ()
 
 @end
@@ -24,7 +25,7 @@
 
 
 - (void)viewDidLoad {
-
+    [self.navigationItem setHidesBackButton:YES];
     self.navigationController.navigationBarHidden=NO;
     self.navigationItem.leftItemsSupplementBackButton=NO;
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -66,6 +67,13 @@
 */
 
 - (IBAction)click_put:(id)sender {
-   
+    [self performSegueWithIdentifier:@"cilentmanage" sender:self];
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //if ([segue.identifier isEqual:@"cilentmanage"]) {
+     //  CilentViewController * cilent=segue.destinationViewController;
+       // cilent.ifrefresh=YES;
+    //}
 }
 @end

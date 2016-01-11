@@ -15,4 +15,24 @@ static NetRequestManager * sharedInstance = nil;
     }
     return sharedInstance;
 }
+
+/////对象转json，返回json格式字符串
+-(NSString*)DataToJsonString:(id)object
+{
+    
+    NSString *jsonString = nil;
+    NSError *error;
+    NSLog(@"%@",object);
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return jsonString;
+}
+
+
 @end

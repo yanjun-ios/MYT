@@ -32,11 +32,15 @@
 @implementation CilentViewController
 -(void)viewDidAppear:(BOOL)animated
 {
-    [_tableview reloadData];
+  
+        [_tableview reloadData];
+    
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    
     [self.viewDeckController closeRightView];
     [self.viewDeckController setPanningMode:IIViewDeckNoPanning];
 }
@@ -50,7 +54,7 @@
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
     [self initinfor];
-    [_tableview reloadData];
+   // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
    
     
@@ -89,8 +93,8 @@
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
-            [_tableview reloadData];
-           // NSLog(@"%d",data.count);
+           // [_tableview reloadData];
+            NSLog(@"%@",data);
 
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -101,7 +105,7 @@
         }];
    }
    
-   [_tableview.mj_footer beginRefreshing];
+  // [_tableview.mj_footer beginRefreshing];
     
 }
 - (void)viewDidLoad {
@@ -170,11 +174,15 @@
     [parDic setValue:find forKey:@"cusname"];
     [parDic setValue:@1 forKey:@"pageNum"];
     [parDic setValue:@10 forKey:@"pageSize"];
-    [parDic setValue:nil forKey:@"province"];
-    [parDic setValue:nil forKey:@"city"];
-    [parDic setValue:nil forKey:@"district"];
-    [parDic setValue:@"N" forKey:@"isneed"];
-    [self searchClient:parDic];
+    [parDic setValue:@"" forKey:@"province"];
+    [parDic setValue:@"" forKey:@"city"];
+    [parDic setValue:@"" forKey:@"district"];
+    [parDic setValue:@"ALL" forKey:@"isneed"];
+    NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:parDic];
+    
+    NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
+    [DIC setObject:parStr forKey:@"paraMap"];
+    [self searchClient:DIC];
 }
 
 
@@ -183,6 +191,7 @@
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/queryCuss.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
         NSArray *init=[responseObject objectForKey:@"list"];
+        [data removeAllObjects];
         for (int i = 0; i<init.count; i++) {
             [data addObject:[init objectAtIndex:i]];
         }
@@ -203,29 +212,35 @@
 - (void)loadMoreData
 {
     // 1.添加假数据
-    j++;
-    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-    [parDic setValue:@"5" forKey:@"pageSize"];
-    NSString *stringJ = [NSString stringWithFormat:@"%d",j];
-    [parDic setValue:@"1" forKey:@"pageNum"];
-     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {        
-        NSLog(@"%@",responseObject);
-        NSArray *init=[responseObject objectForKey:@"list"];
-        for (int i = 0; i<init.count; i++) {
-            [data addObject:[init objectAtIndex:i]];
-        }
-         [_tableview reloadData];
-        //NSLog(@"%d",data.count);
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        
-        [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+    if (j<5) {
+        j++;
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:@"5" forKey:@"pageSize"];
+        NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+        [parDic setValue:stringJ forKey:@"pageNum"];
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSArray *init=[responseObject objectForKey:@"list"];
+            for (int i = 0; i<init.count; i++) {
+                [data addObject:[init objectAtIndex:i]];
+            }
+            [_tableview reloadData];
+            //NSLog(@"%d",data.count);
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            }];
         }];
-    }];
+    }
+    else
+    {
+         [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
 
 
     
@@ -283,6 +298,7 @@
         UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
         [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnadd];
+        btnadd.tag=200;
         [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
         
         //创建客户详情按钮
@@ -292,14 +308,18 @@
         btnto.tag=190;
         [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
     }
-        NSDictionary* customer=[data objectAtIndex:[indexPath row]];
+        NSDictionary* customer=[data objectAtIndex:[indexPath section]];
+  //  NSString *d=[NSString stringWithFormat:@"%ld",(long)[indexPath row]];
+    
+  //  NSLog(@"%@",d);
         int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
     
         ((UIButton*)[cell.contentView viewWithTag:190]).tag=custo_id;
-    
+        ((UIButton*)[cell.contentView viewWithTag:200]).tag=custo_id+2000;//添加联系人tag为客户id+2000
         NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
         ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
         NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
+    NSLog(@"%@",contacts);
         NSString* contacts_phone,*contacts_name,*contacts_id;
         int jgx=0;
         //多的话默认显示前3个
@@ -308,17 +328,19 @@
                 NSDictionary * contact=[contacts objectAtIndex:i];
                 contacts_phone=[contact objectForKey:@"CONTACTS_PHONE"];
                 contacts_name=[contact objectForKey:@"CONTACTS_NAME"];
-                
                 contacts_id=[contact objectForKey:@"CONTACTS_ID"];
-                int jgx=0;
-                UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(0, 60, 70, 25)];
-                [btn_contact addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
-                [btn_contact.titleLabel setFont:[UIFont systemFontOfSize:12]];
                 
+                UIButton * btn_contact=[[UIButton alloc]initWithFrame:CGRectMake(15+jgx, 60, 70, 25)];
+                [btn_contact addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
+                btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
+                [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
-                btn_contact.tag=[indexPath row]*100+i;
-                jgx=+90;
+                [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
+                int phonenumber=((NSNumber*)contacts_phone).intValue;
+                btn_contact.tag=phonenumber;
+                //[indexPath row]*100+i;
+                jgx=jgx+90;
                 [cell.contentView addSubview:btn_contact];
             }
         }
@@ -340,7 +362,7 @@
                 int phonenumber=((NSNumber*)contacts_phone).intValue;
                 btn_contact.tag=phonenumber;
                 //[indexPath row]*100+i;
-                jgx=+90;
+                jgx=jgx+90;
                 [cell.contentView addSubview:btn_contact];
             }
         }
@@ -430,13 +452,17 @@
    UIButton* btn =  (UIButton*)sender;
     clientId=(int)btn.tag;
     toIndex=0;
-    [self performSegueWithIdentifier:@"toTab" sender:nil];
     [NetRequestManager sharedInstance].clientId=clientId;
+    [self performSegueWithIdentifier:@"toTab" sender:nil];
+   
 }
 
 -(void)addContactsClick:(id)sender
 {
+    UIButton* btn =  (UIButton*)sender;
+    clientId=(int)btn.tag-2000;
     toIndex=2;
+    [NetRequestManager sharedInstance].clientId=clientId;
     [self performSegueWithIdentifier:@"toTab" sender:nil];
     
 }

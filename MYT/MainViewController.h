@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+//ok
 @interface MainViewController : UIViewController
 - (IBAction)click_put:(id)sender;
 
