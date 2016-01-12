@@ -17,5 +17,6 @@
 -(NSDictionary*)getClientList:(NSDictionary *)paraDic;
 -(void)getlongandlati;
 -(NSDictionary *)getlongla;
--(NSDictionary *)postJson:(NSDictionary *)paradic url:(NSString*)url;
+-(NSDictionary*)getoderDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end userId:(NSString*)userid;
+
 @end

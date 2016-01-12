@@ -57,6 +57,7 @@
     _TF_website.delegate=self;
     btnSelected=_btn_qiye;//默认为企业
   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Getlocation:) name:@"coordinate"  object:nil];
     [super viewDidLoad];
     
 }
@@ -82,8 +83,19 @@
 {
     self.tableView.frame=CGRectMake(0, 60, ScreenWidth, ScreenHeight-50);
 }
+-(void)Getlocation:(NSNotification *)aNoti
+ {
+    // 通知传值
+    NSDictionary *location = [aNoti userInfo];
+     lati=[location objectForKey:@"lati"];
+     longi=[location objectForKey:@"longi"];
+     NSLog(@"%@,%@",lati,longi);
+     _locati.text=[NSString stringWithFormat:@"纬度%@，经度%@",lati,longi];
+     [SVProgressHUD showSuccessWithStatus:@"获取位置成功"];
+    
+}
 - (IBAction)Click_GetLocation:(id)sender {
-    [[Z_NetRequestManager sharedInstance]getlongandlati];
+   /* [[Z_NetRequestManager sharedInstance]getlongandlati];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
         
@@ -95,7 +107,8 @@
         
         
     });//得到经纬度得时间会有延迟 详情见map方法
-
+*/
+    [self performSegueWithIdentifier:@"getlocation" sender:self];
     
     //
 }
@@ -111,7 +124,9 @@
 }
 
 - (IBAction)click_finish:(id)sender {
-    if (_TF_CusName.text&&_TF_CusTtName.text&&_TF_MobilePhone.text&&lati&&longi&&_TF_website.text&&_TF_CusCode.text&&_TF_Phone.text) {
+    //这儿得改text有值
+    NSLog(@"%lu",_TF_CusName.text.length);
+    if (_TF_CusName.text.length!=0&&_TF_CusTtName.text.length!=0&&_TF_MobilePhone.text.length!=0&&lati&&longi&&_TF_website.text.length!=0&&_TF_CusCode.text.length!=0&&_TF_Phone.text.length!=0) {
         [addcusjson setObject:_TF_CusName.text forKey:@"cusName"];
         [addcusjson setObject:_TF_CusCode.text forKey:@"cusCode"];
         [addcusjson setObject:_TF_MobilePhone.text forKey:@"cusTtName"];

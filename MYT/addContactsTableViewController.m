@@ -98,7 +98,7 @@
 }
 
 -(void)finishclick
-{ if (__TF_Company.text&&__TF_Email.text&&__TF_Name.text&&__TF_other.text&&__TF_Phone.text&&__TF_QQ.text&&__TF_Telephone) {
+{ if (__TF_Company.text.length!=0&&__TF_Email.text.length!=0&&__TF_Name.text.length!=0&&__TF_other.text.length!=0&&__TF_Phone.text.length!=0&&__TF_QQ.text.length!=0&&__TF_Telephone.text.length!=0) {
     NSString *clientidstr=[NSString stringWithFormat:@"%d",_clientId];
     [addcusjson setObject:__TF_Name.text forKey:@"contactsName"];
     [addcusjson setObject:__TF_Email.text forKey:@"email"];
