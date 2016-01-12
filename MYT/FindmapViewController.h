@@ -1,17 +1,16 @@
 //
-//  MapViewController.h
+//  FindmapViewController.h
 //  MYT
 //
-//  Created by YUNRUIMAC on 16/1/10.
+//  Created by yunruiinfo on 16/1/12.
 //  Copyright © 2016年 YunRui. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "KCAnnotation.h"
-@interface MapViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate>
-
+@interface FindmapViewController : UIViewController<UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate,UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UISearchBar *mapsearch;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UILabel *customer_behind;
 @property (strong,nonatomic) CLLocationManager * locationManager;
 @end

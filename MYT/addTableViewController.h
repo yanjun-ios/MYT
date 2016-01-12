@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface addTableViewController : UITableViewController<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *locati;
 
 @property (weak, nonatomic) IBOutlet UITextField *TF_CusName;
 @property (weak, nonatomic) IBOutlet UITextField *TF_CusTtName;
