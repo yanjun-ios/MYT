@@ -19,6 +19,8 @@
     //Boolean mo,mt,yr;//判断是否点开
       NIDropDown *dropDown;
      __block NSDictionary* jsonDic;
+    NSString* Theteamid;
+    NSString* Theuserid;
 }
 
 @end
@@ -73,6 +75,17 @@
     [_shi addTarget:self action:@selector(showMenu:) forControlEvents:UIControlEventTouchUpInside];
     [_Nabarbutton addTarget:self action:@selector(showMenu:) forControlEvents:UIControlEventTouchUpInside];
     [super viewDidLoad];
+    
+    //获取当前月份
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+   int  Year = [dateComponent year];
+   int   Month = [dateComponent month];
+     Theteamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
+     Theuserid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+[self getteamDataByYear:[NSString stringWithFormat:@"%d",Year] beginMonth:[NSString stringWithFormat:@"%d",Month] endMonth:[NSString stringWithFormat:@"%d",Month]  teamId:Theteamid userId:Theuserid];
    
     // Do any additional setup after loading the view.
 }
@@ -89,11 +102,13 @@
     [self rel];
     NSString* selectedStr=sender.setcetedStr;
     UIButton* btn=sender.btnSender;
+    NSString* BtnyearLab=_year.titleLabel.text;
     NSString* firStr = _monthone.titleLabel.text;
     NSString* twostr =  _monthtwo.titleLabel.text;
     
     if (btn.tag==110) {
         //点击了年
+        [self getteamDataByYear:selectedStr beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:Theteamid userId:Theuserid];
     }else if(btn.tag==111)
     {
         //点击了第一个月份
@@ -103,6 +118,9 @@
             //将结束月份的值改为与歧视月份相同
             [_monthtwo setTitle:selectedStr forState:UIControlStateNormal];
         }
+        
+        [self getteamDataByYear:BtnyearLab beginMonth:[selectedStr substringToIndex:(selectedStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:Theteamid userId:Theuserid];
+       
     }else if(btn.tag==112)
     {
         //点击了第二个月
@@ -112,8 +130,10 @@
             //将结束月份的值改为与歧视月份相同
             [_monthone setTitle:selectedStr forState:UIControlStateNormal];
         }
-
+        [self getteamDataByYear:BtnyearLab beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[selectedStr substringToIndex:(selectedStr.length-1)] teamId:Theteamid userId:Theuserid];
     }
+    
+    
 }
 
 -(void)rel{
@@ -260,22 +280,22 @@
     [self performSegueWithIdentifier:@"adresslist" sender:self];
 }
 
-////业绩排行按钮点击事件
-//-(void)performanceClick:(UIButton*)btn
-//{
-//    [self performSegueWithIdentifier:@"performance" sender:nil];
-//}
-////跟机率点击事件
-//- (IBAction)followcount_click:(id)sender {
-//    [self performSegueWithIdentifier:@"follow" sender:self];
-//}
-
-////业绩排行按钮点击事件
--(void)clickGread:(UIButton*)btn
+////右上角业绩排行按钮点击事件
+-(void)performanceClick:(UIButton*)btn
 {
     [self performSegueWithIdentifier:@"performance" sender:nil];
 }
-////跟机率点击事件
+
+////cell中业绩按钮点击事件
+-(void)clickGread:(UIButton*)btn
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Myindent"];
+    [self.navigationController pushViewController:myindent animated:YES];
+
+}
+////cell中跟机率点击事件
 -(void)clickFollow:(UIButton*)btn
 {
     [self performSegueWithIdentifier:@"follow" sender:self];
@@ -364,6 +384,10 @@
     UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Myindent"];
     [self.navigationController pushViewController:myindent animated:YES];
 }
+////跟机率点击事件
+//- (IBAction)followcount_click:(id)sender {
+//    [self performSegueWithIdentifier:@"follow" sender:self];
+//}
 
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -409,9 +433,8 @@
     }
     //点击季度按钮之后开始请求数据
     
-    NSString* teamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
-    NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
-    [self getteamDataByYear:year beginMonth:firStr endMonth:twostr teamId:teamid userId:userid];
+    
+    [self getteamDataByYear:year beginMonth:firStr endMonth:twostr teamId:Theteamid userId:Theuserid];
 //    NSDictionary*  jsondic =  [[Y_NetRequestManager sharedInstance] getteamDataByYear:year beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:teamid userId:userid];
 //    if (jsondic) {
 //        [_tableview1 reloadData];

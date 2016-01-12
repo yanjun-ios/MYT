@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *monthtwo;
 @property (weak, nonatomic) IBOutlet UIButton *year;
 - (IBAction)achievement_click:(id)sender;
-- (IBAction)followcount_click:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *Nabarbutton;
 @property (weak, nonatomic) IBOutlet UIButton *shi;
