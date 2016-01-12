@@ -37,4 +37,25 @@ static Y_NetRequestManager * sharedInstance = nil;
     return dic;
 }
 
+-(NSDictionary*)getteamDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end teamId:(NSString*)teamid userId:(NSString*)userid
+
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:year forKey:@"year"];
+    [parDic setValue:bengin forKey:@"beginMonth"];
+     [parDic setValue:end forKey:@"endMonth"];
+    [parDic setValue:teamid forKey:@"teamId"];
+    [parDic setValue:userid forKey:@"Userid"];
+   __block NSDictionary* jsonDic;
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"team/findteamRoseter"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic = (NSDictionary*)responseObject;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.superclass qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+        }];
+
+    }];
+    return jsonDic;
+}
+
 @end

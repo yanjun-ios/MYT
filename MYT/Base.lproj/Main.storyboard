@@ -1645,12 +1645,12 @@
                                                     <exclude reference="6ms-ps-SoE"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="9KI-YT-H7F"/>
-                                                    <exclude reference="FjJ-qK-6fy"/>
-                                                    <exclude reference="B89-JV-O1s"/>
-                                                    <exclude reference="thU-hj-656"/>
                                                     <exclude reference="AVl-Fi-stx"/>
                                                     <exclude reference="iBW-bQ-Qgk"/>
+                                                    <exclude reference="B89-JV-O1s"/>
+                                                    <exclude reference="thU-hj-656"/>
+                                                    <exclude reference="9KI-YT-H7F"/>
+                                                    <exclude reference="FjJ-qK-6fy"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -1660,12 +1660,12 @@
                                                     <include reference="6ms-ps-SoE"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="9KI-YT-H7F"/>
-                                                    <include reference="FjJ-qK-6fy"/>
-                                                    <include reference="B89-JV-O1s"/>
-                                                    <include reference="thU-hj-656"/>
                                                     <include reference="AVl-Fi-stx"/>
                                                     <include reference="iBW-bQ-Qgk"/>
+                                                    <include reference="B89-JV-O1s"/>
+                                                    <include reference="thU-hj-656"/>
+                                                    <include reference="9KI-YT-H7F"/>
+                                                    <include reference="FjJ-qK-6fy"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1754,7 +1754,7 @@
                                     <action selector="monthclicktwo:" destination="wK8-Fl-WI4" eventType="touchUpInside" id="lZq-LI-dPP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRX-02-krI">
+                            <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRX-02-krI">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="GME-B3-kne"/>
@@ -1778,8 +1778,11 @@
                                         <include reference="Mnl-Pi-Jhf"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="jidu1_click:" destination="wK8-Fl-WI4" eventType="touchUpInside" id="AAA-6Y-Tgl"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKR-pE-tlB">
+                            <button opaque="NO" tag="502" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKR-pE-tlB">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="ATj-LD-nTK"/>
@@ -1803,8 +1806,11 @@
                                         <include reference="fo8-jc-10K"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="jidu1_click:" destination="wK8-Fl-WI4" eventType="touchUpInside" id="ozx-9j-QRv"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVW-wK-5Xe">
+                            <button opaque="NO" tag="503" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVW-wK-5Xe">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="42" id="3Ye-LA-n8h">
@@ -1828,8 +1834,11 @@
                                         <include reference="rc4-uy-lLi"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="jidu1_click:" destination="wK8-Fl-WI4" eventType="touchUpInside" id="XiR-PZ-ght"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-uz-zzX">
+                            <button opaque="NO" tag="504" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-uz-zzX">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="1ZH-pb-ncy"/>
@@ -1853,6 +1862,9 @@
                                         <include reference="G3c-IQ-ZHF"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="jidu1_click:" destination="wK8-Fl-WI4" eventType="touchUpInside" id="pCe-QJ-Oi5"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nle-6d-g2A">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -2231,6 +2243,10 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="Nabarbutton" destination="P9H-m6-IOG" id="SbB-HK-yVz"/>
+                        <outlet property="btn_jidu1" destination="fRX-02-krI" id="h3y-lt-ZCw"/>
+                        <outlet property="btn_jidu2" destination="iKR-pE-tlB" id="JZL-5t-2Ax"/>
+                        <outlet property="btn_jidu3" destination="hVW-wK-5Xe" id="ZHe-qX-k67"/>
+                        <outlet property="btn_jidu4" destination="3AY-uz-zzX" id="iN4-x7-NmK"/>
                         <outlet property="monthone" destination="8Cs-Zd-Zcq" id="mqz-YX-VP6"/>
                         <outlet property="monthtwo" destination="hYT-DJ-jf6" id="QLU-gu-vAV"/>
                         <outlet property="shi" destination="tll-rn-gIC" id="jV4-Fw-fje"/>

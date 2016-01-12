@@ -95,6 +95,7 @@
             NSDictionary *user=[responseObject objectForKey:@"user"];
             NSString *user_id=[user objectForKey:@"user_id"];
              [[NSUserDefaults standardUserDefaults ]setObject:user_id  forKey:@"user_id"];
+            [[NSUserDefaults standardUserDefaults ]setObject:[user objectForKey:@"dep_id"]  forKey:@"dep_id"];
             //存user_id
              NSString *dep_id=[user objectForKey:@"dep_id"];
              NSString *user_name=[user objectForKey:@"user_name"];

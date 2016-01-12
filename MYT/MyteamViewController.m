@@ -12,6 +12,7 @@
 #import "KxMenu.h"
 #import "NIDropDown.h"
 #import "QuartzCore/QuartzCore.h"
+#import "Y_NetRequestManager.h"
 @interface MyteamViewController ()
 {
     //Boolean mo,mt,yr;//判断是否点开
@@ -81,27 +82,33 @@
 }
 - (void) niDropDownDelegateMethod: (NIDropDown *) sender {
     [self rel];
+    NSString* selectedStr=sender.setcetedStr;
     UIButton* btn=sender.btnSender;
-    NSString* tempStr = btn.titleLabel.text;
     NSString* firStr = _monthone.titleLabel.text;
     NSString* twostr =  _monthtwo.titleLabel.text;
     
-    switch (btn.tag) {
-        case 110:
-            //点击年
-            break;
-        case 111:
-            //点击起始月份
-          
-            
-            break;
-        case 112:
-            //点击结束月份
-            break;
-        default:
-            break;
+    if (btn.tag==110) {
+        //点击了年
+    }else if(btn.tag==111)
+    {
+        //点击了第一个月份
+        int begin_month=[selectedStr substringToIndex:(selectedStr.length-1)].intValue;
+       int end_month= [twostr substringToIndex:(twostr.length-1)].intValue;
+        if (begin_month>end_month) {
+            //将结束月份的值改为与歧视月份相同
+            [_monthtwo setTitle:selectedStr forState:UIControlStateNormal];
+        }
+    }else if(btn.tag==112)
+    {
+        //点击了第二个月
+        int end_month=[selectedStr substringToIndex:(selectedStr.length-1)].intValue;
+        int begin_month= [firStr substringToIndex:(firStr.length-1)].intValue;
+        if (begin_month>end_month) {
+            //将结束月份的值改为与歧视月份相同
+            [_monthone setTitle:selectedStr forState:UIControlStateNormal];
+        }
+
     }
-    
 }
 
 -(void)rel{
@@ -276,5 +283,44 @@
 }
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)jidu1_click:(id)sender {
+    
+    int btntag = ((UIButton*)sender).tag;
+    switch (btntag) {
+        case 501:
+            //第一季度
+            [_monthone setTitle:@"1月" forState:0];
+            [_monthtwo setTitle:@"3月" forState:0];
+            break;
+        case 502:
+            //第二季度
+            [_monthone setTitle:@"4月" forState:0];
+            [_monthtwo setTitle:@"6月" forState:0];
+
+            break;
+        case 503:
+            //第三季度
+            [_monthone setTitle:@"7月" forState:0];
+            [_monthtwo setTitle:@"9月" forState:0];
+            break;
+        case 504:
+            //第四季度
+            [_monthone setTitle:@"10月" forState:0];
+            [_monthtwo setTitle:@"12月" forState:0];
+            break;
+        default:
+            break;
+    }
+    //点击季度按钮之后开始请求数据
+    NSString* year=_year.titleLabel.text;
+    NSString* firStr = _monthone.titleLabel.text;
+    NSString* twostr =  _monthtwo.titleLabel.text;
+    NSString* teamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
+    NSString* userid=[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"];
+    NSDictionary*  jsondic =  [[Y_NetRequestManager sharedInstance] getteamDataByYear:year beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:teamid userId:userid];
+    if (jsondic) {
+        [_tableview1 reloadData];
+    }
 }
 @end
