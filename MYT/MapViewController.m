@@ -17,6 +17,7 @@
     NSMutableArray *cusDist;
     int toIndex;
     NSMutableArray * addAnnotations;
+    BOOL ifload;
 }
 @end
 
@@ -24,6 +25,7 @@
 
 - (void)viewDidLoad {
     //地理编码
+    ifload=YES;
     addAnnotations=[[NSMutableArray alloc]init];
     [self getCusdist];
     cusDist=[[NSMutableArray alloc]init];
@@ -125,7 +127,7 @@
     _mapView.mapType=MKMapTypeStandard;
     //添加大头针
     [self addAnnotation];
-    
+   
 }
 
 
@@ -152,23 +154,27 @@
         annotation1.coordinate=location1;
         [addAnnotations addObject:annotation1];
         [_mapView addAnnotation:annotation1];
+        [_mapView selectAnnotation:annotation1 animated:YES];
         lati=lati+5;
         longi=longi+5;
     }
-    
+    ifload=NO;
 }
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    NSArray *array=[NSArray arrayWithArray:addAnnotations];
-    for (int i=0; i<array.count; i++) {
-        if (view.annotation.coordinate.latitude==((MKPointAnnotation*)array[i]).coordinate.latitude) {
-           // clientId=;
-            int clientId=((NSNumber*)(view.annotation.subtitle)).intValue;
-            toIndex=0;
-            [NetRequestManager sharedInstance].clientId=clientId;
-            [self performSegueWithIdentifier:@"tabbar" sender:nil];
+    if (!ifload) {
+        NSArray *array=[NSArray arrayWithArray:addAnnotations];
+        for (int i=0; i<array.count; i++) {
+            if (view.annotation.coordinate.latitude==((MKPointAnnotation*)array[i]).coordinate.latitude) {
+                // clientId=;
+                int clientId=((NSNumber*)(view.annotation.subtitle)).intValue;
+                toIndex=0;
+                [NetRequestManager sharedInstance].clientId=clientId;
+                [self performSegueWithIdentifier:@"tabbar" sender:nil];
+            }
         }
     }
+   
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"tabbar"])
