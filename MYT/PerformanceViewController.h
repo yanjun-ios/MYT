@@ -16,4 +16,6 @@
 - (IBAction)btnFirstClick:(id)sender;
 - (IBAction)btnSecondClick:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UILabel *labSelf;
+@property (weak, nonatomic) IBOutlet UILabel *labRank;
 @end

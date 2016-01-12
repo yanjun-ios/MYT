@@ -65,11 +65,12 @@
 		9CD75FF01C414771001C7C98 /* Z_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FED1C414771001C7C98 /* Z_NetRequestManager.m */; };
 		9CD75FF11C414771001C7C98 /* NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FEF1C414771001C7C98 /* NetRequestManager.m */; };
 		9CD75FF41C4149B3001C7C98 /* Y_NetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF31C4149B3001C7C98 /* Y_NetRequestManager.m */; };
-		9CD75FF81C42A97A001C7C98 /* TradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF71C42A97A001C7C98 /* TradingViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9CD75FFB1C434120001C7C98 /* TradingLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFA1C434120001C7C98 /* TradingLogViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9CD75FFE1C43484C001C7C98 /* CallLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFD1C43484C001C7C98 /* CallLogViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9CD760011C436058001C7C98 /* CusMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD760001C436058001C7C98 /* CusMarkViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CD75FF81C42A97A001C7C98 /* TradingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FF71C42A97A001C7C98 /* TradingViewController.m */; };
+		9CD75FFB1C434120001C7C98 /* TradingLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFA1C434120001C7C98 /* TradingLogViewController.m */; };
+		9CD75FFE1C43484C001C7C98 /* CallLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFD1C43484C001C7C98 /* CallLogViewController.m */; };
+		9CD760011C436058001C7C98 /* CusMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD760001C436058001C7C98 /* CusMarkViewController.m */; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
+		D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9430F951C44B3A800714898 /* FindmapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +207,8 @@
 		9CD75FFF1C436058001C7C98 /* CusMarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CusMarkViewController.h; sourceTree = "<group>"; };
 		9CD760001C436058001C7C98 /* CusMarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CusMarkViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D9430F941C44B3A800714898 /* FindmapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindmapViewController.h; sourceTree = "<group>"; };
+		D9430F951C44B3A800714898 /* FindmapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindmapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,6 +389,8 @@
 				776ADB6E1C4167760084401F /* KCAnnotation.m */,
 				776ADB6B1C41670B0084401F /* MapViewController.h */,
 				776ADB6C1C41670B0084401F /* MapViewController.m */,
+				D9430F941C44B3A800714898 /* FindmapViewController.h */,
+				D9430F951C44B3A800714898 /* FindmapViewController.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -670,7 +675,7 @@
 				TargetAttributes = {
 					18C0A4051C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 6YS9NAWMMK;
+						DevelopmentTeam = 7Z82GR3HSB;
 					};
 					18C0A41E1C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -807,6 +812,7 @@
 				77A805D51C1DACBF00F9B15D /* TreeTableView.m in Sources */,
 				776ADB811C428DE90084401F /* ChangeinfoTableViewController.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,
+				D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */,
 				9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -939,7 +945,7 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -955,7 +961,7 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.YunRui.MYT2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

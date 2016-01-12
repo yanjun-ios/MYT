@@ -11,10 +11,12 @@
 #import "ButtomView.h"
 #import "MJRefresh.h"
 #import "Utility.h"
+#import "Z_NetRequestManager.h"
 #import "QuartzCore/QuartzCore.h"
 @interface MyOderViewController ()
 {
-
+    NSMutableArray * orderdata;
+    NSArray *orderlist;
     NIDropDown *dropDown;
 }
 @end
@@ -22,6 +24,7 @@
 @implementation MyOderViewController
 @synthesize btn_year;
 - (void)viewDidLoad {
+    orderdata=[[NSMutableArray alloc]init];
     _mytableview.delegate=self;
     _mytableview.dataSource=self;
     [super viewDidLoad];
@@ -43,7 +46,12 @@
     btn_year = nil;
     [super viewDidUnload];
 }
-
+-(void)Getmyorder:(NSString *)year beginmonth:(NSString*)begin endmonth:(NSString*)end
+{
+   NSDictionary *dic=[[Z_NetRequestManager sharedInstance]getoderDataByYear:btn_year.titleLabel.text beginMonth:_btn_FirstMonth.titleLabel.text endMonth:_btn_endMonth.titleLabel.text userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];//获取到数据
+    orderlist=[dic objectForKey:@"list"];
+    
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden=NO;
@@ -51,7 +59,7 @@
 -(void)clickBtnYear:(UIButton*)sender
 {
     NSArray * arr = [[NSArray alloc] init];
-    if(sender.tag==1000)
+    if(sender.tag==120)
     {
         arr = [NSArray arrayWithObjects:@"2015年", @"2016年", @"2017年", @"2018年", @"2019年", @"2020年", @"2021年", @"2022年", @"2023年", @"2024年",nil];
     }else
@@ -73,6 +81,35 @@
 - (void) niDropDownDelegateMethod: (NIDropDown *) sender {
    
     [self rel];
+    NSString* selectedStr=sender.setcetedStr;
+    UIButton* btn=sender.btnSender;
+    NSString* firStr = _btn_FirstMonth.titleLabel.text;
+    NSString* twostr =  _btn_endMonth.titleLabel.text;
+    
+    if (btn.tag==120) {
+        [self Getmyorder:btn.titleLabel.text beginmonth:_btn_FirstMonth.titleLabel.text endmonth:_btn_endMonth.titleLabel.text];
+        //点击了年
+    }else if(btn.tag==121)
+    {
+        //点击了第一个月份
+        int begin_month=[selectedStr substringToIndex:(selectedStr.length-1)].intValue;
+        int end_month= [twostr substringToIndex:(twostr.length-1)].intValue;
+        if (begin_month>end_month) {
+            //将结束月份的值改为与歧视月份相同
+            [_btn_endMonth setTitle:selectedStr forState:UIControlStateNormal];
+        }
+    }else if(btn.tag==122)
+    {
+        //点击了第二个月
+        int end_month=[selectedStr substringToIndex:(selectedStr.length-1)].intValue;
+        int begin_month= [firStr substringToIndex:(firStr.length-1)].intValue;
+        if (begin_month>end_month) {
+            //将结束月份的值改为与歧视月份相同
+            [_btn_FirstMonth setTitle:selectedStr forState:UIControlStateNormal];
+        }
+        
+    }
+
 }
 -(void)rel{
     //    [dropDown release];
@@ -127,7 +164,7 @@
 }*/
 #pragma mark - tableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    return orderlist.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

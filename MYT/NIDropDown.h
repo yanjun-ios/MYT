@@ -18,6 +18,7 @@
     NSString *animationDirection;
     UIImageView *imgView;
 }
+@property(nonatomic,retain)NSString* setcetedStr;
 @property(nonatomic, strong) UIButton *btnSender;
 @property (nonatomic, retain) id <NIDropDownDelegate> delegate;
 @property (nonatomic, retain) NSString *animationDirection;

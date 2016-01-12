@@ -14,5 +14,5 @@
  */
 + (Y_NetRequestManager *)sharedInstance;
 -(NSDictionary*)getClientList:(NSDictionary *)paraDic;
-
+-(NSDictionary*)getteamDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end teamId:(NSString*)teamid userId:(NSString*)userid;
 @end

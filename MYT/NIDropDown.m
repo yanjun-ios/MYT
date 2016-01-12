@@ -133,7 +133,7 @@
     
     UITableViewCell *c = [tableView cellForRowAtIndexPath:indexPath];
     [btnSender setTitle:c.textLabel.text forState:UIControlStateNormal];
-    
+    _setcetedStr=c.textLabel.text;
     for (UIView *subview in btnSender.subviews) {
         if ([subview isKindOfClass:[UIImageView class]]) {
             [subview removeFromSuperview];

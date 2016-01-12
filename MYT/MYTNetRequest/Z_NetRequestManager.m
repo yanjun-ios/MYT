@@ -22,24 +22,7 @@ static Z_NetRequestManager * sharedInstance = nil;
     }
     return sharedInstance;
 }
--(NSDictionary *)postJson:(NSDictionary *)paradic url:(NSString *)url
-{
-    __block NSDictionary* dic;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:paradic options:NSJSONWritingPrettyPrinted error:nil];
-    [[QQRequestManager sharedRequestManager] GET:url parameters:data showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        dic=(NSDictionary*)responseObject;
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        [self.superclass qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
-        }];
-        
-    }];
-    
-    return dic;
-}
+//获取客户列表
 -(NSDictionary*)getClientList:(NSDictionary*) paraDic
 {
     __block NSDictionary* dic;
@@ -58,6 +41,7 @@ static Z_NetRequestManager * sharedInstance = nil;
     
     return dic;
 }
+//地图定位 调用即可定位
 -(void)getlongandlati
 {
     NSMutableDictionary* dic=[[NSMutableDictionary alloc]init];
@@ -130,5 +114,24 @@ static Z_NetRequestManager * sharedInstance = nil;
         CLPlacemark *placemark=[placemarks firstObject];
         NSLog(@"详细信息:%@",placemark.addressDictionary);
     }];
+}
+//以上都是地图代理方法
+-(NSDictionary*)getoderDataByYear:(NSString *)year beginMonth:(NSString *)bengin endMonth:(NSString *)end  userId:(NSString *)userid
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:year forKey:@"year"];
+    [parDic setValue:bengin forKey:@"begin_month"];
+    [parDic setValue:end forKey:@"end_month"];
+    [parDic setValue:userid forKey:@"Userid"];
+    __block NSDictionary* jsonDic;
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@""] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic = (NSDictionary*)responseObject;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.superclass qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+        }];
+        
+    }];
+    return jsonDic;
 }
 @end

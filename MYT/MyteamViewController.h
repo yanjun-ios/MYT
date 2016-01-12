@@ -23,4 +23,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *shi;
 - (IBAction)back:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *btn_jidu1;
+@property (weak, nonatomic) IBOutlet UIButton *btn_jidu2;
+@property (weak, nonatomic) IBOutlet UIButton *btn_jidu3;
+@property (weak, nonatomic) IBOutlet UIButton *btn_jidu4;
+- (IBAction)jidu1_click:(id)sender;
+
 @end
