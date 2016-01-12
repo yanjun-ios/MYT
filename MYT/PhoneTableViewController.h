@@ -10,5 +10,5 @@
 
 @interface PhoneTableViewController : UITableViewController
 - (IBAction)addphone:(id)sender;
-
+@property(nonatomic,retain)NSDictionary* getTeamDic;
 @end

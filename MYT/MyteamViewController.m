@@ -13,10 +13,12 @@
 #import "NIDropDown.h"
 #import "QuartzCore/QuartzCore.h"
 #import "Y_NetRequestManager.h"
+#import "PhoneTableViewController.h"
 @interface MyteamViewController ()
 {
     //Boolean mo,mt,yr;//判断是否点开
       NIDropDown *dropDown;
+     __block NSDictionary* jsonDic;
 }
 
 @end
@@ -80,6 +82,9 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+//年月日下拉菜单的代理方法
+
 - (void) niDropDownDelegateMethod: (NIDropDown *) sender {
     [self rel];
     NSString* selectedStr=sender.setcetedStr;
@@ -145,10 +150,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)phone:(id)sender
-{
-    [self performSegueWithIdentifier:@"adresslist" sender:self];
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
@@ -162,8 +163,74 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   
-        UITableViewCell *cell4=[_tableview1 dequeueReusableCellWithIdentifier:@"cell"];
-        return cell4;
+    static NSString* identifi=@"cell1";
+    UITableViewCell* cell;
+    cell=[_tableview1 dequeueReusableCellWithIdentifier:identifi];
+    if(!cell)
+    {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+        
+        //姓名
+        UILabel* name=[[UILabel alloc]init];
+        name.frame=CGRectMake(15, 12, 50, 20);
+        name.font=[UIFont systemFontOfSize:16];
+        name.textColor=[UIColor darkGrayColor];
+        name.tag=1000;
+        [cell.contentView addSubview:name];
+        
+        //业绩
+        UIButton* gread=[[UIButton alloc]init];
+        gread.frame=CGRectMake(0, 0, 50, 20);
+        gread.center=CGPointMake(ScreenWidth/2, 22);
+        gread.titleLabel.font=[UIFont systemFontOfSize:16];
+        [gread setTitleColor:[UIColor orangeColor] forState:0];
+        
+        gread.tag=1001;
+        [cell.contentView addSubview:gread];
+        
+        //跟及率
+        UIButton* follow=[[UIButton alloc]init];
+        follow.frame=CGRectMake(0, 0, 50, 20);
+        follow.center=CGPointMake(ScreenWidth-48, 22);
+        follow.titleLabel.font=[UIFont systemFontOfSize:16];
+        [follow setTitleColor:[UIColor colorWithRed:66.0/255 green:143.0/255 blue:68.0/255 alpha:1.0] forState:0];
+      
+        follow.tag=1002;
+        [cell.contentView addSubview:follow];
+        
+        int ismanager=[[[NSUserDefaults standardUserDefaults] objectForKey:@"profess_state"] intValue];
+        if (ismanager==1) {
+            //本人是经理，有权限看别人的业绩和跟及率
+            [gread addTarget:self action:@selector(clickGread:) forControlEvents:UIControlEventTouchUpInside];
+             [follow addTarget:self action:@selector(clickFollow:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+    }
+    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
+    
+    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
+    btnGread.tag=10000+indexPath.row;
+    [btnGread setTitle:@"0万" forState:0];
+    
+    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
+    btnfollow.tag=20000+indexPath.row;
+   [btnfollow setTitle:@"%80" forState:0];
+//    UILabel* staffname= (UILabel*)[cell.contentView viewWithTag:1000];
+//   int isManager =((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"lev"]).intValue;
+//    if (isManager==1){
+//        //经理的姓名为红色
+//        staffname.textColor=[UIColor redColor];
+//    }
+//    staffname.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
+//    
+//    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
+//    btnGread.tag=10000+indexPath.row;
+//    [btnGread setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"] forState:0];
+//    
+//    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
+//    btnfollow.tag=20000+indexPath.row;
+//    [btnfollow setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"rate"] forState:0];
+        return cell;
  
 
 }
@@ -177,22 +244,42 @@
     
 
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"adresslist"]) {
+        PhoneTableViewController* destination=[segue destinationViewController];
+        destination.getTeamDic=jsonDic;
+    }
 }
-*/
+//点击右上角通讯录按钮
+-(void)phone:(id)sender
+{
+    [self performSegueWithIdentifier:@"adresslist" sender:self];
+}
 
-//业绩排行按钮点击事件
--(void)performanceClick:(UIButton*)btn
+////业绩排行按钮点击事件
+//-(void)performanceClick:(UIButton*)btn
+//{
+//    [self performSegueWithIdentifier:@"performance" sender:nil];
+//}
+////跟机率点击事件
+//- (IBAction)followcount_click:(id)sender {
+//    [self performSegueWithIdentifier:@"follow" sender:self];
+//}
+
+////业绩排行按钮点击事件
+-(void)clickGread:(UIButton*)btn
 {
     [self performSegueWithIdentifier:@"performance" sender:nil];
 }
-
+////跟机率点击事件
+-(void)clickFollow:(UIButton*)btn
+{
+    [self performSegueWithIdentifier:@"follow" sender:self];
+}
 - (IBAction)monthclickone:(id)sender {
     /* if (!mo) {
      _tableview2.hidden=NO;
@@ -278,49 +365,78 @@
     [self.navigationController pushViewController:myindent animated:YES];
 }
 
-- (IBAction)followcount_click:(id)sender {
-    [self performSegueWithIdentifier:@"follow" sender:self];
-}
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)jidu1_click:(id)sender {
     
     int btntag = ((UIButton*)sender).tag;
+    NSString* year=_year.titleLabel.text;
+    NSString* firStr;
+    NSString* twostr;
     switch (btntag) {
         case 501:
             //第一季度
             [_monthone setTitle:@"1月" forState:0];
+           
             [_monthtwo setTitle:@"3月" forState:0];
+             firStr=@"1";
+            twostr=@"3";
             break;
         case 502:
             //第二季度
             [_monthone setTitle:@"4月" forState:0];
             [_monthtwo setTitle:@"6月" forState:0];
-
+            firStr=@"4";
+            twostr=@"6";
             break;
         case 503:
             //第三季度
             [_monthone setTitle:@"7月" forState:0];
             [_monthtwo setTitle:@"9月" forState:0];
+            firStr=@"7";
+            twostr=@"9";
             break;
         case 504:
             //第四季度
             [_monthone setTitle:@"10月" forState:0];
             [_monthtwo setTitle:@"12月" forState:0];
+            firStr=@"10";
+            twostr=@"12";
             break;
         default:
             break;
     }
     //点击季度按钮之后开始请求数据
-    NSString* year=_year.titleLabel.text;
-    NSString* firStr = _monthone.titleLabel.text;
-    NSString* twostr =  _monthtwo.titleLabel.text;
+    
     NSString* teamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
-    NSString* userid=[[NSUserDefaults standardUserDefaults] objectForKey:@"userid"];
-    NSDictionary*  jsondic =  [[Y_NetRequestManager sharedInstance] getteamDataByYear:year beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:teamid userId:userid];
-    if (jsondic) {
-        [_tableview1 reloadData];
-    }
+    NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    [self getteamDataByYear:year beginMonth:firStr endMonth:twostr teamId:teamid userId:userid];
+//    NSDictionary*  jsondic =  [[Y_NetRequestManager sharedInstance] getteamDataByYear:year beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:teamid userId:userid];
+//    if (jsondic) {
+//        [_tableview1 reloadData];
+//    }
 }
+
+-(void)getteamDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end teamId:(NSString*)teamid userId:(NSString*)userid
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:year forKey:@"year"];
+    [parDic setValue:bengin forKey:@"monthS"];
+    [parDic setValue:end forKey:@"monthE"];
+    [parDic setValue:teamid forKey:@"depId"];
+    [parDic setValue:userid forKey:@"userid"];
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic = (NSDictionary*)responseObject;
+        [_tableview1 reloadData];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+        }];
+
+    }];
+}
+
+
 @end

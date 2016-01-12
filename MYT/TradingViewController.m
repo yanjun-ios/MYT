@@ -48,7 +48,7 @@
     [parDic setObject:cusid forKey:@"cusid"];
     [parDic setObject:@5 forKey:@"pageSize"];
     [parDic setObject:NUM forKey:@"pageNum"];
-    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusbusinessList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getTradList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         num++;
         NSDictionary* dic=responseObject;
         NSArray* trading_record=[dic objectForKey:@"trading_record"];
@@ -111,20 +111,20 @@
         [cell.contentView addSubview:money];
     }
     
-//    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_dlvdate"];
-//     ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_obdcode"];
-//     ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_money"];
-        ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2012-12-31";
-         ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"32b425h4u5b5b4u3";
-    ((UILabel*)[cell.contentView viewWithTag:1002]).text=@"1000元";
+    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_dlvdate"];
+     ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_obdcode"];
+     ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"trading_money"];
+//        ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2012-12-31";
+//         ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"32b425h4u5b5b4u3";
+//    ((UILabel*)[cell.contentView viewWithTag:1002]).text=@"1000元";
 
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return [arry count];
-    return 5;
+   return [arry count];
+//    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

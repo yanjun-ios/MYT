@@ -21,11 +21,6 @@
 
 @implementation CusMarkViewController
 
--(void)viewWillLayoutSubviews
-{
-   
-
-}
 
 - (void)viewDidLoad {
     if(currentVersion>=7)
@@ -44,11 +39,16 @@
     [_tableview.mj_footer beginRefreshing];
     _tableview.delegate=self;
     _tableview.dataSource=self;
-    
     _tableview.sectionFooterHeight=0;
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
+    
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
+
     // Do any additional setup after loading the view.
 }
 -(void)loaData
@@ -61,11 +61,11 @@
     [parDic setObject:@5 forKey:@"pageSize"];
     [parDic setObject:NUM forKey:@"pageNum"];
    // 获取备注列表的接口没有
-    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusCallLogList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-//        num++;
-//        NSDictionary* dic=responseObject;
-//        NSArray* trading_record=[dic objectForKey:@"cus_remark"];
-//        [arry addObjectsFromArray:trading_record];
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusRemarkList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        num++;
+        NSDictionary* dic=responseObject;
+        NSArray* trading_record=[dic objectForKey:@"cus_remark"];
+        [arry addObjectsFromArray:trading_record];
         [_tableview reloadData];
         [_tableview.mj_footer endRefreshing];
     
@@ -76,26 +76,47 @@
 //taleview代理方法
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* identifi=@"cell";
+    static NSString* identifi=@"cell1";
     UITableViewCell* cell;
     cell=[_tableview dequeueReusableCellWithIdentifier:identifi];
     if(!cell)
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+        
+        //时间
+        UILabel* labtime=[[UILabel alloc]init];
+        labtime.frame=CGRectMake(10, 8, 200, 15);
+        labtime.font=[UIFont systemFontOfSize:12];
+        labtime.textColor=[UIColor darkGrayColor];
+        labtime.tag=1000;
+        [cell.contentView addSubview:labtime];
+        
+        //备注
+        UILabel* labmark=[[UILabel alloc]init];
+        labmark.frame=CGRectMake(10, 20, ScreenWidth-20, 60);
+        labmark.font=[UIFont systemFontOfSize:12];
+        labmark.textColor=[UIColor darkGrayColor];
+        labmark.lineBreakMode=NSLineBreakByWordWrapping;
+        labmark.numberOfLines=0;
+        labmark.tag=1001;
+        [cell.contentView addSubview:labmark];
     }
     
-    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"2013-23-89";
-    ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"你的看法噶电话噶电话噶看得开；好卡机和；的快感几乎都是； 啊好；卡的很高；阿卡家；阿卡多废话 ；看哈的；按时开放和思考；飞";
-    
+    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"remdate"];
+    ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"remark"];
+    //((UILabel*)[cell.contentView viewWithTag:1001]).text=@"打工行打款给害死U树肯定就发给你是你告诉大家发个SD卡老师的告诉快递公司上课的感觉是的；开公司的；大客户；SD卡返回的；分开规划";
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return [arry count];
-        return 5;
+    return [arry count];
+       // return 5;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

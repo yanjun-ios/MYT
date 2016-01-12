@@ -2532,6 +2532,8 @@
                     <connections>
                         <outlet property="btnFirst" destination="t2Z-8X-uJL" id="c8A-gS-rhb"/>
                         <outlet property="btnSecond" destination="RYR-x3-lyc" id="xzp-J2-1f8"/>
+                        <outlet property="labRank" destination="IuC-9k-IO7" id="A1w-pb-uGX"/>
+                        <outlet property="labSelf" destination="0z6-ru-MI0" id="eum-88-9qZ"/>
                         <outlet property="tableview" destination="8D2-uL-1o4" id="maW-Ye-Jly"/>
                         <outlet property="topView" destination="wxL-gY-BD0" id="bjt-Su-IIb"/>
                     </connections>

@@ -40,62 +40,75 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    static NSString* identifi=@"cell1";
+    UITableViewCell* cell;
+    cell=[self.tableView dequeueReusableCellWithIdentifier:identifi];
+    if(!cell)
+    {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+        
+        //姓名
+        UILabel* name=[[UILabel alloc]init];
+        name.frame=CGRectMake(15, 12, 50, 20);
+        name.font=[UIFont systemFontOfSize:18];
+        name.textColor=[UIColor darkGrayColor];
+        name.tag=1000;
+        [cell.contentView addSubview:name];
+        
+        //电话
+        UILabel* phoneNumber=[[UILabel alloc]init];
+        phoneNumber.frame=CGRectMake(0, 0, 200, 20);
+        phoneNumber.center=CGPointMake(ScreenWidth/2, 22);
+        phoneNumber.font=[UIFont systemFontOfSize:18];
+        phoneNumber.textColor=[UIColor darkGrayColor];
+        phoneNumber.tag=1001;
+        [cell.contentView addSubview:phoneNumber];
+        
+        //电话
+        UIButton* phone=[[UIButton alloc]init];
+        phone.frame=CGRectMake(0, 0, 30, 30);
+        phone.center=CGPointMake(ScreenWidth-35, 22);
+        [phone setImage:[UIImage imageNamed:@"phone"] forState:0];
+        [phone addTarget:self action:@selector(clickPhoneNumber:) forControlEvents:UIControlEventTouchUpInside];
+        phone.tag=1002;
+        [cell.contentView addSubview:phone];
+    }
+
+        UILabel* staffname= (UILabel*)[cell.contentView viewWithTag:1000];
+       int isManager =((NSNumber*)[[[_getTeamDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"lev"]).intValue;
+        if (isManager==1){
+            //经理的姓名为红色
+            staffname.textColor=[UIColor redColor];
+        }
+        staffname.text=[[[_getTeamDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
+    
+        UILabel* number = (UILabel*)[cell.contentView viewWithTag:1001];
+    NSString* hisphoneNumber=[[[_getTeamDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"mobilephone"];
+     number.text=hisphoneNumber;
+        UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
+        btnfollow.tag=[hisphoneNumber intValue];
+    
+
+    
     return cell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Incomplete implementation, return the number of sections
-    return 1;
+      return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
+    //return [[_getTeamDic objectForKey:@"list"] count];
     return 10;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+//点击打电话按钮拨打电话
+-(void)clickPhoneNumber:(UIButton*)btn
+{
     
-    // Configure the cell...
-    
-    return cell;
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation

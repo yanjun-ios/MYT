@@ -13,6 +13,12 @@
     /*UILabel* rank;
     UILabel* name;
     UILabel* mony;*/
+    
+    __block NSDictionary* jsonDic;
+    NSString* TheTeamid;
+    NSString* TheUserid;
+    int Year;
+    int Month;
 }
 @end
 
@@ -27,6 +33,17 @@
 - (void)viewDidLoad {
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    //获取当前月份
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+     Year = [dateComponent year];
+     Month = [dateComponent month];
+   TheTeamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
+   TheUserid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    [self btnFirstClick:_btnFirst];
+    
         [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -44,7 +61,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return 10;
+    return [[jsonDic objectForKey:@"list"] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -56,7 +73,7 @@
         //排名
         UILabel* rank;
         rank=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
-        rank.tag=10;
+        rank.tag=110;
         rank.textColor=[UIColor darkGrayColor];
         rank.font=[UIFont systemFontOfSize:14];
         rank.textAlignment=NSTextAlignmentCenter;
@@ -65,7 +82,7 @@
         UILabel* name;
         name=[[UILabel alloc]initWithFrame:CGRectMake(0, 15, 100, 15)];
         name.center=cell.center;
-        name.tag=11;
+        name.tag=111;
         name.textColor=[UIColor darkGrayColor];
         name.font=[UIFont systemFontOfSize:14];
         name.textAlignment=NSTextAlignmentCenter;
@@ -73,28 +90,19 @@
         //业绩
         UILabel* mony;
         mony=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-100, 15, 100, 15)];
-        mony.tag=12;
+        mony.tag=112;
         mony.textColor=[UIColor darkGrayColor];
         mony.font=[UIFont systemFontOfSize:14];
         mony.textAlignment=NSTextAlignmentCenter;
         [cell.contentView addSubview:mony];
     }
     
-    UILabel* label1=(UILabel*)[cell.contentView viewWithTag:10];
-    label1.text=@"第一名";
-    UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
-    label2.text=@"张三";
-    UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
-    label3.text=@"500万";
-    
-   
-
-    
-
-    
-    
-    
-    
+    UILabel* label1=(UILabel*)[cell.contentView viewWithTag:110];
+    label1.text=[NSString stringWithFormat:@"第%d名",[indexPath row]+1];
+    UILabel* label2=(UILabel*)[cell.contentView viewWithTag:111];
+    label2.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
+    UILabel* label3=(UILabel*)[cell.contentView viewWithTag:112];
+    label3.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"rate"];
     return cell;
     
 }
@@ -121,14 +129,41 @@
     
     _btnSecond.backgroundColor=[UIColor clearColor];
     [_btnSecond setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    
+    [self getteamDataByYear:[NSString stringWithFormat:@"%d",Year] beginMonth:[NSString stringWithFormat:@"%d",Month] endMonth:[NSString stringWithFormat:@"%d",Month] teamId:TheTeamid userId:TheUserid];
 }
 
 - (IBAction)btnSecondClick:(id)sender {
-    
     _btnSecond.backgroundColor=[UIColor redColor];
     [_btnSecond setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     _btnFirst.backgroundColor=[UIColor clearColor];
     [_btnFirst setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    
+    [self getteamDataByYear:[NSString stringWithFormat:@"%d",Year] beginMonth:@"1" endMonth:@"12" teamId:TheTeamid userId:TheUserid];
 }
+
+-(void)getteamDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end teamId:(NSString*)teamid userId:(NSString*)userid
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:year forKey:@"year"];
+    [parDic setValue:bengin forKey:@"monthS"];
+    [parDic setValue:end forKey:@"monthE"];
+    [parDic setValue:teamid forKey:@"depId"];
+    [parDic setValue:userid forKey:@"userid"];
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic = (NSDictionary*)responseObject;
+        _labSelf.text=[NSString stringWithFormat:@"%@元",[jsonDic objectForKey:@"curfeat"]];
+        _labSelf.text=[jsonDic objectForKey:@"ranking"];
+        [_tableview reloadData];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+        }];
+        
+    }];
+}
+
+
 @end
