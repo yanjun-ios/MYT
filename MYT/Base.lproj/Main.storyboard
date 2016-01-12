@@ -1597,7 +1597,8 @@
                                                             <exclude reference="m7R-wZ-Hfh"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="100" y="7" width="40" height="30"/>
                                                         <mask key="constraints">
                                                             <include reference="haY-Sv-jlh"/>
                                                             <include reference="m7R-wZ-Hfh"/>
@@ -1620,7 +1621,8 @@
                                                             <exclude reference="t8H-OS-FW6"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="166" y="7" width="40" height="30"/>
                                                         <mask key="constraints">
                                                             <include reference="Q3F-uO-Nyj"/>
                                                             <include reference="t8H-OS-FW6"/>
