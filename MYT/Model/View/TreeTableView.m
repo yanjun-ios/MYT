@@ -202,7 +202,7 @@
     label3.text=node.name;
  
         UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-        image.image=[UIImage imageNamed:@"left"];
+        image.image=[UIImage imageNamed:@"1"];
     
   
   
@@ -260,7 +260,7 @@
                 endPosition++;
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"ok"];
+                    image.image=[UIImage imageNamed:@"2"];
                 
                 
                 
@@ -271,7 +271,7 @@
                 endPosition = [self removeAllNodesAtParentNode:parentNode];
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"left"];
+                    image.image=[UIImage imageNamed:@"1"];
                 
                 
                 

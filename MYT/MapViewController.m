@@ -9,7 +9,7 @@
 #import "MapViewController.h"
 #import "NetRequestManager.h"
 #import "XNTabBarController.h"
-#import "Z_NetRequestManager.h"
+//#import "Z_NetRequestManager.h"
 @interface MapViewController ()
 {
     
@@ -34,7 +34,7 @@
    // _locationManager=v;
     //测试一下
     
-    [[Z_NetRequestManager sharedInstance]getlongandlati];
+ /*   [[Z_NetRequestManager sharedInstance]getlongandlati];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
         
@@ -44,7 +44,7 @@
         NSLog(@"%f,%f",lati,longi);
        [self getAddressByLatitude:lati longitude:longi];
        
-    });
+    });*/
     //定位管理器
     //_locationManager=[[CLLocationManager alloc]init];
     if (![CLLocationManager locationServicesEnabled]) {

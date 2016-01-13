@@ -23,6 +23,24 @@
 
 @implementation MyOderViewController
 @synthesize btn_year;
+-(void)viewDidAppear:(BOOL)animated
+{
+    [_mytableview reloadData];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden=NO;
+    NSDate *now = [NSDate date];
+    NSLog(@"now date is: %@", now);
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
+    
+    NSString* year = [NSString stringWithFormat:@"%ld",(long)[dateComponent year]];
+    NSString* month =[NSString stringWithFormat:@"%ld",(long)[dateComponent month]];
+    [self Getmyorder:year beginmonth:month endmonth:month];
+}
 - (void)viewDidLoad {
     orderdata=[[NSMutableArray alloc]init];
     _mytableview.delegate=self;
@@ -52,10 +70,7 @@
     orderlist=[dic objectForKey:@"list"];
     
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    self.navigationController.navigationBarHidden=NO;
-}
+
 -(void)clickBtnYear:(UIButton*)sender
 {
     NSArray * arr = [[NSArray alloc] init];
@@ -64,7 +79,7 @@
         arr = [NSArray arrayWithObjects:@"2015年", @"2016年", @"2017年", @"2018年", @"2019年", @"2020年", @"2021年", @"2022年", @"2023年", @"2024年",nil];
     }else
     {
-        arr = [NSArray arrayWithObjects:@"01月", @"02月", @"03月", @"04月", @"05月", @"06月", @"07月", @"08月", @"09月", @"10月",@"11月",@"12月",nil];
+        arr = [NSArray arrayWithObjects:@"1月", @"2月", @"3月", @"4月", @"5月", @"6月", @"7月", @"8月", @"9月", @"10月",@"11月",@"12月",nil];
     }
    
         if(dropDown == nil) {
@@ -87,7 +102,7 @@
     NSString* twostr =  _btn_endMonth.titleLabel.text;
     
     if (btn.tag==120) {
-        [self Getmyorder:btn.titleLabel.text beginmonth:_btn_FirstMonth.titleLabel.text endmonth:_btn_endMonth.titleLabel.text];
+        [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
         //点击了年
     }else if(btn.tag==121)
     {
@@ -98,6 +113,7 @@
             //将结束月份的值改为与歧视月份相同
             [_btn_endMonth setTitle:selectedStr forState:UIControlStateNormal];
         }
+          [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
     }else if(btn.tag==122)
     {
         //点击了第二个月
@@ -107,8 +123,10 @@
             //将结束月份的值改为与歧视月份相同
             [_btn_FirstMonth setTitle:selectedStr forState:UIControlStateNormal];
         }
+         [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
         
     }
+    [_mytableview reloadData];
 
 }
 -(void)rel{
@@ -175,10 +193,16 @@
 {
     NSString* identif=@"cell";
     UITableViewCell* cell=[_mytableview dequeueReusableCellWithIdentifier:identif];
-    if(indexPath.row%2==0)
-    {
-        ((UILabel*)[cell.contentView viewWithTag:101]).text=@"严军";
-    }
+    NSDictionary* dic=[orderlist objectAtIndex:[indexPath section]];
+    NSString *obdcode=[dic objectForKey:@"obdcode"];//订单编号
+    NSString* cusname=[dic objectForKey:@"cusname"];//客户名称
+    NSString* custtname=[dic objectForKey:@"custtname"];//客户全名
+    NSString *dlydate=[dic objectForKey:@"dlydate"];//订单时间
+    NSString *money=[dic objectForKey:@"money"];
+    ((UILabel*)[cell.contentView viewWithTag:101]).text=cusname;
+     ((UILabel*)[cell.contentView viewWithTag:103]).text=obdcode;
+     ((UILabel*)[cell.contentView viewWithTag:104]).text=dlydate;
+     ((UILabel*)[cell.contentView viewWithTag:105]).text=money;
     return cell;
     
 }

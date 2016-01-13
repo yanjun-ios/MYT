@@ -44,6 +44,7 @@
         UIImage* img = [UIImage imageNamed:imgname];
         UIImage *imgsel=[UIImage imageNamed:imgnameSel];
         [myView addButtonWithImage:img selectedImage:imgsel];
+        
     }
     //在myView上面画一条线
     UIView* line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, myView.frame.size.width, 1)];
@@ -63,7 +64,7 @@
     
     self.selectedIndex=to;
     if(to==0)
-   {
+   {self.title=@"客户资料";
 //        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
 //        [alert show];
     }
