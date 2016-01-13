@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_year;
 @property (weak, nonatomic) IBOutlet UIButton *btn_FirstMonth;
 @property (weak, nonatomic) IBOutlet UIButton *btn_endMonth;
+@property(nonatomic,assign)NSString * userID;
 @end

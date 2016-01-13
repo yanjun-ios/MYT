@@ -149,11 +149,11 @@
 - (IBAction)click_qiye:(id)sender {
     qiyeorperson=1;
     btnSelected.selected=NO;
-    [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
+    [btnSelected setImage:[UIImage imageNamed:@"个体户"] forState:UIControlStateNormal];
     _btn_qiye.selected=YES;
     btnSelected=_btn_qiye;
     
-    [btnSelected setImage:[UIImage imageNamed:@"cusTypeSel"] forState:UIControlStateSelected];
+    [btnSelected setImage:[UIImage imageNamed:@"企业"] forState:UIControlStateSelected];
 }
 
 - (IBAction)click_finish:(id)sender {
@@ -225,11 +225,11 @@
 - (IBAction)click_person:(id)sender {
     qiyeorperson=0;
     btnSelected.selected=NO;
-    [btnSelected setImage:[UIImage imageNamed:@"quan"] forState:UIControlStateNormal];
+    [btnSelected setImage:[UIImage imageNamed:@"个体户"] forState:UIControlStateNormal];
     _btn_person.selected=YES;
     btnSelected=_btn_person;
     
-    [btnSelected setImage:[UIImage imageNamed:@"cusTypeSel"] forState:UIControlStateSelected];
+    [btnSelected setImage:[UIImage imageNamed:@"企业"] forState:UIControlStateSelected];
 }
 
 @end

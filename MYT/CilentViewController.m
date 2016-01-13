@@ -33,7 +33,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
   
-        [_tableview reloadData];
+    [_tableview reloadData];
     
     
 }
@@ -109,7 +109,6 @@
     
 }
 - (void)viewDidLoad {
-   
     
     callCenter = [[CTCallCenter alloc] init];
     _tableview.delegate=self;
@@ -295,15 +294,15 @@
         [cell.contentView addSubview:line];
         
         //创建添加联系人按钮
-        UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 30, 30)];
-        [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 23 , 23)];
+        [btnadd setImage:[UIImage imageNamed:@"添加客户"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnadd];
         btnadd.tag=200;
         [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
         
         //创建客户详情按钮
-        UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
-        [btnto setImage:[UIImage imageNamed:@"toright"] forState:UIControlStateNormal];
+        UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-35, 15, 12, 19)];
+        [btnto setImage:[UIImage imageNamed:@"向右"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnto];
         btnto.tag=190;
         [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];
@@ -335,7 +334,7 @@
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
                 btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+                [btn_contact setImage:[UIImage imageNamed:@"电话"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
                 int phonenumber=((NSNumber*)contacts_phone).intValue;
                 btn_contact.tag=phonenumber;
@@ -357,7 +356,7 @@
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
                 btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn_contact setImage:[UIImage imageNamed:@"phone"]  forState:UIControlStateNormal];
+                [btn_contact setImage:[UIImage imageNamed:@"电话小"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
                 int phonenumber=((NSNumber*)contacts_phone).intValue;
                 btn_contact.tag=phonenumber;

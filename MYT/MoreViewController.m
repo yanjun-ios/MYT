@@ -90,7 +90,7 @@
         cell.imageView.image=[UIImage imageNamed:@"checkUpdate"];
         UIImageView* imgV=[[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth-50, 0, 30, 20)];
         imgV.center=CGPointMake(imgV.center.x, cell.center.y);
-        imgV.image=[UIImage imageNamed:@"new"];
+        imgV.image=[UIImage imageNamed:@"NEW"];
         [cell.contentView addSubview:imgV];
         cell.textLabel.text=@"检查更新";
     }

@@ -17,7 +17,7 @@
 {
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithTitle:@""
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
                                  
                                  style:UIBarButtonItemStyleDone
                                  
@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithTitle:@""
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
                                  
                                  style:UIBarButtonItemStyleDone
                                  

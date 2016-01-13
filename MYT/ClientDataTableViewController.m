@@ -16,8 +16,34 @@
 @end
 
 @implementation ClientDataTableViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
+}
 - (void)viewDidLoad {
+    self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    //barbtn.image=searchimage;
+    //self.navigationItem.rightBarButtonItem=barbtn;
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
    _clientId= [NetRequestManager sharedInstance].clientId;
  if(currentVersion>=7)
  {

@@ -125,11 +125,11 @@ static Z_NetRequestManager * sharedInstance = nil;
 {
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:year forKey:@"year"];
-    [parDic setValue:bengin forKey:@"begin_month"];
-    [parDic setValue:end forKey:@"end_month"];
-    [parDic setValue:userid forKey:@"Userid"];
+    [parDic setValue:bengin forKey:@"monthS"];
+    [parDic setValue:end forKey:@"monthE"];
+    [parDic setValue:userid forKey:@"userid"];
     __block NSDictionary* jsonDic;
-    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@""] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getMyOrders.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic = (NSDictionary*)responseObject;
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.superclass qq_performSVHUDBlock:^{

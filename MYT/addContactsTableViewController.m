@@ -30,8 +30,7 @@
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithTitle:@"完成"
-                                 
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
                                  style:UIBarButtonItemStyleDone
                                  
                                  target:self
@@ -50,7 +49,7 @@
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithTitle:@"完成"
+                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
 
                                  style:UIBarButtonItemStyleDone
                                  
