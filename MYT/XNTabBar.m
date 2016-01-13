@@ -60,9 +60,9 @@
     [btn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
 
     //如果是第一个按钮, 则选中(按顺序一个个添加)
-//    if (self.subviews.count == 1) {
-//        [self clickBtn:btn];
-//    }
+    if (self.subviews.count == 1) {
+        [self clickBtn:btn];
+    }
 }
 
 /**专门用来布局子视图, 别忘了调用super方法*/
