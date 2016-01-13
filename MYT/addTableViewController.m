@@ -17,6 +17,7 @@
     NSString* longi;
     NSMutableDictionary* addcusjson;
     NSDictionary* dic;
+     UIAlertView *alert ;
     int qiyeorperson;
 }
 @end
@@ -57,6 +58,13 @@
     _TF_website.delegate=self;
     btnSelected=_btn_qiye;//默认为企业
   
+    alert = [[UIAlertView alloc] initWithTitle:@"定位提示"
+                                       message:@"客户在你当前位置吗?"
+                                      delegate:self
+                             cancelButtonTitle:@"NO"
+                             otherButtonTitles:@"YES",nil];
+    alert.delegate=self;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Getlocation:) name:@"coordinate"  object:nil];
     [super viewDidLoad];
     
@@ -67,7 +75,31 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==0) {
+       [self performSegueWithIdentifier:@"getlocation" sender:self];
+        NSLog(@"你点击了取消");
+        
+    }else if (buttonIndex==1){
+        [[Z_NetRequestManager sharedInstance]getlongandlati];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 刷新表格
+            
+            NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
+            lati=[location objectForKey:@"lati"];
+            longi=[location objectForKey:@"longi"];
+            NSLog(@"%@,%@",lati,longi);
+            _locati.text=[NSString stringWithFormat:@"纬度%@，经度%@",lati,longi];
+            [SVProgressHUD showSuccessWithStatus:@"获取位置成功"];
+            
+            
+        });
+               NSLog(@"你点击了确定");
+        
+    }
+    
+}
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     
@@ -95,6 +127,7 @@
     
 }
 - (IBAction)Click_GetLocation:(id)sender {
+    [alert  show];
    /* [[Z_NetRequestManager sharedInstance]getlongandlati];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
@@ -108,7 +141,7 @@
         
     });//得到经纬度得时间会有延迟 详情见map方法
 */
-    [self performSegueWithIdentifier:@"getlocation" sender:self];
+   // [self performSegueWithIdentifier:@"getlocation" sender:self];
     
     //
 }

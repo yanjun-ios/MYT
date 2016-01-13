@@ -8,6 +8,8 @@
 
 #import "Z_NetRequestManager.h"
 #import "UIViewController+Helper.h"
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
 static Z_NetRequestManager * sharedInstance = nil;
 @implementation Z_NetRequestManager
 {
@@ -15,6 +17,9 @@ static Z_NetRequestManager * sharedInstance = nil;
      CLGeocoder* _geocoder;
     float longi;
     float lati;
+    NSString *begin_hour,*begin_minute,*begin_ms,*end_hour,*end_minute,*end_ms;
+    CTCallCenter *callCenter;
+
 }
 + (Z_NetRequestManager *)sharedInstance{
     if (sharedInstance == nil) {
@@ -133,5 +138,102 @@ static Z_NetRequestManager * sharedInstance = nil;
         
     }];
     return jsonDic;
+}
+//打电话及通话时间
+-(NSString*)call:(id)sender view:(UIView*)view
+{
+    __block NSString* calltime;
+    UIButton* btn =  (UIButton*)sender;
+    int phonenumber=(int)btn.tag;
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%d",phonenumber];
+    UIWebView * callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+    [view addSubview:callWebview];
+    
+    
+    callCenter.callEventHandler=^(CTCall* call){
+        
+        if (call.callState == CTCallStateDialing){
+            
+            NSLog(@"Call Dialing");
+            [self performSelectorOnMainThread:@selector(beginTalktime:) withObject:nil waitUntilDone:YES];
+        }
+        
+        if (call.callState == CTCallStateConnected){
+            
+            NSLog(@"Call Connected");
+            
+            
+            
+            
+            
+        }
+        
+        if (call.callState == CTCallStateDisconnected){
+            
+            [self performSelectorOnMainThread:@selector(closeTalktime:) withObject:nil waitUntilDone:YES];
+            
+            NSLog(@"Call Disconnected");
+            calltime=[self time:begin_hour begin_minute:begin_minute begin_ms:begin_ms endhour:end_hour end_minute:end_minute end_ms:end_ms];
+        }
+        
+    };
+    
+    NSLog(@"打电话中");
+    return calltime;
+}
+-(void)beginTalktime
+{
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+    // NSString hour=[formatter stringFromDate:[NSDate date]];
+    begin_hour = [formatter stringFromDate:[NSDate date]];
+    begin_hour=[begin_hour stringByReplacingOccurrencesOfString:@"时" withString:@""];
+    [formatter setDateFormat:@"mm"];
+    begin_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    begin_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",begin_hour,begin_minute,begin_ms);
+}
+-(void)closeTalktime
+{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+    end_hour = [formatter stringFromDate:[NSDate date]];
+    end_hour=[end_hour stringByReplacingOccurrencesOfString:@"时" withString:@""];
+    [formatter setDateFormat:@"mm"];
+    end_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    end_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",end_hour,end_minute,end_ms);
+}
+-(NSString*)time:(NSString*)begin_h begin_minute:(NSString*)begin_m begin_ms:(NSString*)begin_s endhour:(NSString*)end_h end_minute:(NSString*)end_m end_ms:(NSString*)end_s
+{
+    NSString* cha;
+    int cha_hour ,cha_minute,cha_ms;
+    int bh=[begin_h intValue];
+    int bm=[begin_m intValue];
+    int bs=[begin_s intValue];
+    int eh=[end_h intValue];
+    int em=[end_m intValue];
+    int es=[end_s intValue];
+    if (eh>=bh) {
+        cha_hour=eh-bh;
+    }
+    else
+        cha_hour=eh+24-bh;
+    if (em>=bm) {
+        cha_minute=em-bm;
+    }
+    else
+        cha_minute=em+60-bm;
+    if (es>=bs) {
+        cha_ms=es-bs;
+    }
+    else
+        cha_ms=es+60-bs;
+    cha=[NSString stringWithFormat:@"拨打时间为%d时%d份%d秒",cha_hour,cha_minute,cha_ms];
+    return  cha;
 }
 @end
