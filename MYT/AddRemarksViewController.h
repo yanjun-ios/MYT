@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AddRemarksViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end

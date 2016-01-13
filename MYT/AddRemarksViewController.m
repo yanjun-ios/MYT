@@ -7,7 +7,8 @@
 //
 
 #import "AddRemarksViewController.h"
-
+#import "NetRequestManager.h"
+#import "QQRequestManager.h"
 @interface AddRemarksViewController ()
 
 @end
@@ -17,13 +18,70 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 
+                                 initWithTitle:@"完成"
+                                 
+                                 style:UIBarButtonItemStyleDone
+                                 
+                                 target:self
+                                 
+                                 action:@selector(finishclick)];
+    self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
 }
 
 - (void)viewDidLoad {
-   
+  
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)finishclick
+{
+
+   NSString*  Userid= [[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    NSString* Clientid=[NSString stringWithFormat:@"%d",[NetRequestManager sharedInstance].clientId];
+    NSString* Content=_textView.text;
+    if (Content.length==0) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"请输入备注内容！"];
+        }];
+    }
+    else if (Content.length>100)
+    {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"内容太长，无法提交！"];
+        }];
+    }else
+    {
+        NSMutableDictionary* pardic=[[NSMutableDictionary alloc]init];
+        [pardic setValue:Userid forKey:@"userid"];
+        [pardic setValue:Clientid forKey:@"cusid"];
+        [pardic setValue:Content forKey:@"cont"];
+       NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:pardic];
+        NSMutableDictionary* paramapDic=[[NSMutableDictionary alloc]init];
+        [paramapDic setObject:parStr forKey:@"paraMap"];
+        [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCusRemark.action"] parameters:paramapDic success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSDictionary* dic=responseObject;
+            int status=((NSNumber*)[dic objectForKey:@"status"]).intValue;
+            if (status==1) {
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showSuccessWithStatus:[dic objectForKey:@"message"]];
+                }];
+            }else
+            {
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:[dic objectForKey:@"message"]];
+                }];
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"网络请求错误，请检查网络!"];
+            }];
+
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

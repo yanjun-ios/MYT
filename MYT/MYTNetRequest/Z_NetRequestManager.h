@@ -18,5 +18,6 @@
 -(void)getlongandlati;
 -(NSDictionary *)getlongla;
 -(NSDictionary*)getoderDataByYear:(NSString*)year beginMonth:(NSString*)bengin endMonth:(NSString*)end userId:(NSString*)userid;
+-(NSString*)call:(id)sender view:(UIView*)view;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PhoneTableViewController.h"
 #import "XNTabBarController.h"
+#import "Z_NetRequestManager.h"
 @interface PhoneTableViewController ()
 
 @end
@@ -109,7 +110,8 @@
 //点击打电话按钮拨打电话
 -(void)clickPhoneNumber:(UIButton*)btn
 {
-    
+    //给自己团队的人打电话不需要上传任何数据
+    [[Z_NetRequestManager sharedInstance] call:btn view:self.view];
 }
 
 /*
