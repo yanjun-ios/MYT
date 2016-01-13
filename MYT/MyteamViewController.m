@@ -85,6 +85,10 @@
    int   Month = [dateComponent month];
      Theteamid = [[NSUserDefaults standardUserDefaults] objectForKey:@"dep_id"];
      Theuserid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    //将时间按钮调整至当月时间
+    [_year setTitle:[NSString stringWithFormat:@"%d",Year] forState:0];
+    [_monthone setTitle:[NSString stringWithFormat:@"%d月",Month] forState:0];
+    [_monthtwo setTitle:[NSString stringWithFormat:@"%d月",Month] forState:0];
 [self getteamDataByYear:[NSString stringWithFormat:@"%d",Year] beginMonth:[NSString stringWithFormat:@"%d",Month] endMonth:[NSString stringWithFormat:@"%d",Month]  teamId:Theteamid userId:Theuserid];
    
     // Do any additional setup after loading the view.
@@ -173,7 +177,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-        return 10;
+    return [[jsonDic objectForKey:@"list"] count];
+        //return 10;
    
 }
 
@@ -226,30 +231,30 @@
         }
         
     }
-    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
-    
-    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
-    btnGread.tag=10000+indexPath.row;
-    [btnGread setTitle:@"0万" forState:0];
-    
-    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
-    btnfollow.tag=20000+indexPath.row;
-   [btnfollow setTitle:@"%80" forState:0];
-//    UILabel* staffname= (UILabel*)[cell.contentView viewWithTag:1000];
-//   int isManager =((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"lev"]).intValue;
-//    if (isManager==1){
-//        //经理的姓名为红色
-//        staffname.textColor=[UIColor redColor];
-//    }
-//    staffname.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
+//    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
 //    
 //    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
 //    btnGread.tag=10000+indexPath.row;
-//    [btnGread setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"] forState:0];
+//    [btnGread setTitle:@"0万" forState:0];
 //    
 //    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
 //    btnfollow.tag=20000+indexPath.row;
-//    [btnfollow setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"rate"] forState:0];
+//   [btnfollow setTitle:@"%80" forState:0];
+    UILabel* staffname= (UILabel*)[cell.contentView viewWithTag:1000];
+   int isManager =((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"lev"]).intValue;
+    if (isManager==1){
+        //经理的姓名为红色
+        staffname.textColor=[UIColor redColor];
+    }
+    staffname.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
+    
+    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
+    btnGread.tag=10000+indexPath.row;
+    [btnGread setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"] forState:0];
+    
+    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
+    btnfollow.tag=20000+indexPath.row;
+    [btnfollow setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"rate"] forState:0];
         return cell;
  
 
@@ -451,6 +456,12 @@
     [parDic setValue:userid forKey:@"userid"];
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic = (NSDictionary*)responseObject;
+        if ([[jsonDic objectForKey:@"list"] count]==0) {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"暂时还没有任何数据！"];
+            }];
+
+        }
         [_tableview1 reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

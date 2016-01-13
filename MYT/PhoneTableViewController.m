@@ -15,13 +15,15 @@
 @implementation PhoneTableViewController
 
 - (void)viewDidLoad {
+    if ([[_getTeamDic objectForKey:@"list"] count]==0) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"暂时还没有任何数据"];
+        }];
+
+    }
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,7 +57,7 @@
         name.tag=1000;
         [cell.contentView addSubview:name];
         
-        //电话
+        //电话号码
         UILabel* phoneNumber=[[UILabel alloc]init];
         phoneNumber.frame=CGRectMake(0, 0, 200, 20);
         phoneNumber.center=CGPointMake(ScreenWidth/2, 22);
@@ -93,14 +95,14 @@
     return cell;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+
       return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    //return [[_getTeamDic objectForKey:@"list"] count];
-    return 10;
+
+    return [[_getTeamDic objectForKey:@"list"] count];
+    //return 10;
 }
 
 
