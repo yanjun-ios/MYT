@@ -11,6 +11,8 @@
 #import "KCAnnotation.h"
 @interface MapViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *la_place;
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *customer_behind;
 @property (strong,nonatomic) CLLocationManager * locationManager;

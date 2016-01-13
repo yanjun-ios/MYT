@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -4628,63 +4628,61 @@
                                             <segue destination="zkx-Ml-uBe" kind="push" id="5Dp-Ma-leV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RzS-Ew-Dvk">
-                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oj4-sW-k67">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="FC0-Gb-BZc"/>
-                                            <constraint firstAttribute="width" constant="46" id="qsT-Ql-NUp">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="60"/>
-                                            </constraint>
+                                            <constraint firstAttribute="width" constant="82" id="1ul-VR-OEH"/>
+                                            <constraint firstAttribute="height" constant="36" id="B17-xI-lV2"/>
                                         </constraints>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="FC0-Gb-BZc"/>
-                                                <exclude reference="qsT-Ql-NUp"/>
+                                                <exclude reference="1ul-VR-OEH"/>
+                                                <exclude reference="B17-xI-lV2"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="constraints">
-                                                <include reference="FC0-Gb-BZc"/>
-                                                <include reference="qsT-Ql-NUp"/>
+                                                <include reference="1ul-VR-OEH"/>
+                                                <include reference="B17-xI-lV2"/>
                                             </mask>
                                         </variation>
-                                    </button>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Nm2-1c-DBV" secondAttribute="trailing" constant="23" id="ch8-ql-tzA"/>
+                                    <constraint firstItem="oj4-sW-k67" firstAttribute="top" secondItem="zuE-ib-i4v" secondAttribute="top" constant="7" id="isN-JJ-5mt"/>
+                                    <constraint firstItem="oj4-sW-k67" firstAttribute="leading" secondItem="zuE-ib-i4v" secondAttribute="leading" constant="22" id="jia-Qq-DI1"/>
                                     <constraint firstAttribute="height" constant="50" id="kEH-iM-2t5"/>
-                                    <constraint firstItem="RzS-Ew-Dvk" firstAttribute="leading" secondItem="zuE-ib-i4v" secondAttribute="leading" constant="14" id="nms-q3-H9D"/>
-                                    <constraint firstItem="RzS-Ew-Dvk" firstAttribute="top" secondItem="zuE-ib-i4v" secondAttribute="top" constant="10" id="rpd-0y-Ehr"/>
                                     <constraint firstItem="Nm2-1c-DBV" firstAttribute="top" secondItem="zuE-ib-i4v" secondAttribute="top" constant="10" id="ww8-54-uHK"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="Nm2-1c-DBV"/>
-                                        <exclude reference="RzS-Ew-Dvk"/>
+                                        <exclude reference="oj4-sW-k67"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="kEH-iM-2t5"/>
+                                        <exclude reference="isN-JJ-5mt"/>
+                                        <exclude reference="jia-Qq-DI1"/>
                                         <exclude reference="ch8-ql-tzA"/>
                                         <exclude reference="ww8-54-uHK"/>
-                                        <exclude reference="nms-q3-H9D"/>
-                                        <exclude reference="rpd-0y-Ehr"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="Nm2-1c-DBV"/>
-                                        <include reference="RzS-Ew-Dvk"/>
+                                        <include reference="oj4-sW-k67"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="kEH-iM-2t5"/>
+                                        <include reference="isN-JJ-5mt"/>
+                                        <include reference="jia-Qq-DI1"/>
                                         <include reference="ch8-ql-tzA"/>
                                         <include reference="ww8-54-uHK"/>
-                                        <include reference="nms-q3-H9D"/>
-                                        <include reference="rpd-0y-Ehr"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -4744,6 +4742,7 @@
                     <navigationItem key="navigationItem" title="客户分布" id="leY-8Z-tBw"/>
                     <connections>
                         <outlet property="customer_behind" destination="Ar4-7Q-sFF" id="Gkc-ow-e0x"/>
+                        <outlet property="la_place" destination="oj4-sW-k67" id="1KK-tH-kMY"/>
                         <outlet property="mapView" destination="ye7-DQ-OuZ" id="9w4-EG-oxI"/>
                         <segue destination="YYD-Re-aqo" kind="push" identifier="tabbar" id="eoT-fv-M7m"/>
                     </connections>

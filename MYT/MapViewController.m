@@ -9,7 +9,8 @@
 #import "MapViewController.h"
 #import "NetRequestManager.h"
 #import "XNTabBarController.h"
-@interface MapViewController ()<CLLocationManagerDelegate,MKMapViewDelegate>
+#import "Z_NetRequestManager.h"
+@interface MapViewController ()
 {
     
     CLLocationManager* v;
@@ -33,8 +34,17 @@
    // _locationManager=v;
     //测试一下
     
-    
-    
+    [[Z_NetRequestManager sharedInstance]getlongandlati];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        
+        NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
+        float  lati=((NSNumber*)[location objectForKey:@"lati"]).floatValue;
+        float  longi=((NSNumber*)[location objectForKey:@"longi"]).floatValue;
+        NSLog(@"%f,%f",lati,longi);
+       [self getAddressByLatitude:lati longitude:longi];
+       
+    });
     //定位管理器
     //_locationManager=[[CLLocationManager alloc]init];
     if (![CLLocationManager locationServicesEnabled]) {
@@ -192,7 +202,7 @@
     CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
     NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
     //如果不需要实时定位，使用完即使关闭定位服务
-    // [_locationManager stopUpdatingLocation];
+    //[_locationManager stopUpdatingLocation];
 }
 
 
@@ -227,11 +237,17 @@
 #pragma mark 根据坐标取得地名
 -(void)getAddressByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
     //反地理编码
+    __block NSDictionary *dic;
     CLLocation *location=[[CLLocation alloc]initWithLatitude:latitude longitude:longitude];
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark=[placemarks firstObject];
+        dic=placemark.addressDictionary;
         NSLog(@"详细信息:%@",placemark.addressDictionary);
+        NSLog(@"%@",[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]]);
+        _la_place.text=[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]];
+        
     }];
+   
 }
 
 /*
