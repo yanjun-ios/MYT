@@ -1,57 +1,41 @@
 //
-//  MapViewController.m
+//  MpViewController.m
 //  MYT
 //
-//  Created by YUNRUIMAC on 16/1/10.
+//  Created by YUNRUIMAC on 16/1/13.
 //  Copyright © 2016年 YunRui. All rights reserved.
 //
 
-#import "MapViewController.h"
-#import "NetRequestManager.h"
-#import "XNTabBarController.h"
-#import "Z_NetRequestManager.h"
-@interface MapViewController ()
+#import "MpViewController.h"
+
+@interface MpViewController ()
 {
-    
     CLLocationManager* v;
     CLGeocoder* _geocoder;
-    NSMutableArray *cusDist;
-    int toIndex;
     NSMutableArray * addAnnotations;
-    BOOL ifload;
+    NSMutableArray *cusDist;
 }
 @end
 
-@implementation MapViewController
-
+@implementation MpViewController
+-(void)viewWillAppear:(BOOL)animated
+{}
 - (void)viewDidLoad {
-    //地理编码
+   
     [self initGUI];
-    ifload=YES;
-    addAnnotations=[[NSMutableArray alloc]init];
     cusDist=[[NSMutableArray alloc]init];
-    _geocoder=[[CLGeocoder alloc]init];
-    
+    addAnnotations=[[NSMutableArray alloc]init];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 刷新表格
         
-        
+       
         [self getCusdist];
-        NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
-        float  lati=((NSNumber*)[location objectForKey:@"lati"]).floatValue;
-        float  longi=((NSNumber*)[location objectForKey:@"longi"]).floatValue;
-        NSLog(@"%f,%f",lati,longi);
-        [self getAddressByLatitude:lati longitude:longi];
         
     });
-
-   
-   // _locationManager=v;
-    //测试一下
     
     
-    //定位管理器
-    //_locationManager=[[CLLocationManager alloc]init];
+    
+    _geocoder=[[CLGeocoder alloc]init];
     if (![CLLocationManager locationServicesEnabled]) {
         NSLog(@"定位服务当前可能尚未打开，请设置打开");
         return;
@@ -71,10 +55,8 @@
         //启动跟踪定位
         [_locationManager startUpdatingLocation];
     }
-    
-    
+
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view.
 }
 //获取客户信息列表
@@ -119,7 +101,6 @@
             
     }
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -140,14 +121,15 @@
     
     //设置地图类型
     _mapView.mapType=MKMapTypeStandard;
-    //添加大头针
     
-   
+    
+    
 }
 
 
 #pragma mark 添加大头针
--(void)addAnnotation{
+-(void)addAnnotation
+{
     CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(36.08, 120.35);
     KCAnnotation *annotation1=[[KCAnnotation alloc]init];
     annotation1.title=@"CMJ Studio";
@@ -169,36 +151,17 @@
         annotation1.coordinate=location1;
         [addAnnotations addObject:annotation1];
         [_mapView addAnnotation:annotation1];
-        //[_mapView selectAnnotation:annotation1 animated:YES];
+      //  [_mapView selectAnnotation:annotation1 animated:YES];
         lati=lati+5;
         longi=longi+5;
     }
-    ifload=NO;
+    
+    
+    
+    
 }
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    if (!ifload) {
-        NSArray *array=[NSArray arrayWithArray:addAnnotations];
-        for (int i=0; i<array.count; i++) {
-            if (view.annotation.coordinate.latitude==((MKPointAnnotation*)array[i]).coordinate.latitude) {
-                // clientId=;
-                int clientId=((NSNumber*)(view.annotation.subtitle)).intValue;
-                toIndex=0;
-                [NetRequestManager sharedInstance].clientId=clientId;
-                [self performSegueWithIdentifier:@"tabbar" sender:nil];
-            }
-        }
-    }
-   
-}
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"tabbar"])
-    {
-        XNTabBarController* destinationController=segue.destinationViewController;
-        destinationController.index=toIndex;
-        
-    }
-}
+
+
 #pragma mark - CoreLocation 代理
 #pragma mark 跟踪定位代理方法，每次位置发生变化即会执行（只要定位到相应位置）
 //可以通过模拟器设置一个虚拟位置，否则在模拟器中无法调用此方法
@@ -207,7 +170,7 @@
     CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
     NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
     //如果不需要实时定位，使用完即使关闭定位服务
-    //[_locationManager stopUpdatingLocation];
+   // [_locationManager stopUpdatingLocation];
 }
 
 
@@ -215,11 +178,14 @@
 #pragma mark 根据地名确定地理坐标
 -(void)getCoordinateByAddress:(NSString *)address{
     //地理编码
+    
     [_geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         //取得第一个地标，地标中存储了详细的地址信息，注意：一个地名可能搜索出多个地址
-        CLPlacemark *placemark=[placemarks firstObject];
         
+        CLPlacemark *placemark=[placemarks firstObject];
+       // palceinfor=[NSArray arrayWithArray:placemarks];
         CLLocation *location=placemark.location;//位置
+        NSLog(@"%@",location);
         CLRegion *region=placemark.region;//区域
         NSDictionary *addressDic= placemark.addressDictionary;//详细地址信息字典,包含以下部分信息
         //        NSString *name=placemark.name;//地名
@@ -237,32 +203,27 @@
         //        NSArray *areasOfInterest=placemark.areasOfInterest; //关联的或利益相关的地标
         NSLog(@"位置:%@,区域:%@,详细信息:%@",location,region,addressDic);
     }];
+    
 }
 
 #pragma mark 根据坐标取得地名
 -(void)getAddressByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
     //反地理编码
-    __block NSDictionary *dic;
     CLLocation *location=[[CLLocation alloc]initWithLatitude:latitude longitude:longitude];
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark=[placemarks firstObject];
-        dic=placemark.addressDictionary;
         NSLog(@"详细信息:%@",placemark.addressDictionary);
-        NSLog(@"%@",[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]]);
-        _la_place.text=[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]];
-        
     }];
-   
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
