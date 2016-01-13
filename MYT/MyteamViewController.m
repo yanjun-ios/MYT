@@ -121,6 +121,7 @@
         if (begin_month>end_month) {
             //将结束月份的值改为与歧视月份相同
             [_monthtwo setTitle:selectedStr forState:UIControlStateNormal];
+            twostr=selectedStr;
         }
         
         [self getteamDataByYear:BtnyearLab beginMonth:[selectedStr substringToIndex:(selectedStr.length-1)] endMonth:[twostr substringToIndex:(twostr.length-1)] teamId:Theteamid userId:Theuserid];
@@ -133,6 +134,7 @@
         if (begin_month>end_month) {
             //将结束月份的值改为与歧视月份相同
             [_monthone setTitle:selectedStr forState:UIControlStateNormal];
+            firStr=selectedStr;
         }
         [self getteamDataByYear:BtnyearLab beginMonth:[firStr substringToIndex:(firStr.length-1)] endMonth:[selectedStr substringToIndex:(selectedStr.length-1)] teamId:Theteamid userId:Theuserid];
     }

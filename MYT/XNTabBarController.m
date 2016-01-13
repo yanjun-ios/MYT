@@ -63,11 +63,12 @@
 {
     
     self.selectedIndex=to;
-    if(to==0)
-   {self.title=@"客户资料";
-//        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
-//        [alert show];
-    }
+//    if(to==0)
+//   {
+//       self.title=@"客户资料";
+////        UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
+////        [alert show];
+//    }
     switch (to) {
         case 0:
             self.title=@"客户资料";

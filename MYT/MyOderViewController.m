@@ -66,7 +66,7 @@
 }
 -(void)Getmyorder:(NSString *)year beginmonth:(NSString*)begin endmonth:(NSString*)end
 {
-   NSDictionary *dic=[[Z_NetRequestManager sharedInstance]getoderDataByYear:btn_year.titleLabel.text beginMonth:_btn_FirstMonth.titleLabel.text endMonth:_btn_endMonth.titleLabel.text userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];//获取到数据
+   NSDictionary *dic=[[Z_NetRequestManager sharedInstance]getoderDataByYear:year beginMonth:begin endMonth:end userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];//获取到数据
     orderlist=[dic objectForKey:@"list"];
     
 }
@@ -100,9 +100,10 @@
     UIButton* btn=sender.btnSender;
     NSString* firStr = _btn_FirstMonth.titleLabel.text;
     NSString* twostr =  _btn_endMonth.titleLabel.text;
+    NSString* yearStr=btn_year.titleLabel.text;
     
     if (btn.tag==120) {
-        [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
+        [self Getmyorder:[selectedStr substringToIndex:(selectedStr.length-1)] beginmonth:[firStr substringToIndex:(firStr.length-1)] endmonth:[twostr substringToIndex:(twostr.length-1)]];
         //点击了年
     }else if(btn.tag==121)
     {
@@ -112,8 +113,9 @@
         if (begin_month>end_month) {
             //将结束月份的值改为与歧视月份相同
             [_btn_endMonth setTitle:selectedStr forState:UIControlStateNormal];
+            twostr=selectedStr;
         }
-          [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
+          [self Getmyorder:[yearStr substringToIndex:(yearStr.length-1)] beginmonth:[selectedStr substringToIndex:(selectedStr.length-1)] endmonth:[twostr substringToIndex:(twostr.length-1)] ];
     }else if(btn.tag==122)
     {
         //点击了第二个月
@@ -122,8 +124,9 @@
         if (begin_month>end_month) {
             //将结束月份的值改为与歧视月份相同
             [_btn_FirstMonth setTitle:selectedStr forState:UIControlStateNormal];
+            firStr=selectedStr;
         }
-         [self Getmyorder:[btn.titleLabel.text substringToIndex:(btn.titleLabel.text.length-1)] beginmonth:[_btn_FirstMonth.titleLabel.text substringToIndex:(_btn_FirstMonth.titleLabel.text.length-1)] endmonth:[_btn_endMonth.titleLabel.text substringToIndex:(_btn_endMonth.titleLabel.text.length-1)] ];
+         [self Getmyorder:[yearStr substringToIndex:(yearStr.length-1)] beginmonth:[firStr substringToIndex:(firStr.length-1)] endmonth:[selectedStr substringToIndex:(selectedStr.length-1)] ];
         
     }
     [_mytableview reloadData];
