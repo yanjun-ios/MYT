@@ -11,5 +11,7 @@
 @interface MainViewController : UIViewController
 - (IBAction)click_put:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *click_tocompany;
+- (IBAction)click_tocompany:(id)sender;
 
 @end

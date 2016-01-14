@@ -12,10 +12,10 @@
 @interface TreeTableView ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *arr;
+   
 }
 
 @property (nonatomic , strong) NSArray *data;//传递过来已经组织好的数据（全量数据）
-
 @property (nonatomic , strong) NSMutableArray *tempData;//用于存储数据源（部分数据）
 
 
@@ -107,11 +107,11 @@
             // {
             
                 if (node.depth==0) {
-                    image.frame=CGRectMake(0, 12,15, 15);
+                    image.frame=CGRectMake(2, 16,8, 8);
                 }
                 
                 else
-                    image.frame=CGRectMake(25, 15,15, 15);
+                    image.frame=CGRectMake(25, 16,8, 8);
             
             
            
@@ -202,7 +202,7 @@
     label3.text=node.name;
  
         UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-        image.image=[UIImage imageNamed:@"1"];
+        image.image=[UIImage imageNamed:@"公司库存向右"];
     
   
   
@@ -252,6 +252,7 @@
     BOOL expand = NO;
     for (int i=0; i<_data.count; i++) {
         Node *node = [_data objectAtIndex:i];
+        NSLog(@"%d,%d",node.parentId,parentNode.nodeId);
         if (node.parentId == parentNode.nodeId) {
             node.expand = !node.expand;
             if (node.expand) {
@@ -260,7 +261,7 @@
                 endPosition++;
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"2"];
+                    image.image=[UIImage imageNamed:@"公司库存向下"];
                 
                 
                 
@@ -271,7 +272,7 @@
                 endPosition = [self removeAllNodesAtParentNode:parentNode];
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"1"];
+                    image.image=[UIImage imageNamed:@"公司库存向右"];
                 
                 
                 

@@ -334,7 +334,7 @@
                 [btn_contact setTitle:contacts_name forState:UIControlStateNormal];
                 btn_contact.titleLabel.font = [UIFont systemFontOfSize: 12.0];
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [btn_contact setImage:[UIImage imageNamed:@"电话"]  forState:UIControlStateNormal];
+                [btn_contact setImage:[UIImage imageNamed:@"电话小"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
                 int phonenumber=((NSNumber*)contacts_phone).intValue;
                 btn_contact.tag=phonenumber;
