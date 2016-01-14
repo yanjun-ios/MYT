@@ -26,7 +26,7 @@
                                  
                                  target:self
                                  
-                                 action:@selector(finishclick)];
+                                 action:@selector(updateclick)];
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
@@ -40,7 +40,7 @@
                                  
                                  target:self
                                  
-                                 action:@selector(finishclick)];
+                                 action:@selector(updateclick)];
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
@@ -105,7 +105,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)updateclick
+{
 
+}
 - (IBAction)clickLocation:(id)sender {
     
     //这里直接跳转到地图的页面上面去

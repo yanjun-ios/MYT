@@ -8,16 +8,19 @@
 
 #import "RemindViewController.h"
 #import "ButtomView.h"
+#import "QQRequestManager.h"
+#import "MJRefresh.h"
 @interface RemindViewController ()
-
+{
+    int num;
+   __block NSMutableArray* jsonarry;
+}
 @end
 
 @implementation RemindViewController
 
 - (void)viewDidLoad {
-    
-    _tableview.delegate=self;
-    _tableview.dataSource=self;
+   
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
     self.navigationController.navigationBarHidden=NO;
@@ -40,6 +43,15 @@
     
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
+    
+    //设置刷新
+    num=1;
+    _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loaData)];
+    _tableview.mj_footer.automaticallyHidden = NO;
+    [_tableview.mj_footer beginRefreshing];
+    _tableview.delegate=self;
+    _tableview.dataSource=self;
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -50,13 +62,13 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return [[[jsonarry objectAtIndex:section] objectForKey:@"follows"] count]+1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {return  25;}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return [jsonarry count];
 }
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
@@ -64,7 +76,9 @@
 {//这儿改的时候根据section integer
     UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, _tableview.frame.size.width, 25)];
     UILabel *remindtime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, _tableview.frame.size.width,20)];
-    remindtime.text=@"2015年8月14日入库";
+    
+    //remindtime.text=@"2015年8月14日入库";
+    remindtime.text=[[jsonarry objectAtIndex:section] objectForKey:@"rmdtime"];
     remindtime.font=[UIFont fontWithName:@"ArialMT" size:14];
     remindtime.textAlignment=NSTextAlignmentCenter;
     remindtime.textColor=[UIColor orangeColor];//入库时间
@@ -137,17 +151,100 @@
 {
     if(indexPath.row==0)
     {
-        UITableViewCell *cell=[_tableview dequeueReusableCellWithIdentifier:@"cell1"];
+        UITableViewCell *cell=[_tableview dequeueReusableCellWithIdentifier:@"cell3"];
+        if(!cell)
+        {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+            //设置产品种类
+            UILabel* productType=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 150, 20)];
+            productType.font=[UIFont systemFontOfSize:14];
+            productType.textColor=[UIColor darkGrayColor];
+            productType.tag=1000;
+            productType.textAlignment=NSTextAlignmentLeft;
+            [cell.contentView addSubview:productType];
 
+            //设置产品匹配数
+            UILabel* mateNum=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 20)];
+            mateNum.center=CGPointMake(ScreenWidth/2, 22);
+            mateNum.font=[UIFont systemFontOfSize:14];
+            mateNum.textColor=[UIColor darkGrayColor];
+            mateNum.tag=1001;
+            mateNum.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:mateNum];
+            
+            //设置未跟进数
+            UILabel* NotFollow=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-170, 12, 150, 20)];
+            NotFollow.font=[UIFont systemFontOfSize:14];
+            NotFollow.textColor=[UIColor darkGrayColor];
+            NotFollow.tag=1002;
+            NotFollow.textAlignment=NSTextAlignmentRight;
+            [cell.contentView addSubview:NotFollow];
+        }
+//        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品种类 20"];
+//        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 20"];
+//        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 20"];
+        NSDictionary* follows=[jsonarry objectAtIndex:[indexPath section]];
+        
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品数 %@",[follows objectForKey:@"ctmat"]];
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 %@",[follows objectForKey:@"ctmatch"]];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 %@",[follows objectForKey:@"ctun"]];
         return cell;
     }
     else
     {
-        UITableViewCell *cell1=[_tableview dequeueReusableCellWithIdentifier:@"cell"];
-        
+        UITableViewCell *cell1=[_tableview dequeueReusableCellWithIdentifier:@"cell4"];
+        if(!cell1)
+        {
+            cell1=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell4"];
+            //公司名
+            UILabel* company=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 150, 20)];
+            company.font=[UIFont systemFontOfSize:14];
+            company.textColor=[UIColor darkGrayColor];
+            company.tag=10000;
+            [cell1.contentView addSubview:company];
+            
+            //设置产品种类匹配数
+            UILabel* mateNum=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 12, 40, 20)];
+            mateNum.font=[UIFont systemFontOfSize:14];
+            mateNum.textColor=[UIColor redColor];
+            mateNum.tag=10001;
+            mateNum.textAlignment=NSTextAlignmentCenter;
+            [cell1.contentView addSubview:mateNum];
+            
+            //设置向右边的箭头
+            UIImageView* rightImg=[[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth-20, 14, 10, 15)];
+            [rightImg setImage:[UIImage imageNamed:@"向右"]];
+            [cell1.contentView addSubview:rightImg];
+        }
+          NSArray* follows=[[jsonarry objectAtIndex:[indexPath section]] objectForKey:@"follows"];
+        NSDictionary* cus= [follows objectAtIndex:[indexPath row]];
+        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=[cus objectForKey:@"cusname"];
+        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=[cus objectForKey:@"ctdem"];
         return cell1;
     }
 }
+
+-(void)loaData
+{
+   NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+    [parDic setValue:[NSString stringWithFormat:@"%d",num] forKey:@"pageNum"];
+    [parDic setValue:@"3" forKey:@"pageSize"];
+     [parDic setValue:userid forKey:@"userid"];
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getPushInfo.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        num++;
+        NSArray* arr=[(NSDictionary*)responseObject objectForKey:@"list"];
+        [jsonarry addObjectsFromArray:arr];
+        [_tableview reloadData];
+        [_tableview.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
+            [_tableview.mj_footer endRefreshing];
+        }];
+    }];
+}
+
 /*
 #pragma mark - Navigation
 

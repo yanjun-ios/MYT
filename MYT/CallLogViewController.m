@@ -58,7 +58,10 @@
         [_tableview.mj_footer endRefreshing];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
+            [_tableview.mj_footer endRefreshing];
+        }];
     }];
 }
 //taleview代理方法

@@ -8,17 +8,28 @@
 
 #import "messageCenterViewController.h"
 #import "ButtomView.h"
+#import "MJRefresh.h"
+#import "QQRequestManager.h"
 #import "Utility.h"
+#import "messageDetailViewController.h"
 @interface messageCenterViewController ()
-
+{
+    int num;
+    NSArray* jsonlist;
+    NSString* detail;
+}
 @end
 
 @implementation messageCenterViewController
 
 - (void)viewDidLoad {
-    //消除多余空白行
+    num=1;
+     _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loaData)];
+    _tableView.mj_footer.automaticallyHidden = NO;
+    [_tableView.mj_footer beginRefreshing];
     _tableView.delegate=self;
     _tableView.dataSource=self;
+    //消除多余空白行
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [_tableView  setTableFooterView:view];
@@ -60,7 +71,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return [jsonlist count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -73,46 +84,64 @@
     if(cell==nil)
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identif];
-    }
-    switch (indexPath.row) {
-        case 0:
-            cell.imageView.image=[UIImage imageNamed:@"incomNoti"];
-            cell.textLabel.text=@"放假通知";
-            cell.detailTextLabel.text=@"【公司通知】放假20天";
-            break;
-        case 1:
-            cell.imageView.image=[UIImage imageNamed:@"messNoti"];
-            cell.textLabel.text=@"入库提醒";
-            cell.detailTextLabel.text=@"【入库提醒】放假20天";
-            break;
-        case 2:
-            cell.imageView.image=[UIImage imageNamed:@"Noti"];
-            cell.textLabel.text=@"通知公告";
-            cell.detailTextLabel.text=@"【公司通知】由于公司业绩不错，特组织旅游";
-            break;
-            
-        default:
-            break;
-    }
-    cell.detailTextLabel.textColor=[UIColor darkGrayColor];
-    
-    //初始化时间标签
+        //初始化时间标签
         UILabel* lab_time=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-50, 8, 50, 20)];
         lab_time.font=[UIFont systemFontOfSize:12];
         lab_time.textColor=[UIColor lightGrayColor];
-    lab_time.text=@"10.19";
+        lab_time.tag=100;
+        
+        cell.detailTextLabel.textColor=[UIColor darkGrayColor];
+    }
+    int type=((NSNumber*)[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TYPE"]).intValue;
+    switch (type) {
+        case 0:
+            cell.imageView.image=[UIImage imageNamed:@"入库提醒"];
+            break;
+        case 1:
+            cell.imageView.image=[UIImage imageNamed:@"放假通知"];
+            break;
+        case 2:
+            cell.imageView.image=[UIImage imageNamed:@"通知公告"];
+            break;
+        case 3:
+            cell.imageView.image=[UIImage imageNamed:@"通知公告"];
+            break;
+        default:
+            break;
+    }
     
-    //初始化红点
-    UIView* point =[[UIView alloc]initWithFrame:CGRectMake(ScreenWidth-42, 28, 8, 8)];
-    [[Utility sharedInstance] setLayerView:point borderW:0 borderColor:[UIColor clearColor] radius:4];
-    point.backgroundColor=[UIColor redColor];
-    
-    [cell.contentView addSubview:point];
-    [cell.contentView addSubview:lab_time];
-    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=[UIColor clearColor];
+    cell.textLabel.text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TITLE"];
+    cell.detailTextLabel.text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"CONT"];
+    ((UILabel*)[cell.contentView viewWithTag:100]).text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TIME"];
     return cell;
     
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    detail=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"CONT"];
+    [self performSegueWithIdentifier:@"detail" sender:self];
+}
+
+-(void)loaData
+{
+   NSString* userid= [[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+    [parDic setObject:userid forKey:@"userid"];
+    [parDic setObject:[NSString stringWithFormat:@"%d",num] forKey:@"pageNum"];
+    [parDic setObject:@"10" forKey:@"pageSize"];
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"/msg/list"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        num++;
+        jsonlist=[(NSDictionary*)responseObject objectForKey:@"List"];
+        [_tableView reloadData];
+        [_tableView.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
+             [_tableView.mj_footer endRefreshing];
+        }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,14 +149,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"detail"]) {
+        messageDetailViewController* destination=[segue destinationViewController];
+        destination.getMessageDetail=detail;
+    }
 }
-*/
+
 
 @end

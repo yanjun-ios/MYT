@@ -14,6 +14,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "Y_NetRequestManager.h"
 #import "PhoneTableViewController.h"
+#import "FollowViewController.h"
 @interface MyteamViewController ()
 {
     //Boolean mo,mt,yr;//判断是否点开
@@ -21,6 +22,7 @@
      __block NSDictionary* jsonDic;
     NSString* Theteamid;
     NSString* Theuserid;
+    NSMutableDictionary* toFollowDIc;
 }
 
 @end
@@ -228,7 +230,7 @@
         int ismanager=[[[NSUserDefaults standardUserDefaults] objectForKey:@"profess_state"] intValue];
         if (ismanager==1) {
             //本人是经理，有权限看别人的业绩和跟及率
-            [gread addTarget:self action:@selector(clickGread:) forControlEvents:UIControlEventTouchUpInside];
+            //[gread addTarget:self action:@selector(clickGread:) forControlEvents:UIControlEventTouchUpInside];
              [follow addTarget:self action:@selector(clickFollow:) forControlEvents:UIControlEventTouchUpInside];
         }
         
@@ -280,6 +282,11 @@
         PhoneTableViewController* destination=[segue destinationViewController];
         destination.getTeamDic=jsonDic;
     }
+    else if ([segue.identifier isEqualToString:@"follow"])
+    {
+        FollowViewController* destination=[segue destinationViewController];
+        destination.parDic=toFollowDIc;
+    }
 }
 //点击右上角通讯录按钮
 -(void)phone:(id)sender
@@ -293,20 +300,37 @@
     [self performSegueWithIdentifier:@"performance" sender:nil];
 }
 
-////cell中业绩按钮点击事件
--(void)clickGread:(UIButton*)btn
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Myindent"];
-    [self.navigationController pushViewController:myindent animated:YES];
+//////cell中业绩按钮点击事件(废弃这个方法)
+//-(void)clickGread:(UIButton*)btn
+//{
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    
+//    UIViewController *myindent  = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Myindent"];
+//    [self.navigationController pushViewController:myindent animated:YES];
+//
+//}
 
-}
+
 ////cell中跟机率点击事件
 -(void)clickFollow:(UIButton*)btn
 {
+    int index=btn.tag-20000;
+    //获取职员id
+   NSString* staffid = [[[jsonDic objectForKey:@"list"] objectAtIndex:index] objectForKey:@"staffid"];
+    NSString* Uid=Theuserid;
+    NSString* Fyear=_year.titleLabel.text;
+    NSString* Fbegin=[_monthone.titleLabel.text substringToIndex:_monthone.titleLabel.text.length-1];
+     NSString* Fend=[_monthtwo.titleLabel.text substringToIndex:_monthtwo.titleLabel.text.length-1];
+    toFollowDIc=[[NSMutableDictionary alloc]init];
+    [toFollowDIc setValue:staffid forKey:@"staffid"];
+    [toFollowDIc setValue:Uid forKey:@"userid"];
+    [toFollowDIc setValue:Fyear forKey:@"year"];
+    [toFollowDIc setValue:Fbegin forKey:@"beginMonth"];
+    [toFollowDIc setValue:Fend forKey:@"endMonth"];
     [self performSegueWithIdentifier:@"follow" sender:self];
 }
+
+
 - (IBAction)monthclickone:(id)sender {
     /* if (!mo) {
      _tableview2.hidden=NO;
