@@ -37,7 +37,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginLogo" translatesAutoresizingMaskIntoConstraints="NO" id="F5M-gm-Dhk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="登录LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="F5M-gm-Dhk">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="F5M-gm-Dhk" secondAttribute="height" multiplier="3:1" id="T3g-FM-jMr"/>
@@ -7190,7 +7190,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="3fe-jU-KId"/>
                                                         <constraint firstAttribute="width" constant="30" id="xmw-Wd-5sh"/>
                                                     </constraints>
-                                                    <state key="normal" image="位置图标"/>
+                                                    <state key="normal" image="地图"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="3fe-jU-KId"/>
@@ -9479,16 +9479,14 @@
         <image name="background" width="131" height="309"/>
         <image name="homelogo" width="458" height="175"/>
         <image name="left" width="22" height="22"/>
-        <image name="loginLogo" width="180" height="60"/>
         <image name="ok" width="28" height="27"/>
         <image name="phone" width="20" height="20"/>
         <image name="tabBar3" width="60" height="49"/>
         <image name="title" width="160" height="57"/>
-        <image name="toright" width="15" height="16"/>
+        <image name="toright" width="15" height="15"/>
         <image name="touxiang" width="117" height="117"/>
         <image name="个体户" width="27" height="27"/>
         <image name="企业" width="27" height="27"/>
-        <image name="位置图标" width="20" height="25"/>
         <image name="入库提醒" width="90" height="90"/>
         <image name="全部" width="32" height="33"/>
         <image name="公司库存" width="116" height="116"/>
@@ -9501,7 +9499,8 @@
         <image name="我的订单" width="116" height="116"/>
         <image name="消息中心" width="116" height="116"/>
         <image name="添加客户" width="29" height="30"/>
-        <image name="电话小" width="31" height="31"/>
+        <image name="电话小" width="20" height="20"/>
+        <image name="登录LOGO" width="274" height="81"/>
         <image name="选择" width="15" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>

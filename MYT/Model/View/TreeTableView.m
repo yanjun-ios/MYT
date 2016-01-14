@@ -107,11 +107,11 @@
             // {
             
                 if (node.depth==0) {
-                    image.frame=CGRectMake(0, 12,15, 15);
+                    image.frame=CGRectMake(2, 16,8, 8);
                 }
                 
                 else
-                    image.frame=CGRectMake(25, 15,15, 15);
+                    image.frame=CGRectMake(25, 16,8, 8);
             
             
            
@@ -202,7 +202,7 @@
     label3.text=node.name;
  
         UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-        image.image=[UIImage imageNamed:@"1"];
+        image.image=[UIImage imageNamed:@"公司库存向右"];
     
   
   
@@ -260,7 +260,7 @@
                 endPosition++;
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"2"];
+                    image.image=[UIImage imageNamed:@"公司库存向下"];
                 
                 
                 
@@ -271,7 +271,7 @@
                 endPosition = [self removeAllNodesAtParentNode:parentNode];
                 UIImageView *image=[cell.contentView viewWithTag:13];
                 
-                    image.image=[UIImage imageNamed:@"1"];
+                    image.image=[UIImage imageNamed:@"公司库存向右"];
                 
                 
                 
