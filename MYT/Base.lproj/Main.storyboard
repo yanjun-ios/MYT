@@ -373,7 +373,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="l5y-SJ-0cM" kind="push" id="6mx-gT-1U8"/>
+                                    <action selector="click_tocompany:" destination="yOu-zh-Qhb" eventType="touchUpInside" id="aMC-8E-tKI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zzi-o2-Sjh">
@@ -606,6 +606,7 @@
                     <connections>
                         <segue destination="ga0-8n-Gav" kind="push" id="peS-34-2fH"/>
                         <segue destination="Mzv-WY-uGE" kind="push" identifier="cilentmanage" id="NfW-5C-1Pu"/>
+                        <segue destination="l5y-SJ-0cM" kind="push" identifier="company" id="t1h-SU-kLK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3Q-JZ-Vys" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3645,7 +3646,8 @@
                                                 <exclude reference="ElU-bi-URA"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="174" y="6" width="54" height="18"/>
                                             <mask key="constraints">
                                                 <include reference="ElU-bi-URA"/>
                                             </mask>

@@ -12,10 +12,10 @@
 @interface TreeTableView ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *arr;
+   
 }
 
 @property (nonatomic , strong) NSArray *data;//传递过来已经组织好的数据（全量数据）
-
 @property (nonatomic , strong) NSMutableArray *tempData;//用于存储数据源（部分数据）
 
 
@@ -252,6 +252,7 @@
     BOOL expand = NO;
     for (int i=0; i<_data.count; i++) {
         Node *node = [_data objectAtIndex:i];
+        NSLog(@"%d,%d",node.parentId,parentNode.nodeId);
         if (node.parentId == parentNode.nodeId) {
             node.expand = !node.expand;
             if (node.expand) {

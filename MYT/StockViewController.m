@@ -11,20 +11,42 @@
 #import "Node.h"
 #import "TreeTableView.h"
 #import "ProductdetalViewController.h"
+#import "QQRequestManager.h"
 @interface StockViewController ()<TreeTableCellDelegate>
 {
     NSString *parent;
     NSString *pparent;
     NSString *child;
     NSArray  *data1;
+    NSArray *init;
+    NSMutableArray *nodear;
+    BOOL click;//判断是否点开
+  __block  NSMutableArray  *typearr;//存类型为T的物料类别
+  __block  NSMutableArray  *wularr;//存类型为W的物料类别
 }
 @end
 
 @implementation StockViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+}
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+    
+    click=YES;
+    nodear=[[NSMutableArray alloc] init];
+    typearr=[[NSMutableArray alloc]init];
+    wularr=[[NSMutableArray alloc]init];
+    nodear=[NSMutableArray arrayWithArray:_nodearr];
+    NSLog(@"%@",nodear);
+
+    //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self initData];
+        // 2秒后异步执行这里的代码...
+        
+   // });
+        UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
     view.backgroundColor=[UIColor lightGrayColor];
     UILabel *nameofpro=[[UILabel alloc]initWithFrame:CGRectMake(14, 0, ScreenWidth/3, 30)];
     nameofpro.text=@"产品名称";
@@ -47,13 +69,14 @@
     [view addSubview:mate];
     
     [self.view addSubview:view];
-    [self initData];
+    
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
     self.navigationController.navigationBarHidden=NO;
     self.navigationItem.leftItemsSupplementBackButton=NO;
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
+     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 -(void)Actiondo:(id)sender
@@ -61,9 +84,13 @@
     [self performSegueWithIdentifier:@"need" sender:self];
 }
 -(void)initData{
+   
+   // NSLog(@"%lu",(unsigned long)nodearr.count);
+    
+    //第一层的数据
     
     //----------------------------------中国的省地市关系图3,2,1--------------------------------------------
-    Node *country1 = [[Node alloc] initWithParentId:-1 nodeId:0 name:@"中国" depth:0 expand:YES child:YES];
+  /*  Node *country1 = [[Node alloc] initWithParentId:-1 nodeId:0 name:@"中国" depth:0 expand:YES child:YES];
     Node *province1 = [[Node alloc] initWithParentId:0 nodeId:1 name:@"江苏" depth:1 expand:NO child:YES];
     Node *city1 = [[Node alloc] initWithParentId:1 nodeId:2 name:@"南通" depth:2 expand:NO child:NO];
     //Node *subCity1 = [[Node alloc] initWithParentId:2 nodeId:100 name:@"通州" depth:3 expand:NO];
@@ -96,17 +123,81 @@
     //NSArray *data = [NSArray arrayWithObjects:country1,province1,province2,province3,country2,province4,province5,province6,country3, nil];
     
     NSArray *data = [NSArray arrayWithObjects:country1,province1,city1,city2,city3,province2,city4,city5,province3,city6,country2,province4,province5,city7,province6,city8,city9,country3,province7,province8,province9, nil];
-    data1=[NSArray arrayWithArray:data];
-    
+    data1=[NSArray arrayWithArray:data];*/
+    NSArray *data=nodear;
+    NSLog(@"%@",data);
     TreeTableView *tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
     tableview.treeTableCellDelegate = self;
     [self.view addSubview:tableview];
 }
-
+//初始化Node
 #pragma mark - TreeTableCellDelegate
 -(void)cellClick:(Node *)node{
+    click=!click;
     NSLog(@"%@",node.name);
-    if(node.depth==2)
+    NSLog(@"%d",node.nodeId);
+    if(node.depth==0)
+    {
+    
+            NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+            [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+            NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+            NSString *nodeid=[NSString stringWithFormat:@"%d",node.nodeId];
+            [parDic setValue:nodeid forKey:@"parentid"];
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                NSLog(@"%@",responseObject);
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                        [typearr addObject:dic];
+                    }
+                    else
+                    {
+                        [wularr addObject:dic];
+                    }
+                }
+                for (int i=0; i<typearr.count; i++) {
+                    NSDictionary * typeinfo=[typearr objectAtIndex:i];
+                    int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:NO child:YES];
+                    if (!click) {
+                        [nodear addObject:node1];
+                        
+                    }
+                    else
+                    {
+                        [nodear removeObject:node1];
+                        
+                    }
+                    
+                }
+                for (int i=0; i<wularr.count; i++) {
+                    NSDictionary * wulinfo=[wularr objectAtIndex:i];
+                    int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO];
+                    [nodear addObject:node1];
+                    
+                }
+                //  [self initData];
+                [typearr removeAllObjects];
+                [wularr removeAllObjects];
+                
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                }];
+            }];
+
+      //  }
+       // else
+       // {
+            
+       // }
+        
+}
+       if(node.depth==2)
     {
         for(Node *nd in data1)
         {
