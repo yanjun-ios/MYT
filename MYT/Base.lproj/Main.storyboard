@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -4637,8 +4637,7 @@
                                                 <exclude reference="zl6-wy-76c"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="79" y="15" width="244" height="21"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="constraints">
                                                 <include reference="zl6-wy-76c"/>
                                             </mask>
@@ -6101,6 +6100,7 @@
                         <viewControllerLayoutGuide type="bottom" id="aYK-7d-vbc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="l0d-v6-6ic">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-rG-syc">
@@ -6147,8 +6147,7 @@
                                         <exclude reference="sRV-bt-7Ch"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="64" width="375" height="50"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="4DV-tN-uvx"/>
                                     </mask>
@@ -6177,8 +6176,7 @@
                                                 <exclude reference="QXo-3S-VRR"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="86" y="8" width="220" height="34"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="constraints">
                                                 <include reference="Bog-o6-wVm"/>
                                                 <include reference="QXo-3S-VRR"/>
@@ -6202,8 +6200,7 @@
                                         <exclude reference="QD5-vC-19I"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="749" width="375" height="50"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="eBq-tD-sVa"/>
                                     </mask>
@@ -6216,9 +6213,6 @@
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4rd-hj-uIA">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="114" width="400" height="502"/>
-                                </variation>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6241,16 +6235,16 @@
                                 <exclude reference="4rd-hj-uIA"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="DxW-AR-R6V"/>
-                                <exclude reference="OiI-QH-5Qq"/>
-                                <exclude reference="W7M-NS-9lS"/>
+                                <exclude reference="VSz-f8-KKA"/>
                                 <exclude reference="28P-5Y-thn"/>
                                 <exclude reference="Hh5-9w-mbW"/>
                                 <exclude reference="f7P-qR-XNR"/>
+                                <exclude reference="DxW-AR-R6V"/>
+                                <exclude reference="OiI-QH-5Qq"/>
+                                <exclude reference="W7M-NS-9lS"/>
                                 <exclude reference="177-NH-pYX"/>
                                 <exclude reference="L1t-Od-72x"/>
                                 <exclude reference="b9J-Ik-G0a"/>
-                                <exclude reference="VSz-f8-KKA"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -6260,16 +6254,16 @@
                                 <include reference="4rd-hj-uIA"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="DxW-AR-R6V"/>
-                                <include reference="OiI-QH-5Qq"/>
-                                <include reference="W7M-NS-9lS"/>
+                                <include reference="VSz-f8-KKA"/>
                                 <include reference="28P-5Y-thn"/>
                                 <include reference="Hh5-9w-mbW"/>
                                 <include reference="f7P-qR-XNR"/>
+                                <include reference="DxW-AR-R6V"/>
+                                <include reference="OiI-QH-5Qq"/>
+                                <include reference="W7M-NS-9lS"/>
                                 <include reference="177-NH-pYX"/>
                                 <include reference="L1t-Od-72x"/>
                                 <include reference="b9J-Ik-G0a"/>
-                                <include reference="VSz-f8-KKA"/>
                             </mask>
                         </variation>
                     </view>
@@ -9488,7 +9482,7 @@
         <image name="loginLogo" width="180" height="60"/>
         <image name="ok" width="28" height="27"/>
         <image name="phone" width="20" height="20"/>
-        <image name="tabBar3" width="76" height="49"/>
+        <image name="tabBar3" width="60" height="49"/>
         <image name="title" width="160" height="57"/>
         <image name="toright" width="15" height="16"/>
         <image name="touxiang" width="117" height="117"/>

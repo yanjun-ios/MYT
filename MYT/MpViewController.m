@@ -21,7 +21,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {}
 - (void)viewDidLoad {
-   
+    NSLog(@"ss");
     [self initGUI];
     cusDist=[[NSMutableArray alloc]init];
     addAnnotations=[[NSMutableArray alloc]init];
