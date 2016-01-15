@@ -7,6 +7,8 @@
 //
 
 #import "RemindViewController.h"
+#import "MateclientViewController.h"
+#import "MateProjectViewController.h"
 #import "ButtomView.h"
 #import "QQRequestManager.h"
 #import "MJRefresh.h"
@@ -14,13 +16,15 @@
 {
     int num;
    __block NSMutableArray* jsonarry;
+    NSString* rmdidToRight;//传本次提醒的id参数给详情页面
+    NSString* cusIdToRight;//传递客户id给详情页面
 }
 @end
 
 @implementation RemindViewController
 
 - (void)viewDidLoad {
-   
+    jsonarry=[[NSMutableArray alloc]init];
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
     self.navigationController.navigationBarHidden=NO;
@@ -62,15 +66,15 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
-    //return [[[jsonarry objectAtIndex:section] objectForKey:@"follows"] count]+1;
+   // return 4;
+    return ([[[jsonarry objectAtIndex:section] objectForKey:@"follows"] count]+1);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {return  25;}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //return [jsonarry count];
-    return 2;
+    return [jsonarry count];
+   // return 2;
 }
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
@@ -79,8 +83,8 @@
     UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, _tableview.frame.size.width, 25)];
     UILabel *remindtime=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, _tableview.frame.size.width,20)];
     
-    remindtime.text=@"2015年8月14日入库";
-   // remindtime.text=[[jsonarry objectAtIndex:section] objectForKey:@"rmdtime"];
+    //remindtime.text=@"2015年8月14日入库";
+   remindtime.text=[[jsonarry objectAtIndex:section] objectForKey:@"rmdtime"];
     remindtime.font=[UIFont fontWithName:@"ArialMT" size:14];
     remindtime.textAlignment=NSTextAlignmentCenter;
     remindtime.textColor=[UIColor orangeColor];//入库时间
@@ -134,19 +138,28 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
+        rmdidToRight=[[jsonarry objectAtIndex:indexPath.section] objectForKey:@"rmdid"];
+
         [self performSegueWithIdentifier:@"toclient" sender:self];
-    }
-    else
+        }
+    else{
+        NSArray* follows=[[jsonarry objectAtIndex:indexPath.section] objectForKey:@"follows"];
+        NSDictionary* DIc=[follows objectAtIndex:indexPath.row-1];
+        cusIdToRight=[DIc objectForKey:@"cusid"];
     [self performSegueWithIdentifier:@"tomate" sender:self];
+        
+    }
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"toclient"]) {
-        
+        MateclientViewController* destination=[segue destinationViewController];
+        destination.rmdid=rmdidToRight;
     }
     else if ([segue.identifier isEqualToString:@"tomate"])
     {
-        
+        MateProjectViewController* destination=[segue destinationViewController];
+        destination.cusId=cusIdToRight;
     }
 }//有数据传参数
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -182,14 +195,14 @@
             NotFollow.textAlignment=NSTextAlignmentRight;
             [cell.contentView addSubview:NotFollow];
         }
-        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品种类 20"];
-        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 20"];
-        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 20"];
-//        NSDictionary* follows=[jsonarry objectAtIndex:[indexPath section]];
-//        
-//        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品数 %@",[follows objectForKey:@"ctmat"]];
-//        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 %@",[follows objectForKey:@"ctmatch"]];
-//        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 %@",[follows objectForKey:@"ctun"]];
+//        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品种类 20"];
+//        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 20"];
+//        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 20"];
+        NSDictionary* follows=[jsonarry objectAtIndex:[indexPath section]];
+        
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品数 %@",[follows objectForKey:@"ctmat"]];
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 %@",[follows objectForKey:@"ctmatch"]];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 %@",[follows objectForKey:@"ctun"]];
         return cell;
     }
     else
@@ -218,12 +231,12 @@
             [rightImg setImage:[UIImage imageNamed:@"向右"]];
             [cell1.contentView addSubview:rightImg];
         }
-//          NSArray* follows=[[jsonarry objectAtIndex:[indexPath section]] objectForKey:@"follows"];
-//        NSDictionary* cus= [follows objectAtIndex:[indexPath row]];
-//        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=[cus objectForKey:@"cusname"];
-//        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=[cus objectForKey:@"ctcusmatch"];
-        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=@"huadenumye";
-        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=@"30";
+          NSArray* follows=[[jsonarry objectAtIndex:[indexPath section]] objectForKey:@"follows"];
+        NSDictionary* cus= [follows objectAtIndex:[indexPath row]-1];
+        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=[cus objectForKey:@"cusname"];
+        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=[cus objectForKey:@"ctcusmatch"];
+//        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=@"huadenumye";
+//        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=@"30";
         return cell1;
     }
 }
@@ -239,6 +252,7 @@
         num++;
         NSArray* arr=[(NSDictionary*)responseObject objectForKey:@"list"];
         [jsonarry addObjectsFromArray:arr];
+        
         [_tableview reloadData];
         [_tableview.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

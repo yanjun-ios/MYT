@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MateclientViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MateclientViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-
+@property(nonatomic,retain)NSString* rmdid;
 @end
