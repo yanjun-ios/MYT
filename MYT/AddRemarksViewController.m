@@ -48,20 +48,17 @@
             [SVProgressHUD showErrorWithStatus:@"请输入备注内容！"];
         }];
     }
-    else if (Content.length>100)
-    {
-        [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"内容太长，无法提交！"];
-        }];
-    }else
+    else
     {
         NSMutableDictionary* pardic=[[NSMutableDictionary alloc]init];
         [pardic setValue:Userid forKey:@"userid"];
         [pardic setValue:Clientid forKey:@"cusid"];
         [pardic setValue:Content forKey:@"cont"];
-       NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:pardic];
+       //NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:pardic];
         NSMutableDictionary* paramapDic=[[NSMutableDictionary alloc]init];
-        [paramapDic setObject:parStr forKey:@"paraMap"];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:pardic options:NSJSONWritingPrettyPrinted error:nil];
+        NSString*  datastr=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        [paramapDic setObject:datastr forKey:@"paraMap"];
         [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCusRemark.action"] parameters:paramapDic success:^(NSURLSessionDataTask *task, id responseObject) {
             NSDictionary* dic=responseObject;
             int status=((NSNumber*)[dic objectForKey:@"status"]).intValue;

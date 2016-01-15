@@ -21,8 +21,15 @@
 
 @implementation CusMarkViewController
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [_tableview reloadData];
+}
 
 - (void)viewDidLoad {
+    _tableview.rowHeight=UITableViewAutomaticDimension;
+    _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
+    
     if(currentVersion>=7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -72,35 +79,37 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+    
+    
 }
 //taleview代理方法
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* identifi=@"cell1";
+    static NSString* identifi=@"cell";
     UITableViewCell* cell;
     cell=[_tableview dequeueReusableCellWithIdentifier:identifi];
-    if(!cell)
-    {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
-        
-        //时间
-        UILabel* labtime=[[UILabel alloc]init];
-        labtime.frame=CGRectMake(10, 8, 200, 15);
-        labtime.font=[UIFont systemFontOfSize:12];
-        labtime.textColor=[UIColor darkGrayColor];
-        labtime.tag=1000;
-        [cell.contentView addSubview:labtime];
-        
-        //备注
-        UILabel* labmark=[[UILabel alloc]init];
-        labmark.frame=CGRectMake(10, 20, ScreenWidth-20, 60);
-        labmark.font=[UIFont systemFontOfSize:12];
-        labmark.textColor=[UIColor darkGrayColor];
-        labmark.lineBreakMode=NSLineBreakByWordWrapping;
-        labmark.numberOfLines=0;
-        labmark.tag=1001;
-        [cell.contentView addSubview:labmark];
-    }
+//    if(!cell)
+//    {
+//        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
+//        
+//        //时间
+//        UILabel* labtime=[[UILabel alloc]init];
+//        labtime.frame=CGRectMake(10, 8, 200, 15);
+//        labtime.font=[UIFont systemFontOfSize:12];
+//        labtime.textColor=[UIColor darkGrayColor];
+//        labtime.tag=1000;
+//        [cell.contentView addSubview:labtime];
+//        
+//        //备注
+//        UILabel* labmark=[[UILabel alloc]init];
+//        labmark.frame=CGRectMake(10, 20, ScreenWidth-20, 60);
+//        labmark.font=[UIFont systemFontOfSize:12];
+//        labmark.textColor=[UIColor darkGrayColor];
+//        labmark.lineBreakMode=NSLineBreakByWordWrapping;
+//        labmark.numberOfLines=0;
+//        labmark.tag=1001;
+//        [cell.contentView addSubview:labmark];
+//    }
     
     ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"remdate"];
     ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arry objectAtIndex:[indexPath row]] objectForKey:@"remark"];
@@ -113,10 +122,10 @@
     return [arry count];
        // return 5;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 80;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 80;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -59,8 +59,39 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-        UITableViewCell *cell1=[_tableview dequeueReusableCellWithIdentifier:@"cell1"];
-        return cell1;
+        UITableViewCell *cell=[_tableview dequeueReusableCellWithIdentifier:@"cell3"];
+        if(!cell)
+        {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+            //设置产品种类
+            UILabel* productType=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 150, 20)];
+            productType.font=[UIFont systemFontOfSize:14];
+            productType.textColor=[UIColor darkGrayColor];
+            productType.tag=1000;
+            productType.textAlignment=NSTextAlignmentLeft;
+            [cell.contentView addSubview:productType];
+            
+            //设置产品匹配数
+            UILabel* mateNum=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 20)];
+            mateNum.center=CGPointMake(ScreenWidth/2, 22);
+            mateNum.font=[UIFont systemFontOfSize:14];
+            mateNum.textColor=[UIColor darkGrayColor];
+            mateNum.tag=1001;
+            mateNum.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:mateNum];
+            
+            //设置未跟进数
+            UILabel* NotFollow=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-170, 12, 150, 20)];
+            NotFollow.font=[UIFont systemFontOfSize:14];
+            NotFollow.textColor=[UIColor darkGrayColor];
+            NotFollow.tag=1002;
+            NotFollow.textAlignment=NSTextAlignmentRight;
+            [cell.contentView addSubview:NotFollow];
+        }
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"产品种类 20"];
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"匹配数 20"];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"未跟进数 20"];
+        return cell;
     }
     else
     {
