@@ -20,5 +20,5 @@
 @property (nonatomic , weak) id<TreeTableCellDelegate> treeTableCellDelegate;
 
 -(instancetype)initWithFrame:(CGRect)frame withData : (NSArray *)data;
-
+-(void)replacedata:(NSArray*)data;
 @end

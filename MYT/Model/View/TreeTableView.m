@@ -22,19 +22,24 @@
 @end
 
 @implementation TreeTableView
-
+//加载第一层时候用
 -(instancetype)initWithFrame:(CGRect)frame withData : (NSArray *)data{
-    
+  
     self = [super initWithFrame:frame style:UITableViewStyleGrouped];
     if (self) {
         self.dataSource = self;
         self.delegate = self;
-        _data = data;
+        _data =data;
         _tempData = [self createTempData:data];
     }
     return self;
 }
-
+//第2层，第3层用
+-(void)replacedata:(NSArray *)data
+{
+    _data =data;
+    _tempData = [self createTempData:data];
+}
 /**
  * 初始化数据源
  */

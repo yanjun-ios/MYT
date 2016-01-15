@@ -12,6 +12,7 @@
 #import "TreeTableView.h"
 #import "ProductdetalViewController.h"
 #import "QQRequestManager.h"
+#import "TreeTableView.h"
 @interface StockViewController ()<TreeTableCellDelegate>
 {
     NSString *parent;
@@ -19,7 +20,7 @@
     NSString *child;
     NSArray  *data1;
     NSArray *init;
-    NSMutableArray *nodear;
+    NSMutableArray *nodear;//要显示的所有node数据
     BOOL click;//判断是否点开
   __block  NSMutableArray  *typearr;//存类型为T的物料类别
   __block  NSMutableArray  *wularr;//存类型为W的物料类别
@@ -38,7 +39,15 @@
     nodear=[[NSMutableArray alloc] init];
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
-    nodear=[NSMutableArray arrayWithArray:_nodearr];
+    nodear=[[NSMutableArray alloc]init];
+    for(int i=0;i<_nodearr.count;i++)
+    {
+        NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+        [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+        
+        [nodear addObject:nodea];
+    }
+    NSLog(@"%@",_nodearr);
     NSLog(@"%@",nodear);
 
     //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -124,7 +133,7 @@
     
     NSArray *data = [NSArray arrayWithObjects:country1,province1,city1,city2,city3,province2,city4,city5,province3,city6,country2,province4,province5,city7,province6,city8,city9,country3,province7,province8,province9, nil];
     data1=[NSArray arrayWithArray:data];*/
-    NSArray *data=nodear;
+    NSArray *data=_nodearr;
     NSLog(@"%@",data);
     TreeTableView *tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
     tableview.treeTableCellDelegate = self;
@@ -134,11 +143,20 @@
 #pragma mark - TreeTableCellDelegate
 -(void)cellClick:(Node *)node{
     click=!click;
+    NSLog(@"%hdd",click);
     NSLog(@"%@",node.name);
     NSLog(@"%d",node.nodeId);
     if(node.depth==0)
     {
-    
+        NSMutableArray * arr=[[NSMutableArray alloc]init];
+       __block int j;
+        for (int i=0;i<_nodearr.count;i++) {
+            if (((Node*)[_nodearr objectAtIndex:i]).nodeId==node.nodeId) {
+                arr=(NSMutableArray*)[nodear objectAtIndex:i];
+                j=i;
+            }
+        }
+        
             NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
             [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
             NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
@@ -161,16 +179,24 @@
                     int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
                     Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:NO child:YES];
                     if (!click) {
-                        [nodear addObject:node1];
+                        NSLog(@"%@",[nodear objectAtIndex:j]);
+                        [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
                         
                     }
                     else
                     {
-                        [nodear removeObject:node1];
+                        for (int i=0; i<((NSMutableArray*)[nodear objectAtIndex:j]).count; i++) {
+                            Node * nod=[(NSMutableArray*)[nodear objectAtIndex:j] objectAtIndex:i];
+                            if (nod.nodeId==nodeid) {
+                                [(NSMutableArray*)[nodear objectAtIndex:j] removeObject:nod];//移除
+                            }
+                        }
+                        
                         
                     }
                     
                 }
+                NSLog(@"%@",nodear);
                 for (int i=0; i<wularr.count; i++) {
                     NSDictionary * wulinfo=[wularr objectAtIndex:i];
                     int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
@@ -178,7 +204,7 @@
                     [nodear addObject:node1];
                     
                 }
-                //  [self initData];
+                  [self initData];
                 [typearr removeAllObjects];
                 [wularr removeAllObjects];
                 
