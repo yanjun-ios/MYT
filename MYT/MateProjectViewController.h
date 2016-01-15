@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MateProjectViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MateProjectViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *abandon;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UILabel *mate_name;
 @property(retain,nonatomic)NSString* name;
+- (IBAction)clickPhone:(id)sender;
+
+- (IBAction)clickBandon:(id)sender;
+@property(nonatomic,retain)NSString* cusId;
+
 @end

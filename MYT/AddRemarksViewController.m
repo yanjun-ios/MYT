@@ -17,6 +17,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    _textView.delegate=self;
 
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
@@ -84,6 +85,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    NSInteger bytes= [textView.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    if (bytes>=150) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showInfoWithStatus:@"文字输入太长，无法提交！"];
+        }];
+
+    }
 }
 
 /*
