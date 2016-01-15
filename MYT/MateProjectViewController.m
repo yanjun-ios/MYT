@@ -10,8 +10,11 @@
 #import "Utility.h"
 #import "QQRequestManager.h"
 #import "ButtomView.h"
+#import "MJRefresh.h"
 @interface MateProjectViewController ()
 {
+    __block NSMutableArray* jsonArry;
+    int num;
     __block NSDictionary* jsonDic;
 }
 @end
@@ -19,9 +22,9 @@
 @implementation MateProjectViewController
 
 - (void)viewDidLoad {
+   
+    jsonArry=[[NSMutableArray alloc]init];
     
-    _tableview.delegate=self;
-    _tableview.dataSource=self;
     [[Utility sharedInstance]setLayerView:_abandon borderW:1 borderColor:[UIColor colorWithRed:96.0f/255.0f green:56.0f/255.0f blue:17.0f/255.0f alpha:0.5] radius:5.0];
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
@@ -45,7 +48,12 @@
     
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
-    [self loadData];
+    num=1;
+    _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    _tableview.mj_footer.automaticallyHidden = NO;
+    [_tableview.mj_footer beginRefreshing];
+    _tableview.delegate=self;
+    _tableview.dataSource=self;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -57,7 +65,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[jsonDic objectForKey:@"list"] count];
+    return [jsonArry count];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -92,10 +100,9 @@
         save.textAlignment=NSTextAlignmentRight;
         [cell.contentView addSubview:save];
     }
-    NSArray* arr=[jsonDic objectForKey:@"list"];
-    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[arr objectAtIndex:indexPath.row] objectForKey:@"mattername"];
-    ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[arr objectAtIndex:indexPath.row] objectForKey:@"ctdem"];
-    ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[arr objectAtIndex:indexPath.row] objectForKey:@"ivtct"];
+    ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"mattername"];
+    ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ctdem"];
+    ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ivtct"];
     return cell;
 }
 
@@ -104,11 +111,15 @@
      NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
     [parDic setValue:userid forKey:@"userid"];
-    [parDic setValue:_cusId forKey:@"cusid"];
+    [parDic setValue:_cusId forKey:@"dtlid"];
+    [parDic setValue:[NSString stringWithFormat:@"%d",num] forKey:@"pageNum"];
+    [parDic setValue:@"10" forKey:@"pageSize"];
     [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getMatchProdDtel.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic=(NSDictionary*)responseObject;
+        [jsonArry addObjectsFromArray:[jsonDic objectForKey:@"list"]];
         _mate_name.text=[jsonDic objectForKey:@"custtname"];
         [_tableview reloadData];
+        [_tableview.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self qq_performSVHUDBlock:^{
             [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
@@ -143,6 +154,7 @@
     //设置输入框的键盘类型
     UITextField *tf = [alert textFieldAtIndex:0];
     tf.keyboardType = UIKeyboardTypeDefault;
+    [alert show];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -154,8 +166,10 @@
         [parDic setValue:dtlid forKey:@"dtlid"];
         [parDic setValue:userid forKey:@"userid"];
         [parDic setValue:text forKey:@"gpReason"];
-        [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/giveupCall.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/giveupCall.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            num++;
             int status= ((NSNumber*)[responseObject objectForKey:@"status"]).intValue;
+            
             if (status==1) {
                 [self qq_performSVHUDBlock:^{
                     [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];

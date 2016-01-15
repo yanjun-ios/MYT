@@ -10,9 +10,11 @@
 
 @interface NetRequestManager : NSObject
 @property(nonatomic,assign)int clientId;//单例传值，客户管理页面点击查看详情的时候将客户id传值给tabbar
+@property(nonatomic,retain)NSDictionary* AREALIST;
 /**
  *  工具类单例
  */
 + (NetRequestManager *)sharedInstance;
 -(NSString*)DataToJsonString:(id)object;
+-(void)getArelist;
 @end

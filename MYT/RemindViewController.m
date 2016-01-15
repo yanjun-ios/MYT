@@ -145,7 +145,7 @@
     else{
         NSArray* follows=[[jsonarry objectAtIndex:indexPath.section] objectForKey:@"follows"];
         NSDictionary* DIc=[follows objectAtIndex:indexPath.row-1];
-        cusIdToRight=[DIc objectForKey:@"cusid"];
+        cusIdToRight=[DIc objectForKey:@"dtlid"];
     [self performSegueWithIdentifier:@"tomate" sender:self];
         
     }

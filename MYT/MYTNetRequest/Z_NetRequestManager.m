@@ -131,6 +131,7 @@ static Z_NetRequestManager * sharedInstance = nil;
     __block NSDictionary* jsonDic;
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getMyOrders.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic = (NSDictionary*)responseObject;
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.superclass qq_performSVHUDBlock:^{
             [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];

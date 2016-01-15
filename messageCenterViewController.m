@@ -85,33 +85,51 @@
     {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identif];
         //初始化时间标签
-        UILabel* lab_time=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-50, 8, 50, 20)];
+        UILabel* lab_time=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-110, 8, 110, 20)];
         lab_time.font=[UIFont systemFontOfSize:12];
         lab_time.textColor=[UIColor lightGrayColor];
         lab_time.tag=100;
+        [cell.contentView addSubview:lab_time];
+        //初始化图片
+        UIImageView* img=[[UIImageView alloc]initWithFrame:CGRectMake(8, 8, 40, 40)];
+        img.tag=101;
+        [cell.contentView addSubview:img];
         
-        cell.detailTextLabel.textColor=[UIColor darkGrayColor];
+        //初始化title
+        UILabel* lab_title=[[UILabel alloc]initWithFrame:CGRectMake(55, 8, 150, 20)];
+        lab_title.font=[UIFont systemFontOfSize:14];
+        lab_title.textColor=[UIColor darkGrayColor];
+        lab_title.tag=102;
+        [cell.contentView addSubview:lab_title];
+        
+        //初始化detail
+        UILabel* lab_detail=[[UILabel alloc]initWithFrame:CGRectMake(55, 30, 200, 20)];
+        lab_detail.font=[UIFont systemFontOfSize:14];
+        lab_detail.textColor=[UIColor lightGrayColor];
+        lab_detail.tag=103;
+        [cell.contentView addSubview:lab_detail];
     }
     int type=((NSNumber*)[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TYPE"]).intValue;
+    
     switch (type) {
         case 0:
-            cell.imageView.image=[UIImage imageNamed:@"入库提醒"];
+           ((UIImageView*)[cell.contentView viewWithTag:101]).image=[UIImage imageNamed:@"入库提醒"];
             break;
         case 1:
-            cell.imageView.image=[UIImage imageNamed:@"放假通知"];
+            ((UIImageView*)[cell.contentView viewWithTag:101]).image=[UIImage imageNamed:@"放假通知"];
             break;
         case 2:
-            cell.imageView.image=[UIImage imageNamed:@"通知公告"];
+            ((UIImageView*)[cell.contentView viewWithTag:101]).image=[UIImage imageNamed:@"通知公告"];
             break;
         case 3:
-            cell.imageView.image=[UIImage imageNamed:@"通知公告"];
+            ((UIImageView*)[cell.contentView viewWithTag:101]).image=[UIImage imageNamed:@"通知公告"];
             break;
         default:
             break;
     }
     
-    cell.textLabel.text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TITLE"];
-    cell.detailTextLabel.text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"CONT"];
+   ((UILabel*)[cell.contentView viewWithTag:102]).text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TITLE"];
+   ((UILabel*)[cell.contentView viewWithTag:103]).text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"CONT"];
     ((UILabel*)[cell.contentView viewWithTag:100]).text=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TIME"];
     return cell;
     
@@ -131,9 +149,9 @@
     [parDic setObject:userid forKey:@"userid"];
     [parDic setObject:[NSString stringWithFormat:@"%d",num] forKey:@"pageNum"];
     [parDic setObject:@"10" forKey:@"pageSize"];
-    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"/msg/list"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getMsgList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         num++;
-        jsonlist=[(NSDictionary*)responseObject objectForKey:@"List"];
+        jsonlist=[(NSDictionary*)responseObject objectForKey:@"list"];
         [_tableView reloadData];
         [_tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

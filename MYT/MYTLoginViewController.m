@@ -14,6 +14,7 @@
 #import <SVProgressHUD.h>
 #import "MoreViewController.h"
 #import "BaseDB.h"
+#import "NetRequestManager.h"
 @interface MYTLoginViewController ()
 {
     NSString *name;
@@ -120,6 +121,7 @@
             }
 
             [self performSegueWithIdentifier:@"mainPage" sender:self];
+            [[NetRequestManager sharedInstance] getArelist];
         }
         else if(statusint==0)
         {

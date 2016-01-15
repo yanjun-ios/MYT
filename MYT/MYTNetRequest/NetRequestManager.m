@@ -7,6 +7,7 @@
 //
 
 #import "NetRequestManager.h"
+#import "QQRequestManager.h"
 static NetRequestManager * sharedInstance = nil;
 @implementation NetRequestManager
 + (NetRequestManager *)sharedInstance{
@@ -34,5 +35,16 @@ static NetRequestManager * sharedInstance = nil;
     return jsonString;
 }
 
-
+-(void)getArelist
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+    
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getAreaList.action"] parameters:parDic showHUD:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        _AREALIST=(NSDictionary*)responseObject;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+            [SVProgressHUD showErrorWithStatus:@"获取区域数据失败"];
+    }];
+}
 @end
