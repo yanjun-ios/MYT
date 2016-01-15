@@ -10,7 +10,7 @@
 #import "ButtomView.h"
 #import "RemindViewController.h"
 #import "CilentViewController.h"
-#import "StockViewController.h"
+#import "TreeViewController.h"
 #import "Node.h"
 @interface MainViewController ()
 {
@@ -138,20 +138,20 @@
 - (IBAction)click_tocompany:(id)sender {
             //请求完第一层数据进入
     
-            if (nodear.count) {
+           if (nodear.count) {
                  [self performSegueWithIdentifier:@"company" sender:self];
             }
             else
                 [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
             /*show the image to the user here on the main queue*/
-           
+    
     
   
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqual:@"company"]) {
-      StockViewController * stock=segue.destinationViewController;
+      TreeViewController * stock=segue.destinationViewController;
      stock.nodearr=nodear;
     }
 }

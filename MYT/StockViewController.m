@@ -24,6 +24,7 @@
     BOOL click;//判断是否点开
   __block  NSMutableArray  *typearr;//存类型为T的物料类别
   __block  NSMutableArray  *wularr;//存类型为W的物料类别
+    TreeTableView *tableview ;
 }
 @end
 
@@ -135,13 +136,14 @@
     data1=[NSArray arrayWithArray:data];*/
     NSArray *data=_nodearr;
     NSLog(@"%@",data);
-    TreeTableView *tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
+    tableview = [[TreeTableView alloc] initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.view.frame), self.view.frame.size.height-133) withData:data];
     tableview.treeTableCellDelegate = self;
     [self.view addSubview:tableview];
 }
 //初始化Node
 #pragma mark - TreeTableCellDelegate
 -(void)cellClick:(Node *)node{
+    
     click=!click;
     NSLog(@"%hdd",click);
     NSLog(@"%@",node.name);
@@ -177,7 +179,7 @@
                 for (int i=0; i<typearr.count; i++) {
                     NSDictionary * typeinfo=[typearr objectAtIndex:i];
                     int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:NO child:YES];
+                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES];
                     if (!click) {
                         NSLog(@"%@",[nodear objectAtIndex:j]);
                         [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
@@ -196,6 +198,7 @@
                     }
                     
                 }
+               
                 NSLog(@"%@",nodear);
                 for (int i=0; i<wularr.count; i++) {
                     NSDictionary * wulinfo=[wularr objectAtIndex:i];
@@ -204,7 +207,7 @@
                     [nodear addObject:node1];
                     
                 }
-                  [self initData];
+                [tableview replacedata:nodear];
                 [typearr removeAllObjects];
                 [wularr removeAllObjects];
                 

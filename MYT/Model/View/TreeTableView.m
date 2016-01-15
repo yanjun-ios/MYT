@@ -37,8 +37,19 @@
 //第2层，第3层用
 -(void)replacedata:(NSArray *)data
 {
+    [_tempData removeAllObjects];
     _data =data;
-    _tempData = [self createTempData:data];
+    _tempData = [self repalceTempData:data];
+}
+-(NSMutableArray *)repalceTempData : (NSArray *)data{
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (int i=0; i<data.count; i++) {
+        Node *node = [_data objectAtIndex:i];
+        
+            [tempArray addObject:node];
+        
+    }
+    return tempArray;
 }
 /**
  * 初始化数据源
