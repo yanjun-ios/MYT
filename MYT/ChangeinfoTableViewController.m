@@ -7,9 +7,15 @@
 //
 
 #import "ChangeinfoTableViewController.h"
-
+#import "Node.h"
+#import "AddneedViewController.h"
 @interface ChangeinfoTableViewController ()
-
+{
+    NSArray *init;
+    NSMutableArray *nodear;
+    __block  NSMutableArray  *typear;//存类型为T的物料类别
+    __block  NSMutableArray  *wular;//存类型为W的物料类别
+}
 @end
 
 @implementation ChangeinfoTableViewController
@@ -27,10 +33,13 @@
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
-    
+    [self getstock];
    
 }
 - (void)viewDidLoad {
+    nodear=[[NSMutableArray alloc]init];
+    typear=[[NSMutableArray alloc]init];
+    wular=[[NSMutableArray alloc]init];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
                                  initWithImage:[UIImage imageNamed:@"右上角对号"]
@@ -65,7 +74,19 @@
 }
 -(void)finishclick
 {
-    NSLog(@"俺是修改联系人");
+    if (nodear.count) {
+         [self performSegueWithIdentifier:@"addneed" sender:self];
+    }
+    else
+        [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+   
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqual:@"addneed"]) {
+        AddneedViewController * stock=segue.destinationViewController;
+        stock.nodearr=nodear;
+    }
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -84,6 +105,61 @@
 }
 #pragma mark - Table view data source
 
+-(void)getstock
+{
+    
+    [nodear removeAllObjects];
+    [typear removeAllObjects];
+    [wular removeAllObjects];
+    NSLog(@"%@",nodear);
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+    [parDic setValue:@"null" forKey:@"parentid"];
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_sync(concurrentQueue, ^{
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            [nodear removeAllObjects];
+            init=[responseObject objectForKey:@"list"];
+            for (NSDictionary *dic in init) {
+                if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                    [typear addObject:dic];
+                }
+                else
+                {
+                    [wular addObject:dic];
+                }
+            }
+            for (int i=0; i<typear.count; i++) {
+                NSDictionary * typeinfo=[typear objectAtIndex:i];
+                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1];
+                [nodear addObject:node];
+            }
+            for (int i=0; i<wular.count; i++) {
+                NSDictionary * wulinfo=[wular objectAtIndex:i];
+                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1];
+                [nodear addObject:node];
+                
+            }
+            NSLog(@"%@",nodear);
+            
+            //将请求到的第一层数据分类
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+            }];
+        }];
+        
+        /*download the image here*/
+        
+    });
+    
+}
 
 
 /*

@@ -18,6 +18,7 @@
     NSMutableArray *nodear;
     __block  NSMutableArray  *typear;//存类型为T的物料类别
     __block  NSMutableArray  *wular;//存类型为W的物料类别
+    
 }
 
 @end
@@ -34,6 +35,7 @@
 
 
 - (void)viewDidLoad {
+    
     nodear=[[NSMutableArray alloc]init];
     typear=[[NSMutableArray alloc]init];
     wular=[[NSMutableArray alloc]init];
@@ -84,6 +86,7 @@
 }
 -(void)getstock
 {
+    
     [nodear removeAllObjects];
     [typear removeAllObjects];
     [wular removeAllObjects];
@@ -121,7 +124,8 @@
                     
                 }
                 NSLog(@"%@",nodear);
-                //将请求到的第一层数据分类
+               
+                                //将请求到的第一层数据分类
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 
                 
