@@ -110,13 +110,13 @@
                 for (int i=0; i<typear.count; i++) {
                     NSDictionary * typeinfo=[typear objectAtIndex:i];
                     int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES];
+                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1];
                     [nodear addObject:node];
                 }
                 for (int i=0; i<wular.count; i++) {
                     NSDictionary * wulinfo=[wular objectAtIndex:i];
                     int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO];
+                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1];
                     [nodear addObject:node];
                     
                 }

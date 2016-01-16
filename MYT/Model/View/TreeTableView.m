@@ -234,7 +234,9 @@
 //    }
     
 //    [name appendString:node.name];
+    cell.textLabel.font=[UIFont systemFontOfSize:12];
     cell.textLabel.text = node.name;
+    
     return cell;
 }
 

@@ -14,4 +14,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *jibie;
 @property(nonatomic,assign)NSString* depth1;
 @property(nonatomic,assign)NSString* depth2;
+@property(nonatomic,assign)int matid;
 @end

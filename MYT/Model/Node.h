@@ -24,9 +24,11 @@
 @property (nonatomic , assign) BOOL expand;//该节点是否处于展开状态
 
 @property (nonatomic , assign) BOOL child;//该节点是否有孩子
+
+@property (nonatomic , assign)int matid;//该节点是否有孩子
 /**
  *快速实例化该对象模型
  */
-- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child;
+- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(int)matid;
 
 @end
