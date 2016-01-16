@@ -7,15 +7,18 @@
 //
 
 #import "MateclientViewController.h"
+#import "MateProjectViewController.h"
 #import "ButtomView.h"
 #import "QQRequestManager.h"
 #import "MJRefresh.h"
+#import "ContactsTableViewController.h"
 @interface MateclientViewController ()
 {
     int num;
     __block NSMutableArray* jsonarry;
     __block NSDictionary* jsondic;
     NSString* dtlid;
+    NSString* cusid;
 }
 @end
 
@@ -205,6 +208,29 @@
 {
     return 1;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     dtlid=[[jsonarry objectAtIndex:indexPath.row-1] objectForKey:@"dtlid"];
+    [self performSegueWithIdentifier:@"detail" sender:self];
+   
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"detail"]) {
+        MateProjectViewController* destination=[segue destinationViewController];
+        destination.cusId=dtlid;
+    }
+    if ([segue.identifier isEqualToString:@"toContact"]) {
+        ContactsTableViewController* destination=[segue destinationViewController];
+        destination.cusid=cusid;
+        destination.dtlid=dtlid;
+    }
+
+}
+
 -(void)loaData
 {
     NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
@@ -232,6 +258,10 @@
 -(void)clickPhone:(UIButton*)btn
 {
     //跳转到客户资料的通讯录
+    int index=btn.tag-100000;
+  dtlid=  [[jsonarry objectAtIndex:index-1] objectForKey:@"dtlid"];
+   cusid= [[jsonarry objectAtIndex:index-1] objectForKey:@"cusid"];
+    [self performSegueWithIdentifier:@"toContact" sender:self];
 }
 
 //放弃按钮

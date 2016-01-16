@@ -16,6 +16,6 @@
 - (IBAction)clickPhone:(id)sender;
 
 - (IBAction)clickBandon:(id)sender;
-@property(nonatomic,retain)NSString* cusId;
+@property(nonatomic,retain)NSString* cusId;//这个传递的是产品明细id而不是客户id，
 
 @end
