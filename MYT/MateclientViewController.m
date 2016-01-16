@@ -57,6 +57,11 @@
     [_tableview.mj_footer beginRefreshing];
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
     [super viewDidLoad];
 }
 
@@ -211,8 +216,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     dtlid=[[jsonarry objectAtIndex:indexPath.row-1] objectForKey:@"dtlid"];
-    [self performSegueWithIdentifier:@"detail" sender:self];
+    if (indexPath.row>0) {
+        dtlid=[[jsonarry objectAtIndex:indexPath.row-1] objectForKey:@"dtlid"];
+        [self performSegueWithIdentifier:@"detail" sender:self];
+    }
+    
    
 }
 

@@ -40,6 +40,12 @@
 }
 
 - (void)viewDidLoad {
+    
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview1 setTableFooterView:view];
+    
     _tableview1.delegate=self;
     _tableview1.dataSource=self;
   

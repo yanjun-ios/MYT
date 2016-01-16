@@ -49,7 +49,14 @@
     
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-114, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
+    
     num=1;
+    
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
+    
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     _tableview.mj_footer.automaticallyHidden = NO;
     [_tableview.mj_footer beginRefreshing];

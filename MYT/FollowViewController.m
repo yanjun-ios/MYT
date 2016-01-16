@@ -52,6 +52,10 @@
     [_tableview.mj_footer beginRefreshing];
     _tableview.delegate=self;
     _tableview.dataSource=self;
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }

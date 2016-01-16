@@ -31,6 +31,10 @@
 }
 
 - (void)viewDidLoad {
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
     _tableview.delegate=self;
     _tableview.dataSource=self;
     //获取当前月份

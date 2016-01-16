@@ -37,6 +37,10 @@
     _tableview.delegate=self;
     _tableview.dataSource=self;
     [super viewDidLoad];
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_tableview setTableFooterView:view];
     // Do any additional setup after loading the view.
 }
 -(void)loaData

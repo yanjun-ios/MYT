@@ -39,9 +39,18 @@
     
     NSString* year = [NSString stringWithFormat:@"%ld",(long)[dateComponent year]];
     NSString* month =[NSString stringWithFormat:@"%ld",(long)[dateComponent month]];
+    [btn_year setTitle:[NSString stringWithFormat:@"%@年",year] forState:0];
+    [_btn_FirstMonth setTitle:[NSString stringWithFormat:@"%@月",month] forState:0];
+    [_btn_endMonth setTitle:[NSString stringWithFormat:@"%@月",month] forState:0];
     [self Getmyorder:year beginmonth:month endmonth:month];
 }
 - (void)viewDidLoad {
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [_mytableview setTableFooterView:view];
+    
+    
     orderdata=[[NSMutableArray alloc]init];
     _mytableview.delegate=self;
     _mytableview.dataSource=self;
@@ -66,8 +75,9 @@
 }
 -(void)Getmyorder:(NSString *)year beginmonth:(NSString*)begin endmonth:(NSString*)end
 {
-   NSDictionary *dic=[[Z_NetRequestManager sharedInstance]getoderDataByYear:year beginMonth:begin endMonth:end userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];//获取到数据
-    orderlist=[dic objectForKey:@"list"];
+//   NSDictionary *dic=[[Z_NetRequestManager sharedInstance]getoderDataByYear:year beginMonth:begin endMonth:end userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];//获取到数据
+//    orderlist=[dic objectForKey:@"list"];
+    [self getoderDataByYear:year beginMonth:begin endMonth:end userId:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]];
     
 }
 
@@ -129,7 +139,7 @@
          [self Getmyorder:[yearStr substringToIndex:(yearStr.length-1)] beginmonth:[firStr substringToIndex:(firStr.length-1)] endmonth:[selectedStr substringToIndex:(selectedStr.length-1)] ];
         
     }
-    [_mytableview reloadData];
+    
 
 }
 -(void)rel{
@@ -194,22 +204,97 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* identif=@"cell";
+    NSString* identif=@"cell1";
     UITableViewCell* cell=[_mytableview dequeueReusableCellWithIdentifier:identif];
-    NSDictionary* dic=[orderlist objectAtIndex:[indexPath section]];
-    NSString *obdcode=[dic objectForKey:@"obdcode"];//订单编号
-    NSString* cusname=[dic objectForKey:@"cusname"];//客户名称
-    NSString* custtname=[dic objectForKey:@"custtname"];//客户全名
-    NSString *dlydate=[dic objectForKey:@"dlydate"];//订单时间
-    NSString *money=[dic objectForKey:@"money"];
-    ((UILabel*)[cell.contentView viewWithTag:101]).text=cusname;
-     ((UILabel*)[cell.contentView viewWithTag:103]).text=obdcode;
-     ((UILabel*)[cell.contentView viewWithTag:104]).text=dlydate;
-     ((UILabel*)[cell.contentView viewWithTag:105]).text=money;
+    if (!cell) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identif];
+        //客户名：
+        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(15, 10, 75, 20)];
+        name.text=@"客户名称：";
+        name.textAlignment=NSTextAlignmentRight;
+        name.font=[UIFont systemFontOfSize:14];
+        name.textColor=[UIColor darkGrayColor];
+        [cell.contentView addSubview:name];
+        
+        //客户
+        UILabel* cusName=[[UILabel alloc]initWithFrame:CGRectMake(90, 10, ScreenWidth-80, 20)];
+        cusName.textAlignment=NSTextAlignmentLeft;
+        cusName.font=[UIFont systemFontOfSize:14];
+        cusName.textColor=[UIColor lightGrayColor];
+        cusName.tag=100;
+        [cell.contentView addSubview:cusName];
+        
+        //交易时间：
+        UILabel* time=[[UILabel alloc]initWithFrame:CGRectMake(15, 40, 75, 20)];
+        time.text=@"交易时间：";
+        time.textAlignment=NSTextAlignmentRight;
+        time.font=[UIFont systemFontOfSize:14];
+        time.textColor=[UIColor darkGrayColor];
+        [cell.contentView addSubview:time];
+        
+        //交易时间
+        UILabel* tradTime=[[UILabel alloc]initWithFrame:CGRectMake(90, 40, ScreenWidth-80, 20)];
+        tradTime.textAlignment=NSTextAlignmentLeft;
+        tradTime.font=[UIFont systemFontOfSize:14];
+        tradTime.textColor=[UIColor lightGrayColor];
+        tradTime.tag=101;
+        [cell.contentView addSubview:tradTime];
+        
+        //订单编码：
+        UILabel* code=[[UILabel alloc]initWithFrame:CGRectMake(15, 70, 75, 20)];
+        code.text=@"订单编码：";
+        code.textAlignment=NSTextAlignmentRight;
+        code.font=[UIFont systemFontOfSize:14];
+        code.textColor=[UIColor darkGrayColor];
+        [cell.contentView addSubview:code];
+        //订单编码
+        UILabel* tradCode=[[UILabel alloc]initWithFrame:CGRectMake(90, 70, ScreenWidth-80, 20)];
+        tradCode.textAlignment=NSTextAlignmentLeft;
+        tradCode.font=[UIFont systemFontOfSize:14];
+        tradCode.textColor=[UIColor lightGrayColor];
+        tradCode.tag=102;
+        [cell.contentView addSubview:tradCode];
+        
+        //交易金额：
+        UILabel* mony=[[UILabel alloc]initWithFrame:CGRectMake(15, 100, 75, 20)];
+        mony.text=@"交易金额：";
+        mony.textAlignment=NSTextAlignmentRight;
+        mony.font=[UIFont systemFontOfSize:14];
+        mony.textColor=[UIColor darkGrayColor];
+        [cell.contentView addSubview:mony];
+        //交易金额
+        UILabel* tradMony=[[UILabel alloc]initWithFrame:CGRectMake(90, 100, ScreenWidth-80, 20)];
+        tradMony.textAlignment=NSTextAlignmentLeft;
+        tradMony.font=[UIFont systemFontOfSize:14];
+        tradMony.textColor=[UIColor redColor];
+        tradMony.tag=103;
+        [cell.contentView addSubview:tradMony];
+        
+    }
+    NSDictionary* dic=[orderlist objectAtIndex:[indexPath row]];
+    
+    //客户名称
+    ((UILabel*)[cell.contentView viewWithTag:100]).text=[dic objectForKey:@"custtname"];
+    ((UILabel*)[cell.contentView viewWithTag:101]).text=[dic objectForKey:@"dlvdate"];
+     ((UILabel*)[cell.contentView viewWithTag:102]).text=[dic objectForKey:@"obdcode"];
+    ((UILabel*)[cell.contentView viewWithTag:103]).text= [NSString stringWithFormat:@"%d￥",[(NSNumber*)[dic objectForKey:@"money"] intValue]];;
+    
+//    NSString *obdcode=[dic objectForKey:@"obdcode"];//订单编号
+//    NSString* cusname=[dic objectForKey:@"cusname"];//客户名称
+//    NSString* custtname=[dic objectForKey:@"custtname"];//客户全名
+//    NSString *dlydate=[dic objectForKey:@"dlydate"];//订单时间
+//    NSString *money=[dic objectForKey:@"money"];
+//    ((UILabel*)[cell.contentView viewWithTag:101]).text=cusname;
+//     ((UILabel*)[cell.contentView viewWithTag:103]).text=obdcode;
+//     ((UILabel*)[cell.contentView viewWithTag:104]).text=dlydate;
+//     ((UILabel*)[cell.contentView viewWithTag:105]).text=money;
     return cell;
     
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 8;
@@ -217,6 +302,27 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0;
+}
+
+
+-(void)getoderDataByYear:(NSString *)year beginMonth:(NSString *)bengin endMonth:(NSString *)end  userId:(NSString *)userid
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:year forKey:@"year"];
+    [parDic setValue:bengin forKey:@"monthS"];
+    [parDic setValue:end forKey:@"monthE"];
+    [parDic setValue:userid forKey:@"userid"];
+    __block NSDictionary* jsonDic;
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getMyOrders.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic = (NSDictionary*)responseObject;
+        orderlist=[jsonDic objectForKey:@"list"];
+        [_mytableview reloadData];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.superclass qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+        }];
+        
+    }];
 }
 
 
