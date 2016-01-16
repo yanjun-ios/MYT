@@ -1798,16 +1798,17 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="匹配客户" id="ZDd-kM-qnW"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="abandon" destination="FzU-nG-OJb" id="HVD-L2-tj4"/>
                         <outlet property="mate_name" destination="VvA-jo-898" id="pvl-uf-kFZ"/>
                         <outlet property="tableview" destination="L7m-TO-53y" id="KVc-aJ-R9S"/>
+                        <segue destination="U0V-sN-SYv" kind="push" identifier="toContact" id="7lN-VQ-DuP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-Nm-JuQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4588.5" y="240"/>
+            <point key="canvasLocation" x="3711.75" y="246.375"/>
         </scene>
         <!--我的团队-->
         <scene sceneID="Q7X-aV-ICI">
@@ -3410,14 +3411,16 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="匹配产品明细" id="aIu-fE-ct7"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableview" destination="Sc4-yC-o7S" id="Qm8-iz-18R"/>
+                        <segue destination="Oju-zP-off" kind="push" identifier="detail" id="4Td-en-ejO"/>
+                        <segue destination="U0V-sN-SYv" kind="push" identifier="toContact" id="JeF-lr-eim"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aq-pH-tyg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4578" y="968.25"/>
+            <point key="canvasLocation" x="4526.25" y="241.125"/>
         </scene>
         <!--通讯录-->
         <scene sceneID="U1K-DM-QSW">
@@ -8350,7 +8353,13 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="客户资料右上角"/>
+                                <connections>
+                                    <action selector="contactClick:" destination="ae4-tF-6fu" eventType="touchUpInside" id="VkN-t7-hk6"/>
+                                </connections>
                             </button>
+                            <connections>
+                                <action selector="contactClick:" destination="ae4-tF-6fu" id="Db3-6D-Yhk"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -8369,11 +8378,12 @@
                         <outlet property="lab_talk_time" destination="xMM-OC-vzW" id="SJw-0Y-QUp"/>
                         <outlet property="lab_telephone" destination="EWL-bY-8ql" id="f1k-ci-32V"/>
                         <outlet property="lab_visite_time" destination="PjM-P9-AUM" id="It3-Fa-BwN"/>
+                        <segue destination="U0V-sN-SYv" kind="push" identifier="contacts" id="7eJ-eP-xlg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Jy-rk-46V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6913.5" y="-636"/>
+            <point key="canvasLocation" x="6952.5" y="-629.25"/>
         </scene>
         <!--交易记录-->
         <scene sceneID="Kd2-Dv-dh2">
@@ -8546,6 +8556,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kUG-80-IfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8229.75" y="-635.625"/>
+        </scene>
+        <!--联系人-->
+        <scene sceneID="tKu-J3-lx6">
+            <objects>
+                <tableViewController id="U0V-sN-SYv" customClass="ContactsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vb0-R0-IT3">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CcI-4n-R8T">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CcI-4n-R8T" id="3gc-gw-PO3">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="U0V-sN-SYv" id="X2R-sD-otl"/>
+                            <outlet property="delegate" destination="U0V-sN-SYv" id="9tC-QB-mLG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="联系人" id="2Vv-bD-jx7"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FB2-Vc-coC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7587.75" y="37.125"/>
         </scene>
         <!--备注列表-->
         <scene sceneID="lGG-fA-Apk">
@@ -10067,8 +10103,10 @@
         <image name="选择" width="15" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uDY-cg-zof"/>
+        <segue reference="4Td-en-ejO"/>
+        <segue reference="7lN-VQ-DuP"/>
         <segue reference="isS-60-a2j"/>
         <segue reference="cpN-Vg-WFn"/>
+        <segue reference="uDY-cg-zof"/>
     </inferredMetricsTieBreakers>
 </document>

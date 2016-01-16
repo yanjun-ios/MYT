@@ -27,5 +27,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lab_remark;
 - (IBAction)clickLocation:(id)sender;
+- (IBAction)contactClick:(id)sender;
 
 @end

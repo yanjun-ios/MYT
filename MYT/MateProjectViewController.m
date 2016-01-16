@@ -11,6 +11,7 @@
 #import "QQRequestManager.h"
 #import "ButtomView.h"
 #import "MJRefresh.h"
+#import "ContactsTableViewController.h"
 @interface MateProjectViewController ()
 {
     __block NSMutableArray* jsonArry;
@@ -139,8 +140,23 @@
 */
 
 - (IBAction)clickPhone:(id)sender {
+    /*
+     参数传递 “dtlid”:’1’,(入库提醒明细id)
+            “cusid”:(客户id)
+     */
     
+    [self performSegueWithIdentifier:@"toContact" sender:self];
     
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"toContact"]) {
+        ContactsTableViewController* destination=[segue destinationViewController];
+        destination.cusid=[jsonDic objectForKey:@"cusid"];
+        destination.dtlid=[jsonDic objectForKey:@"dtlid"];
+    }
 }
 
 - (IBAction)clickBandon:(id)sender {

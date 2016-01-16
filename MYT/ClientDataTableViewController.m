@@ -9,6 +9,7 @@
 #import "ClientDataTableViewController.h"
 #import "NetRequestManager.h"
 #import "QQRequestManager.h"
+#import "ContactsTableViewController.h"
 @interface ClientDataTableViewController ()
 {
     NSDictionary* dataDic;
@@ -100,6 +101,14 @@
     }];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"contacts"]) {
+        ContactsTableViewController* destination=[segue destinationViewController];
+        destination.cusid=[NSString stringWithFormat:@"%d",_clientId];;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -107,7 +116,7 @@
 
 -(void)updateclick
 {
-
+     [self performSegueWithIdentifier:@"contacts" sender:self];
 }
 - (IBAction)clickLocation:(id)sender {
     
@@ -117,5 +126,10 @@
 //    //获取纬度
 //     float longitude=((NSNumber*)[dataDic objectForKey:@"longitude"]).floatValue;
 //    [self performSegueWithIdentifier:@"tomap" sender:self];
+}
+
+- (IBAction)contactClick:(id)sender {
+    
+   
 }
 @end
