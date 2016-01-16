@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TreeViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface TreeViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *findview;
+@property (weak, nonatomic) IBOutlet UITextField *findtext;
+- (IBAction)click_find:(id)sender;
+- (IBAction)find:(id)sender;
 @property(nonatomic,assign)NSArray *nodearr;
 @end

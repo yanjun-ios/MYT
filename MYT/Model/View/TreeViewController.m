@@ -21,15 +21,18 @@
     NSMutableArray *_tempedata;//要显示的所有数据
     __block  NSMutableArray  *typearr;//存类型为T的物料类别
     __block  NSMutableArray  *wularr;//存类型为W的物料类别
+    BOOL findclick;
 }
 @end
 
 @implementation TreeViewController
 -(void)viewWillAppear:(BOOL)animated
 {
+    findclick=NO;
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-49, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
      self.navigationController.navigationBarHidden=NO;
+   
     
 }
 -(void)initwithnodear
@@ -51,6 +54,9 @@
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc]init];
+   
+    _findtext.delegate=self;
+    _findview.hidden=YES;
     for(int i=0;i<_nodearr.count;i++)
     {
         NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
@@ -60,6 +66,13 @@
     }
     [self initwithnodear];
     NSLog(@"%@",_tempedata);
+   // UISwipeGestureRecognizer* recognizer;
+    // handleSwipeFrom 是偵測到手势，所要呼叫的方法
+   // recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closefind)];
+    // 不同的 Recognizer 有不同的实体变数
+    // 例如 SwipeGesture 可以指定方向
+    // 而 TapGesture 則可以指定次數
+  //  [self.view addGestureRecognizer:recognizer];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -478,4 +491,51 @@
 }
 */
 
+- (IBAction)click_find:(id)sender {
+    NSString *findtext = [_findtext.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([findtext isEqualToString:@""]) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"请输入搜索内容"];
+        }];
+    }//空的话
+    else
+    {
+        NSLog(@"%@",findtext);
+        NSLog(@"%@",_tempedata);
+        for (int i=0;i<_tempedata.count;i++) {
+            Node *node=(Node*)[_tempedata objectAtIndex:i];
+            NSLog(@"%@",node.name);
+            if ([node.name rangeOfString:findtext].location !=NSNotFound) {
+                NSLog(@"找到了");
+                NSUInteger sectionCount = [self.tableView numberOfSections];
+                if (sectionCount) {
+                    NSUInteger rowCount = i;
+                    if (rowCount) {
+                        NSUInteger ii[2] = {0, i};
+                        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
+                        [self.tableView scrollToRowAtIndexPath:indexPath
+                                              atScrollPosition:UITableViewScrollPositionBottom animated:YES];  
+                    }  
+                }
+            }
+        }
+    }
+}
+
+- (IBAction)find:(id)sender {
+    
+    if (!findclick) {
+        _findview.hidden=NO;
+        findclick=YES;
+    }
+    else
+    {
+        findclick=NO;
+        _findview.hidden=YES;
+    }
+}
+-(void)closefind
+{
+    _findview.hidden=NO;
+}
 @end
