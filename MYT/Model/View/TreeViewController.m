@@ -112,7 +112,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
             //数量
             UILabel* count;
-            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-25, 15, 50, 15)];
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
         
             count.tag=11;
             count.textColor=[UIColor redColor];
@@ -153,6 +153,24 @@
             else if (node.depth==2)
             {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+                UILabel* count;
+                count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+                
+                count.tag=11;
+                count.textColor=[UIColor redColor];
+                count.font=[UIFont systemFontOfSize:14];
+                count.textAlignment=NSTextAlignmentCenter;
+                [cell.contentView addSubview:count];
+                
+                //匹配客户
+                UILabel* men;
+                men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
+                men.tag=12;
+                men.textColor=[UIColor greenColor];
+                men.font=[UIFont systemFontOfSize:14];
+                men.textAlignment=NSTextAlignmentCenter;
+                [cell.contentView addSubview:men];
+
               //  UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
               //  text.borderStyle = UITextBorderStyleRoundedRect;
               //  text.text=@"1";
@@ -164,10 +182,12 @@
 
     }
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
-    label2.text=@"z";
+    label2.font=[UIFont systemFontOfSize:14];
+    label2.text=node.name;
     
     UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
-    label3.text=@"3";
+    label2.font=[UIFont systemFontOfSize:14];
+    label3.text=node.name;
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
     image.image=[UIImage imageNamed:@"公司库存向右"];
@@ -177,7 +197,7 @@
     //
     // cell有缩进的方法
     cell.indentationLevel = node.depth; // 缩进级别
-    cell.indentationWidth = 30.f; // 每个缩进级别的距离
+    cell.indentationWidth = 20.f; // 每个缩进级别的距离
     
     
     //    NSMutableString *name = [NSMutableString string];
@@ -186,6 +206,7 @@
     //    }
     
     //    [name appendString:node.name];
+    cell.textLabel.font=[UIFont systemFontOfSize:14];
     cell.textLabel.text = node.name;
 
     return cell;

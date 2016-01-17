@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddneedViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface AddneedViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic,assign)NSArray *nodearr;
+@property(nonatomic,assign)int clientId;
+- (IBAction)click_ok:(id)sender;
 
 @end

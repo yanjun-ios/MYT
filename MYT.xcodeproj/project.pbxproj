@@ -20,6 +20,8 @@
 		18C0A4511C15187D00C380B5 /* UIImageView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A43C1C15187D00C380B5 /* UIImageView+Loading.m */; };
 		18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44D1C15187D00C380B5 /* UIViewController+Helper.m */; };
 		18C0A4591C15187D00C380B5 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A44F1C15187D00C380B5 /* Utility.m */; };
+		773101AD1C4B2EB90043C2C7 /* Node1.m in Sources */ = {isa = PBXBuildFile; fileRef = 773101AC1C4B2EB90043C2C7 /* Node1.m */; };
+		773101B01C4B74E40043C2C7 /* CilentplaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 773101AF1C4B74E40043C2C7 /* CilentplaceViewController.m */; };
 		773C66BC1C3F5349008450AF /* BaseDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 773C66BB1C3F5349008450AF /* BaseDB.m */; };
 		773C66BE1C3F6248008450AF /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 773C66BD1C3F6248008450AF /* libsqlite3.0.tbd */; };
 		775A82891C16D39E00C5BDB3 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775A82881C16D39E00C5BDB3 /* RemindViewController.m */; };
@@ -118,6 +120,10 @@
 		18C0A45A1C15194900C380B5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		2DF2547226180A97CAE380BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6DAA3D31AA655B689A679C69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		773101AB1C4B2EB90043C2C7 /* Node1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node1.h; sourceTree = "<group>"; };
+		773101AC1C4B2EB90043C2C7 /* Node1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node1.m; sourceTree = "<group>"; };
+		773101AE1C4B74E40043C2C7 /* CilentplaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CilentplaceViewController.h; sourceTree = "<group>"; };
+		773101AF1C4B74E40043C2C7 /* CilentplaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CilentplaceViewController.m; sourceTree = "<group>"; };
 		773C66BA1C3F5340008450AF /* BaseDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseDB.h; path = ../BaseDB.h; sourceTree = "<group>"; };
 		773C66BB1C3F5349008450AF /* BaseDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseDB.m; path = ../BaseDB.m; sourceTree = "<group>"; };
 		773C66BD1C3F6248008450AF /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -435,6 +441,8 @@
 				773C66BB1C3F5349008450AF /* BaseDB.m */,
 				77A805CF1C1DACB200F9B15D /* Node.h */,
 				77A805D01C1DACB200F9B15D /* Node.m */,
+				773101AB1C4B2EB90043C2C7 /* Node1.h */,
+				773101AC1C4B2EB90043C2C7 /* Node1.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -574,6 +582,8 @@
 				9CD760001C436058001C7C98 /* CusMarkViewController.m */,
 				77A7223C1C4A750900715D4D /* AddneedViewController.h */,
 				77A7223D1C4A750900715D4D /* AddneedViewController.m */,
+				773101AE1C4B74E40043C2C7 /* CilentplaceViewController.h */,
+				773101AF1C4B74E40043C2C7 /* CilentplaceViewController.m */,
 			);
 			name = YJCrud;
 			sourceTree = "<group>";
@@ -818,6 +828,7 @@
 				9CA6D8EF1C1836D2007E7D7A /* AddRemarksViewController.m in Sources */,
 				9CD75FFB1C434120001C7C98 /* TradingLogViewController.m in Sources */,
 				9CA6D8E91C181EFD007E7D7A /* XNTabBarController.m in Sources */,
+				773101AD1C4B2EB90043C2C7 /* Node1.m in Sources */,
 				9CBF339D1C1A98B400F7E1DC /* ButtomView.m in Sources */,
 				9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */,
 				9C6F18051C166A9B00B48EFE /* IIWrapController.m in Sources */,
@@ -830,6 +841,7 @@
 				9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */,
 				773C66BC1C3F5349008450AF /* BaseDB.m in Sources */,
 				18C0A40F1C1515FD00C380B5 /* AppDelegate.m in Sources */,
+				773101B01C4B74E40043C2C7 /* CilentplaceViewController.m in Sources */,
 				77661B731C20538700BCBDB2 /* ProductdetalViewController.m in Sources */,
 				D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */,
 				77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */,

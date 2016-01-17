@@ -7,7 +7,9 @@
 //
 
 #import "AddneedViewController.h"
-#import "Node.h"
+#import "Node1.h"
+#import "NetRequestManager.h"
+#import "QQRequestManager.h"
 @interface AddneedViewController ()
 {
     NSArray *init;
@@ -16,6 +18,10 @@
     NSMutableArray *_tempedata;//要显示的所有数据
     __block  NSMutableArray  *typearr;//存类型为T的物料类别
     __block  NSMutableArray  *wularr;//存类型为W的物料类别
+    NSMutableArray * typjson;
+    NSMutableArray*  wuljson;
+    UIAlertView *alert ;
+    
 }
 
 @end
@@ -25,6 +31,8 @@
     self.navigationController.navigationBarHidden=NO;
 }
 - (void)viewDidLoad {
+   
+   _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
     self.tableView.dataSource=self;
     _tempedata=[[NSMutableArray alloc]init];
@@ -32,6 +40,10 @@
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc]init];
+    typjson=[[NSMutableArray alloc]init];
+    wuljson=[[NSMutableArray alloc]init];
+    
+
     NSLog(@"%@",_nodearr);
     for(int i=0;i<_nodearr.count;i++)
     {
@@ -72,7 +84,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Node *node = [_tempedata objectAtIndex:indexPath.row];
+    Node1 *node = [_tempedata objectAtIndex:indexPath.row];
     
     static NSString *NODE_CELL_ID ;
     if (node.depth==0||node.depth==1) {
@@ -95,7 +107,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
             //数量
             UILabel* count;
-            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-25, 15, 50, 15)];
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
             
             count.tag=11;
             count.textColor=[UIColor redColor];
@@ -103,15 +115,14 @@
             count.textAlignment=NSTextAlignmentCenter;
             [cell.contentView addSubview:count];
             
-            //匹配客户
-            UILabel* men;
-            men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
-            men.tag=12;
-            men.textColor=[UIColor greenColor];
-            men.font=[UIFont systemFontOfSize:14];
-            men.textAlignment=NSTextAlignmentCenter;
-            [cell.contentView addSubview:men];
+            //需求量输入框
+            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 8, 80, 30)];
+            text.borderStyle = UITextBorderStyleRoundedRect;
+           
             
+            text.text=@"";
+            text.tag=1000;
+            [cell.contentView addSubview:text];
             UIImageView *image=[[UIImageView alloc] init];
             image.tag=13;
             //if(node.child)
@@ -135,11 +146,22 @@
         }
         else if (node.depth==2)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
-            //  UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
-            //  text.borderStyle = UITextBorderStyleRoundedRect;
-            //  text.text=@"1";
-            // [cell.contentView addSubview:text];
+              cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 8, 80, 30)];
+            text.borderStyle = UITextBorderStyleRoundedRect;
+           
+            //数量
+            UILabel* count;
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+            
+            count.tag=11;
+            count.textColor=[UIColor redColor];
+            count.font=[UIFont systemFontOfSize:14];
+            count.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:count];
+            text.text=@"";
+            text.tag=1000;
+            [cell.contentView addSubview:text];
             //设置边框样式，只有设置了才会显示边框样式
             
             //  text.borderStyle = UITextBorderStyleRoundedRect;
@@ -147,10 +169,16 @@
         
     }
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
-    label2.text=@"z";
+    label2.font=[UIFont systemFontOfSize:14];
+    label2.text=node.name;
     
-    UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
-    label3.text=@"3";
+    //输入框
+    UITextField* textfield=(UITextField*)[cell.contentView viewWithTag:1000];
+    textfield.delegate=self;
+    textfield.text=@"";
+    textfield.tag=1000;
+    NSLog(@"%d",textfield.tag);
+
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
     image.image=[UIImage imageNamed:@"公司库存向右"];
@@ -160,7 +188,7 @@
     //
     // cell有缩进的方法
     cell.indentationLevel = node.depth; // 缩进级别
-    cell.indentationWidth = 30.f; // 每个缩进级别的距离
+    cell.indentationWidth = 20.f; // 每个缩进级别的距离
     
     
     //    NSMutableString *name = [NSMutableString string];
@@ -169,6 +197,7 @@
     //    }
     
     //    [name appendString:node.name];
+    cell.textLabel.font=[UIFont systemFontOfSize:14];
     cell.textLabel.text = node.name;
     
     return cell;
@@ -178,7 +207,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    Node *parentNode = [_tempedata objectAtIndex:indexPath.row];
+    Node1 *parentNode = [_tempedata objectAtIndex:indexPath.row];
     NSLog(@"%hd",parentNode.child);
     NSLog(@"%hd",parentNode.expand);
     NSLog(@"%@",nodear);
@@ -190,7 +219,7 @@
         NSMutableArray * arr=[[NSMutableArray alloc]init];
         __block int j;
         for (int i=0;i<_nodearr.count;i++) {
-            if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
+            if (((Node1*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
                 arr=(NSMutableArray*)[nodear objectAtIndex:i];
                 j=i;
             }
@@ -216,7 +245,7 @@
             for (int i=0; i<typearr.count; i++) {
                 NSDictionary * typeinfo=[typearr objectAtIndex:i];
                 int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1];
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1 typid:nodeid needcount:-1];
                 
                 if (parentNode.expand) {
                     NSLog(@"%@",[nodear objectAtIndex:j]);
@@ -231,7 +260,7 @@
             for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid];
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid typid:-1 needcount:-1];
                 if(parentNode.expand)
                 {
                     [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];
@@ -243,7 +272,7 @@
                 NSLog(@"%lu",(unsigned long)((NSMutableArray*)[nodear objectAtIndex:j]).count);
                 int numj=((NSMutableArray*)[nodear objectAtIndex:j]).count;
                 for (int i=1; i<numj; i++) {
-                    Node * nod=[(NSMutableArray*)[nodear objectAtIndex:j] objectAtIndex:1];
+                    Node1 * nod=[(NSMutableArray*)[nodear objectAtIndex:j] objectAtIndex:1];
                     
                     [(NSMutableArray*)[nodear objectAtIndex:j] removeObject:nod];//移除
                     NSLog(@"%@",(NSMutableArray*)[nodear objectAtIndex:j]);
@@ -300,7 +329,7 @@
             
             for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
                 arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
-                if (((Node*)[arr objectAtIndex:z]).nodeId==parentNode.nodeId) {
+                if (((Node1*)[arr objectAtIndex:z]).nodeId==parentNode.nodeId) {
                     j=z;//获得第2层的插入位置
                     k=i;//获取在nodear中相对于哪一个数组
                 }
@@ -333,7 +362,7 @@
             for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid];
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid typid:-1 needcount:-1];
                 NSLog(@"%hd",parentNode.expand);
                 if (parentNode.expand) {
                     //  NSLog(@"%@",[nodear objectAtIndex:j]);
@@ -346,7 +375,7 @@
                 {
                     NSLog(@"%@",nodear);
                     for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-                        Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
+                        Node1 * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
                         if (nod.nodeId==nodeid) {
                             [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
                         }
@@ -410,14 +439,14 @@
  *
  *  @return 该父节点下一个相邻的统一级别的节点的位置
  */
--(NSUInteger)removeAllNodesAtParentNode : (Node *)parentNode{
+-(NSUInteger)removeAllNodesAtParentNode : (Node1 *)parentNode{
     
     NSUInteger startPosition = [_tempedata indexOfObject:parentNode];
     NSLog(@"%d",parentNode.depth);
     NSLog(@"%d",startPosition);
     NSUInteger endPosition = startPosition;
     for (NSUInteger i=startPosition+1; i<_tempedata.count; i++) {
-        Node *node = [_tempedata objectAtIndex:i];
+        Node1 *node = [_tempedata objectAtIndex:i];
         endPosition++;
         if (node.depth <= parentNode.depth) {
             break;
@@ -447,4 +476,113 @@
 }
 */
 
+//- (void)textFieldDidEndEditing:(UITextField *)textField;
+//{
+  //  textField.text=@"";
+   /* NSString *need = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //int needint=need.intValue;
+    int row=textField.tag-1000;
+    Node1* node=[_tempedata objectAtIndex:row];
+    NSString* nodeid=[NSString stringWithFormat:@"%d",node.nodeId];
+    //先判断输入框中是否为空
+    alert = [[UIAlertView alloc] initWithTitle:@"确认需求信息"
+                                       message:[NSString stringWithFormat:@"%@需求量为%@",node.name,need]
+                                      delegate:self
+                             cancelButtonTitle:@"NO"
+                             otherButtonTitles:@"YES",nil];
+    //alert.delegate=self;
+    if (![need isEqualToString:@""]) {
+      //  [alert show];
+       // if (ifs) {
+            if (node.typid==node.nodeId) {
+                NSDictionary* dic;
+                dic=[NSDictionary dictionaryWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                [typjson addObject:dic];
+            }//是物料规格
+            else if(node.matid==node.nodeId)
+            {
+                NSDictionary* dic=[[NSDictionary alloc]initWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                [wuljson addObject:dic];
+            }//是物料
+            
+     //  }
+        
+    }*/
+    
+   
+//}
+- (IBAction)click_ok:(id)sender {
+    for (int i=0; i<_tempedata.count; i++) {
+        
+        NSIndexPath *pathOne=[NSIndexPath indexPathForRow:i inSection:0];//获取cell的位置
+        UITableViewCell *cell=(UITableViewCell *)[_tableView cellForRowAtIndexPath:pathOne];//获取具体位置的cell
+        UITextField *textone=[cell.contentView viewWithTag:1000];
+        NSString *need = [textone.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSLog(@"%@",need);
+        Node1* node=[_tempedata objectAtIndex:i];
+        NSString* nodeid=[NSString stringWithFormat:@"%d",node.nodeId];
+        if (![need isEqualToString:@""]&&need) {
+            //  [alert show];
+            // if (ifs) {
+            if (node.typid==node.nodeId) {
+                NSDictionary* dic;
+                dic=[NSDictionary dictionaryWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                [typjson addObject:dic];
+            }//是物料规格
+            else if(node.matid==node.nodeId)
+            {
+                NSDictionary* dic=[[NSDictionary alloc]initWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                [wuljson addObject:dic];
+            }//是物料
+            
+            //  }
+            
+        }
+    }
+    for (int i=0; i<_tempedata.count; i++) {
+        
+        NSIndexPath *pathOne=[NSIndexPath indexPathForRow:i inSection:0];//获取cell的位置
+        UITableViewCell *cell=(UITableViewCell *)[_tableView cellForRowAtIndexPath:pathOne];//获取具体位置的cell
+        UITextField *textone=[cell.contentView viewWithTag:1000];
+        textone.text=@"";
+    }//清空所有textfield
+
+    if (typjson.count||wuljson.count) {
+        NSString *clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+        NSDictionary* jsondic=[[NSDictionary alloc]initWithObjectsAndKeys:typjson,@"T",wuljson,@"W",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"],@"userid",clientidstr,@"cusid", nil];
+        NSString*  datastr=[[NetRequestManager sharedInstance]DataToJsonString:jsondic];
+        NSMutableDictionary *pir=[[NSMutableDictionary alloc]init];
+        [pir setObject:datastr forKey:@"paraMap"];
+        NSLog(@"%@",datastr);
+        [[QQRequestManager sharedRequestManager] POST:[SEVER_URL stringByAppendingString:@"yd/addCusMatReq.action"] parameters:pir showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@",datastr);
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+            }];
+            [typjson removeAllObjects];
+            [wuljson removeAllObjects];
+            if([responseObject objectForKey:@"status"])
+            {
+                /*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [self.navigationController popViewControllerAnimated:NO];
+                 // 2秒后异步执行这里的代码...
+                 
+                 });*/
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"添加失败"];
+            }];
+        }];
+
+    }
+    else
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"请输入需求量后再提交"];
+        }];
+   
+}
 @end

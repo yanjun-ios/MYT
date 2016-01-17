@@ -7,7 +7,7 @@
 //
 
 #import "ChangeinfoTableViewController.h"
-#import "Node.h"
+#import "Node1.h"
 #import "AddneedViewController.h"
 @interface ChangeinfoTableViewController ()
 {
@@ -23,7 +23,7 @@
 {
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
+                                 initWithImage:[UIImage imageNamed:@"02-1通讯录30-30"]
                                  
                                  style:UIBarButtonItemStyleDone
                                  
@@ -42,7 +42,7 @@
     wular=[[NSMutableArray alloc]init];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
                                  
-                                 initWithImage:[UIImage imageNamed:@"右上角对号"]
+                                 initWithImage:[UIImage imageNamed:@"02-1通讯录30-30"]
                                  
                                  style:UIBarButtonItemStyleDone
                                  
@@ -134,13 +134,13 @@
             for (int i=0; i<typear.count; i++) {
                 NSDictionary * typeinfo=[typear objectAtIndex:i];
                 int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1];
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:-1];
                 [nodear addObject:node];
             }
             for (int i=0; i<wular.count; i++) {
                 NSDictionary * wulinfo=[wular objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1];
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid typid:-1 needcount:-1];
                 [nodear addObject:node];
                 
             }

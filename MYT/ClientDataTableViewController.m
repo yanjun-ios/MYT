@@ -5,14 +5,18 @@
 //  Created by 熊凯 on 15/12/9.
 //  Copyright © 2015年 YunRui. All rights reserved.
 //
-
+#import "CilentplaceViewController.h"
 #import "ClientDataTableViewController.h"
 #import "NetRequestManager.h"
 #import "QQRequestManager.h"
 #import "ContactsTableViewController.h"
+
 @interface ClientDataTableViewController ()
 {
     NSDictionary* dataDic;
+    __block NSString * longi;
+    __block NSString * lati;
+   
 }
 @end
 
@@ -71,7 +75,8 @@
         NSLog(@"%@",responseObject);
         
         dataDic=(NSDictionary*)responseObject ;
-        
+        lati=[dataDic objectForKey:@"latitude"];
+        longi=[dataDic objectForKey:@"longitude"];
         _lab_custtname.text=[dataDic objectForKey:@"custtname"];
         _lab_cusname.text=[dataDic objectForKey:@"cusname"];
         _lab_telephone.text=[dataDic objectForKey:@"phone"];
@@ -101,13 +106,7 @@
     }];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"contacts"]) {
-        ContactsTableViewController* destination=[segue destinationViewController];
-        destination.cusid=[NSString stringWithFormat:@"%d",_clientId];;
-    }
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -119,7 +118,7 @@
      [self performSegueWithIdentifier:@"contacts" sender:self];
 }
 - (IBAction)clickLocation:(id)sender {
-    
+     [self performSegueWithIdentifier:@"cplace" sender:self];
     //这里直接跳转到地图的页面上面去
 //    //获取经度
 //    float latitude=((NSNumber*)[dataDic objectForKey:@"latitude"]).floatValue;
@@ -127,7 +126,20 @@
 //     float longitude=((NSNumber*)[dataDic objectForKey:@"longitude"]).floatValue;
 //    [self performSegueWithIdentifier:@"tomap" sender:self];
 }
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([segue.identifier isEqualToString:@"contacts"]) {
+        ContactsTableViewController* destination=[segue destinationViewController];
+        destination.cusid=[NSString stringWithFormat:@"%d",_clientId];
+    }
+    else if ([segue.identifier isEqualToString:@"cplace"])
+    {
+        CilentplaceViewController *des=segue.destinationViewController;
+        des.lati=lati;
+        des.longi=longi;
+    }
+}
 - (IBAction)contactClick:(id)sender {
     
    
