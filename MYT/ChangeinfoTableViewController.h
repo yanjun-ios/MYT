@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 //放错地方了 应该在YJCrud
-@interface ChangeinfoTableViewController : UITableViewController<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *TF_name;
-@property (weak, nonatomic) IBOutlet UITextField *TF_singlename;
-@property (weak, nonatomic) IBOutlet UITextField *TF_phone;
-@property (weak, nonatomic) IBOutlet UITextField *TF_need;
-@property (weak, nonatomic) IBOutlet UITextField *TF_ChuanZ;
-@property (weak, nonatomic) IBOutlet UITextField *TF_Website;
-
+@interface ChangeinfoTableViewController : UITableViewController
+@property(nonatomic,assign)int clientId;
 @end

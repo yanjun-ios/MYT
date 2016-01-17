@@ -74,7 +74,7 @@
             self.title=@"客户资料";
             break;
         case 1:
-            self.title=@"修改";
+            self.title=@"用料需求";
             break;
         case 2:
             self.title=@"添加联系人";

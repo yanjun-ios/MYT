@@ -9,12 +9,15 @@
 #import "ChangeinfoTableViewController.h"
 #import "Node1.h"
 #import "AddneedViewController.h"
+#import "NetRequestManager.h"
+#import "QQRequestManager.h"
 @interface ChangeinfoTableViewController ()
 {
     NSArray *init;
     NSMutableArray *nodear;
     __block  NSMutableArray  *typear;//存类型为T的物料类别
     __block  NSMutableArray  *wular;//存类型为W的物料类别
+    __block NSArray *jsonary;
 }
 @end
 
@@ -34,9 +37,13 @@
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
     [self getstock];
+    [self getneed];
    
 }
 - (void)viewDidLoad {
+    _clientId= [NetRequestManager sharedInstance].clientId;
+    self.tableView.delegate=self;
+    self.tableView.dataSource=self;
     nodear=[[NSMutableArray alloc]init];
     typear=[[NSMutableArray alloc]init];
     wular=[[NSMutableArray alloc]init];
@@ -52,12 +59,7 @@
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
-    _TF_ChuanZ.delegate=self;
-    _TF_name.delegate=self;
-    _TF_need.delegate=self;
-    _TF_phone.delegate=self;
-    _TF_singlename.delegate=self;
-    _TF_Website.delegate=self;
+    
     
     [super viewDidLoad];
     
@@ -66,6 +68,105 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
+    //物料或者物料规格名字
+    UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 60, 20)];
+    name.font=[UIFont systemFontOfSize:14];
+    name.textColor=[UIColor lightGrayColor];
+    name.text=@"名称";
+    [view addSubview:name];
+    
+    //是物料还是物料规格
+    UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80, 20)];
+    phone.center=CGPointMake(ScreenWidth/2, 21);
+    phone.textAlignment=NSTextAlignmentCenter;
+    phone.font=[UIFont systemFontOfSize:14];
+    phone.textColor=[UIColor lightGrayColor];
+    phone.text=@"类型";
+    [view addSubview:phone];
+    
+    
+    UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 11, 60, 20)];
+    need.font=[UIFont systemFontOfSize:14];
+    need.textColor=[UIColor lightGrayColor];
+    need.text=@"需求量";
+    [view addSubview:need];
+
+    return view;
+}
+-(void)getneed
+{
+    NSString * clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+    [parDic setValue:clientidstr forKey:@"cusid"];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@""] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonary=[responseObject objectForKey:@"list"];
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"网络请求错误！"];
+        }];
+    }];
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return  jsonary.count;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* identif=@"cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identif];
+    if (!cell) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identif];
+        
+        //物料或者物料规格名字
+        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 60, 20)];
+        name.font=[UIFont systemFontOfSize:14];
+        name.textColor=[UIColor darkGrayColor];
+        name.tag=1000;
+        [cell.contentView addSubview:name];
+        
+        //是物料还是物料规格
+        UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80, 20)];
+        phone.center=CGPointMake(ScreenWidth/2, 21);
+        phone.textAlignment=NSTextAlignmentCenter;
+        phone.font=[UIFont systemFontOfSize:14];
+        phone.textColor=[UIColor darkGrayColor];
+        phone.tag=1001;
+        [cell.contentView addSubview:phone];
+        
+  
+        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 11, 60, 20)];
+        need.font=[UIFont systemFontOfSize:14];
+        need.textColor=[UIColor darkGrayColor];
+        need.tag=1002;
+        [cell.contentView addSubview:need];
+    }
+    if ([[[jsonary objectAtIndex:indexPath.row] objectForKey:@"tw"] isEqualToString:@"T"]) {
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"typename"];
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"物料规格";
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"needs"];
+    }
+    else
+    {
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"mattername"];
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"spec"];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"needs"];
+    }
+    
+    
+    
+    return cell;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,21 +189,7 @@
         stock.nodearr=nodear;
     }
 }
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-   
-    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[textField convertRect:textField.bounds toView:window];
-    float y1=rect.origin.y;
-    if(y1>200)
-    {
-        self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
-    }
-}
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-50);
-}
+
 #pragma mark - Table view data source
 
 -(void)getstock
