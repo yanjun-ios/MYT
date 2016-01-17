@@ -7,8 +7,8 @@
 //
 //ok
 #import <UIKit/UIKit.h>
-
-@interface addTableViewController : UITableViewController<UITextFieldDelegate,UIAlertViewDelegate>
+#import "RegionsTableViewController.h"
+@interface addTableViewController : UITableViewController<UITextFieldDelegate,UIAlertViewDelegate,PassLocationValueDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *locati;
 
 @property (weak, nonatomic) IBOutlet UITextField *TF_CusName;

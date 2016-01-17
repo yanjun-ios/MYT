@@ -19,6 +19,7 @@
     NSDictionary* dic;
      UIAlertView *alert ;
     int qiyeorperson;
+    NSDictionary* locationCodeDic;
 }
 @end
 
@@ -167,9 +168,9 @@
          [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
         [addcusjson setObject:lati forKey:@"longitude"];//经度
         [addcusjson setObject:longi forKey:@"latitude"];//纬度
-        [addcusjson setObject:@"0" forKey:@"province"];
-        [addcusjson setObject:@"0" forKey:@"city"];
-        [addcusjson setObject:@"0" forKey:@"district"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"region"] forKey:@"district"];
         [addcusjson setObject:_TF_website.text forKey:@"website"];
         if (qiyeorperson==1) {
             [addcusjson setObject:@"1" forKey:@"type"];
@@ -221,7 +222,13 @@
     }
     
 }
-
+-(void)passLovation:(NSDictionary *)locationDic
+{
+    UILabel* lab=(UILabel*)[self.view viewWithTag:1234];
+    lab.text=[[[locationDic objectForKey:@"provinceName"] stringByAppendingString:[locationDic objectForKey:@"cityName"]] stringByAppendingString:[locationDic objectForKey:@"regionName"]];
+    locationCodeDic=locationDic;
+     NSLog(@"%@",locationDic);
+}
 - (IBAction)click_person:(id)sender {
     qiyeorperson=0;
     btnSelected.selected=NO;
