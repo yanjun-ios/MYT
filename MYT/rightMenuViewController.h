@@ -16,4 +16,5 @@
 
 @property (weak, nonatomic) IBOutlet UIView *view_three;
 @property (weak, nonatomic) IBOutlet UIView *view_four;
+- (IBAction)celectLocation:(id)sender;
 @end

@@ -170,7 +170,7 @@
         [addcusjson setObject:longi forKey:@"latitude"];//纬度
         [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
         [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];
-        [addcusjson setObject:[locationCodeDic objectForKey:@"region"] forKey:@"district"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"regioncode"] forKey:@"district"];
         [addcusjson setObject:_TF_website.text forKey:@"website"];
         if (qiyeorperson==1) {
             [addcusjson setObject:@"1" forKey:@"type"];
