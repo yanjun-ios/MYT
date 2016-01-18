@@ -19,6 +19,8 @@
     int toIndex;
     NSMutableArray * addAnnotations;
     BOOL ifload;
+    NSString*  lati;
+    NSString*  longi;
 }
 @end
 
@@ -37,10 +39,9 @@
         
         
         [self getCusdist];
-        NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
-        float  lati=((NSNumber*)[location objectForKey:@"lati"]).floatValue;
-        float  longi=((NSNumber*)[location objectForKey:@"longi"]).floatValue;
-        NSLog(@"%f,%f",lati,longi);
+        //NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
+        
+        NSLog(@"%@,%@",lati,longi);
         [self getAddressByLatitude:lati longitude:longi];
         
     });
@@ -86,7 +87,7 @@
     [parDic setValue:@"24" forKey:@"lon"];//单例的经度
     [parDic setValue:@"36" forKey:@"lat"];//单例的纬度
     [parDic setValue:@"1000" forKey:@"raidus"];//范围
-    [self getAddressByLatitude:39 longitude:120];
+   // [self getAddressByLatitude:39 longitude:120];
     //异步请求
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusDist.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         cusDist=[responseObject objectForKey:@"list"];
@@ -206,6 +207,8 @@
     CLLocation *location=[locations firstObject];//取出第一个位置
     CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
     NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+    lati=[NSString stringWithFormat:@"%f",coordinate.latitude];
+    longi=[NSString stringWithFormat:@"%f",coordinate.longitude];
     //如果不需要实时定位，使用完即使关闭定位服务
     //[_locationManager stopUpdatingLocation];
 }
@@ -240,15 +243,18 @@
 }
 
 #pragma mark 根据坐标取得地名
--(void)getAddressByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+-(void)getAddressByLatitude:(NSString*)latitude longitude:(NSString*)longitude{
     //反地理编码
+    NSLog(@"%@,%@",latitude,longitude);
     __block NSDictionary *dic;
-    CLLocation *location=[[CLLocation alloc]initWithLatitude:latitude longitude:longitude];
+    CLLocationDegrees lat=[latitude doubleValue];
+    CLLocationDegrees lon=[longitude doubleValue];
+    CLLocation *location=[[CLLocation alloc]initWithLatitude:lat longitude:lon];
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placemark=[placemarks firstObject];
         dic=placemark.addressDictionary;
         NSLog(@"详细信息:%@",placemark.addressDictionary);
-        NSLog(@"%@",[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]]);
+        NSLog(@"%@",[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"Name"]]);
         _la_place.text=[NSString stringWithFormat:@"%@",[placemark.addressDictionary objectForKey:@"City"]];
         
     }];

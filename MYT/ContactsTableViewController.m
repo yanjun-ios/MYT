@@ -29,7 +29,7 @@
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
-    
+    callCenter = [[CTCallCenter alloc] init];
     [super viewDidLoad];
     [self loadData];
     // Uncomment the following line to preserve selection between presentations.
@@ -214,22 +214,36 @@
                 [UpLoadJson setValue:contId forKey:@"contid"];
                 [UpLoadJson setValue:calltime forKey:@"calltime"];
                 [UpLoadJson setValue:ctime forKey:@"talktime"];
+                 NSLog(@"%@",ctime);
                 NSString* jsonStr= [[NetRequestManager sharedInstance]DataToJsonString:UpLoadJson];
                 NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
                 [parDic setValue:jsonStr forKey:@"paraMap"];
                 [[QQRequestManager sharedRequestManager]POST:[SEVER_URL stringByAppendingString:@"yd/addCallRecord.action"] parameters:parDic success:^(NSURLSessionDataTask *task, id responseObject) {
                     int status=((NSNumber*)[responseObject objectForKey:@"status"]).intValue;
                     if (status==1) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            // 刷新表格
+                            
+                            
+                            [self qq_performSVHUDBlock:^{
+                                [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+                            }];
+
+                            
+                        });
+                        
+                    }
+                    else
+                    {dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        // 刷新表格
+                        
+                        
                         [self qq_performSVHUDBlock:^{
                             [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
                         }];
-                    }
-                    else
-                    {
-                        [self qq_performSVHUDBlock:^{
-                            [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"message"]];
-                        }];
-                    }
+                        
+                        
+                    });                    }
                 } failure:^(NSURLSessionDataTask *task, NSError *error) {
                     [self qq_performSVHUDBlock:^{
                         [SVProgressHUD showErrorWithStatus:@"通话记录上传失败！"];
@@ -245,7 +259,7 @@
     else
     {
         
-         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%ld",(long)btn.tag];
+         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@",[[jsonAry objectAtIndex:index] objectForKey:@"mobilephone"]];
         UIWebView * callWebview = [[UIWebView alloc] init];
         [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
         [self.view addSubview:callWebview];

@@ -153,7 +153,7 @@
                 [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
             /*show the image to the user here on the main queue*/
     
-    
+
   
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -162,10 +162,10 @@
       TreeViewController * stock=segue.destinationViewController;
      stock.nodearr=nodear;
     }
-    else if ([segue.identifier isEqual:@"cilentmanage"]) {
+    /*else if ([segue.identifier isEqual:@"cilentmanage"]) {
         CilentViewController * stock=segue.destinationViewController;
         stock.nodearr=nodear;
-    }
+    }*/
 
 }
 @end
