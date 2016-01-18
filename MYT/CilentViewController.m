@@ -280,6 +280,11 @@
     
     return 1;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%@",data);
@@ -303,15 +308,17 @@
         [cell.contentView addSubview:line];
         
         //创建添加联系人按钮
-        UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 23 , 23)];
-        [btnadd setImage:[UIImage imageNamed:@"添加客户"] forState:UIControlStateNormal];
+        UIButton* btnadd=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 55, 35 , 35)];
+       
+        [btnadd setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnadd];
         btnadd.tag=200;
         [btnadd addTarget:self action:@selector(addContactsClick:) forControlEvents:UIControlEventTouchUpInside];
         
         //创建客户详情按钮
-        UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-35, 15, 12, 19)];
-        [btnto setImage:[UIImage imageNamed:@"向右"] forState:UIControlStateNormal];
+        UIButton* btnto=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 5, 35 , 35)];
+        
+        [btnto setImage:[UIImage imageNamed:@"向右15.15"] forState:UIControlStateNormal];
         [cell.contentView addSubview:btnto];
         btnto.tag=190;
         [btnto addTarget:self action:@selector(clickToTaba:) forControlEvents:UIControlEventTouchUpInside];

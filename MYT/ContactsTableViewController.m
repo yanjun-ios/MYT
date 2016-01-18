@@ -81,7 +81,7 @@
         [cell.contentView addSubview:phone];
         
         //电话图标
-        UIButton* call=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-40, 7, 30, 30)];
+        UIButton* call=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-50, 7, 35, 35)];
         call.tag=1002;
         [cell.contentView addSubview:call];
     }

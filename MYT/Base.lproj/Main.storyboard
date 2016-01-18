@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Wyf-NJ-SbM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Wyf-NJ-SbM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1361,8 +1361,12 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VlS-1i-gwf">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="26" id="9T1-RI-fyR"/>
-                                            <constraint firstAttribute="height" constant="21" id="M7a-Db-nqR"/>
+                                            <constraint firstAttribute="width" constant="26" id="9T1-RI-fyR">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="21" id="M7a-Db-nqR">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                            </constraint>
                                         </constraints>
                                         <state key="normal" title="Button" image="电话小"/>
                                         <variation key="default">
@@ -1420,7 +1424,9 @@
                                     <constraint firstItem="cVL-NJ-lSh" firstAttribute="top" secondItem="M7g-48-iaH" secondAttribute="top" constant="20" id="UFv-o1-QOs">
                                         <variation key="heightClass=regular-widthClass=compact" constant="14"/>
                                     </constraint>
-                                    <constraint firstItem="VlS-1i-gwf" firstAttribute="top" secondItem="M7g-48-iaH" secondAttribute="top" constant="14" id="Vmn-1n-ixt"/>
+                                    <constraint firstItem="VlS-1i-gwf" firstAttribute="top" secondItem="M7g-48-iaH" secondAttribute="top" constant="14" id="Vmn-1n-ixt">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="7"/>
+                                    </constraint>
                                     <constraint firstItem="FzU-nG-OJb" firstAttribute="top" secondItem="M7g-48-iaH" secondAttribute="top" constant="10" id="Xwh-T6-sxf"/>
                                     <constraint firstItem="FzU-nG-OJb" firstAttribute="leading" secondItem="VlS-1i-gwf" secondAttribute="trailing" constant="1" id="YEv-KH-HWH">
                                         <variation key="heightClass=regular-widthClass=compact" constant="13"/>
@@ -9923,7 +9929,7 @@
         <segue reference="isS-60-a2j"/>
         <segue reference="uDY-cg-zof"/>
         <segue reference="cpN-Vg-WFn"/>
-        <segue reference="7eJ-eP-xlg"/>
         <segue reference="4Td-en-ejO"/>
+        <segue reference="JeF-lr-eim"/>
     </inferredMetricsTieBreakers>
 </document>
