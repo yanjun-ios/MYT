@@ -107,9 +107,10 @@
     UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
     CGRect rect=[textField convertRect:textField.bounds toView:window];
     float y1=rect.origin.y;
-    if(y1>200)
+    
+    if(y1>216)
     {
-        self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
+        self.tableView.frame=CGRectMake(0, -216, ScreenWidth, ScreenHeight);
     }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
@@ -168,9 +169,12 @@
          [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
         [addcusjson setObject:lati forKey:@"longitude"];//经度
         [addcusjson setObject:longi forKey:@"latitude"];//纬度
-        [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
-        [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];
-        [addcusjson setObject:[locationCodeDic objectForKey:@"regioncode"] forKey:@"district"];
+        [addcusjson setObject:@"0" forKey:@"province"];
+        //[locationCodeDic objectForKey:@"provinceCode"]
+        [addcusjson setObject:@"0" forKey:@"city"];
+        //[locationCodeDic objectForKey:@"cityCode"]
+        [addcusjson setObject:@"0" forKey:@"district"];
+        //[locationCodeDic objectForKey:@"regioncode"]
         [addcusjson setObject:_TF_website.text forKey:@"website"];
         if (qiyeorperson==1) {
             [addcusjson setObject:@"1" forKey:@"type"];
