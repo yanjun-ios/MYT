@@ -221,13 +221,15 @@
             for (int i=0; i<typear.count; i++) {
                 NSDictionary * typeinfo=[typear objectAtIndex:i];
                 int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:-1];
+                int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
                 [nodear addObject:node];
             }
             for (int i=0; i<wular.count; i++) {
                 NSDictionary * wulinfo=[wular objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid typid:-1 needcount:-1];
+                int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid typid:-1 needcount:counts];
                 [nodear addObject:node];
                 
             }

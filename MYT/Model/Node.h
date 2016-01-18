@@ -25,10 +25,12 @@
 
 @property (nonatomic , assign) BOOL child;//该节点是否有孩子
 
-@property (nonatomic , assign)int matid;//该节点是否有孩子
+@property (nonatomic , assign)int matid;//物料id
+@property (nonatomic , assign)int counts;//库存量
+@property (nonatomic , assign)int matecounts;//匹配到的客户数量
 /**
  *快速实例化该对象模型
  */
-- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(int)matid;
+- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(int)matid counts:(int)counts matecounts:(int)matecounts;
 
 @end

@@ -183,11 +183,11 @@
     }
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
     label2.font=[UIFont systemFontOfSize:14];
-    label2.text=node.name;
+    label2.text=[NSString stringWithFormat:@"%d",node.counts];
     
     UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
     label2.font=[UIFont systemFontOfSize:14];
-    label3.text=node.name;
+    label3.text=[NSString stringWithFormat:@"%d",node.matecounts];
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
     image.image=[UIImage imageNamed:@"公司库存向右"];
@@ -274,7 +274,9 @@
             for (int i=0; i<typearr.count; i++) {
                 NSDictionary * typeinfo=[typearr objectAtIndex:i];
                 int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1];
+                int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                int matecounts=((NSNumber*)[typeinfo objectForKey:@"matecounts"]).intValue;
+                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1 counts:counts matecounts:matecounts];
                 
                 if (parentNode.expand) {
                     NSLog(@"%@",[nodear objectAtIndex:j]);
@@ -289,7 +291,9 @@
             for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid];
+                int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
                 if(parentNode.expand)
                 {
                 [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];
@@ -391,7 +395,9 @@
                 for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
                 int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                    Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid];
+                int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+                    Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
                NSLog(@"%hd",parentNode.expand);
                     if (parentNode.expand) {
                       //  NSLog(@"%@",[nodear objectAtIndex:j]);

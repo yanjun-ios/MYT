@@ -179,7 +179,7 @@
                 for (int i=0; i<typearr.count; i++) {
                     NSDictionary * typeinfo=[typearr objectAtIndex:i];
                     int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
-                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1];
+                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1 counts:0 matecounts:0];
                     if (!click) {
                         NSLog(@"%@",[nodear objectAtIndex:j]);
                         [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
@@ -203,7 +203,7 @@
                 for (int i=0; i<wularr.count; i++) {
                     NSDictionary * wulinfo=[wularr objectAtIndex:i];
                     int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
-                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:-1];
+                    Node * node1=[[Node alloc]initWithParentId:node.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:-1 counts:0 matecounts:0];
                     [nodear addObject:node1];
                     
                 }

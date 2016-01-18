@@ -10,9 +10,15 @@
 #import "QQRequestManager.h"
 #import "Z_NetRequestManager.h"
 #import "NetRequestManager.h"
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
 @interface ContactsTableViewController ()
 {
     __block NSArray* jsonAry;
+     CTCallCenter *callCenter;
+    NSString *begin_hour,*begin_minute,*begin_ms,*end_hour,*end_minute,*end_ms;
+   
+    __block NSString* ctime;
 }
 @end
 
@@ -85,7 +91,7 @@
     //电话按钮
     UIButton* btn=(UIButton*)[cell.contentView viewWithTag:1002];
     [btn setImage:[UIImage imageNamed:@"电话小"] forState:0];
-    [btn addTarget:self action:@selector(callPhoneNum:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=10000+indexPath.row;
     
     
@@ -107,7 +113,7 @@
     }];
 }
 
--(void)callPhoneNum:(UIButton*)btn
+/*-(void)callPhoneNum:(UIButton*)btn
 {
     int index=btn.tag-10000;
     NSString* contId=[[jsonAry objectAtIndex:index] objectForKey:@"contactsid"];
@@ -122,9 +128,9 @@
         NSString* calltime=[formatter stringFromDate:[NSDate date]];
         [self UploadCallRecoredByUserId:userid Dtlid:_dtlid Contid:contId Calltime:calltime Talktime:talkTime];
     }
-}
+}*/
 
--(void)UploadCallRecoredByUserId:(NSString*)userid Dtlid:(NSString*)dtlid Contid:(NSString*)contid Calltime:(NSString*)calltime Talktime:(NSString*)talktime
+/*-(void)UploadCallRecoredByUserId:(NSString*)userid Dtlid:(NSString*)dtlid Contid:(NSString*)contid Calltime:(NSString*)calltime Talktime:(NSString*)talktime
 {
     NSMutableDictionary* UpLoadJson=[[NSMutableDictionary alloc]init];
     [UpLoadJson setValue:userid forKey:@"userid"];
@@ -153,9 +159,184 @@
             [SVProgressHUD showErrorWithStatus:@"通话记录上传失败！"];
         }];
     }];
-   }
+   }*/
 
+//打电话及通话时间
+-(void)call:(id)sender
+{
+   
+    UIButton* btn =  (UIButton*)sender;
+    int index=(int)btn.tag-10000;
+    NSString* contId=[[jsonAry objectAtIndex:index] objectForKey:@"contactsid"];
+   
+    NSLog(@"%@",[[jsonAry objectAtIndex:index] objectForKey:@"mobilephone"]);
+    //判断一下  如果dtlid入库提醒明细id存在就上传通话记录 否则不上传
+    if (_dtlid) {
+        //上传通话记录
+        NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+        NSDateFormatter* formatter=[[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString* calltime=[formatter stringFromDate:[NSDate date]];
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@",[[jsonAry objectAtIndex:index] objectForKey:@"mobilephone"]];
+        UIWebView * callWebview = [[UIWebView alloc] init];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [self.view addSubview:callWebview];
+        
+        
+        callCenter.callEventHandler=^(CTCall* call){
+            
+            if (call.callState == CTCallStateDialing){
+                
+                NSLog(@"Call Dialing");
+                [self performSelectorOnMainThread:@selector(beginTalktime) withObject:nil waitUntilDone:YES];
+            }
+            
+            if (call.callState == CTCallStateConnected){
+                
+                NSLog(@"Call Connected");
+                
+                
+                
+                
+                
+            }
+            
+            if (call.callState == CTCallStateDisconnected){
+                
+                [self performSelectorOnMainThread:@selector(closeTalktime) withObject:nil waitUntilDone:YES];
+                
+                NSLog(@"Call Disconnected");
+                ctime=[self time:begin_hour begin_minute:begin_minute begin_ms:begin_ms endhour:end_hour end_minute:end_minute end_ms:end_ms];
+                NSLog(@"%@",ctime);
+                NSMutableDictionary* UpLoadJson=[[NSMutableDictionary alloc]init];
+                [UpLoadJson setValue:userid forKey:@"userid"];
+                [UpLoadJson setValue:_dtlid forKey:@"dtlid"];
+                [UpLoadJson setValue:contId forKey:@"contid"];
+                [UpLoadJson setValue:calltime forKey:@"calltime"];
+                [UpLoadJson setValue:ctime forKey:@"talktime"];
+                NSString* jsonStr= [[NetRequestManager sharedInstance]DataToJsonString:UpLoadJson];
+                NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+                [parDic setValue:jsonStr forKey:@"paraMap"];
+                [[QQRequestManager sharedRequestManager]POST:[SEVER_URL stringByAppendingString:@"yd/addCallRecord.action"] parameters:parDic success:^(NSURLSessionDataTask *task, id responseObject) {
+                    int status=((NSNumber*)[responseObject objectForKey:@"status"]).intValue;
+                    if (status==1) {
+                        [self qq_performSVHUDBlock:^{
+                            [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+                        }];
+                    }
+                    else
+                    {
+                        [self qq_performSVHUDBlock:^{
+                            [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"message"]];
+                        }];
+                    }
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    [self qq_performSVHUDBlock:^{
+                        [SVProgressHUD showErrorWithStatus:@"通话记录上传失败！"];
+                    }];
+                }];
+            }
+            
+        };
+        
+        NSLog(@"打电话中");
 
+    }
+    else
+    {
+        
+         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%ld",(long)btn.tag];
+        UIWebView * callWebview = [[UIWebView alloc] init];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [self.view addSubview:callWebview];
+        
+        
+        callCenter.callEventHandler=^(CTCall* call){
+            
+            if (call.callState == CTCallStateDialing){
+                
+                NSLog(@"Call Dialing");
+                [self performSelectorOnMainThread:@selector(beginTalktime) withObject:nil waitUntilDone:YES];
+            }
+            
+            if (call.callState == CTCallStateConnected){
+                
+                NSLog(@"Call Connected");
+                
+                
+                
+                
+                
+            }
+            
+            if (call.callState == CTCallStateDisconnected){
+                
+                [self performSelectorOnMainThread:@selector(closeTalktime) withObject:nil waitUntilDone:YES];
+                
+                NSLog(@"Call Disconnected");
+            }
+        };
+        
+        NSLog(@"打电话中");
+
+    }
+
+       //return calltime;
+}
+-(void)beginTalktime
+{
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+    // NSString hour=[formatter stringFromDate:[NSDate date]];
+    begin_hour = [formatter stringFromDate:[NSDate date]];
+    begin_hour=[begin_hour stringByReplacingOccurrencesOfString:@"时" withString:@""];
+    [formatter setDateFormat:@"mm"];
+    begin_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    begin_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",begin_hour,begin_minute,begin_ms);
+}
+-(void)closeTalktime
+{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"hh"];
+    end_hour = [formatter stringFromDate:[NSDate date]];
+    end_hour=[end_hour stringByReplacingOccurrencesOfString:@"时" withString:@""];
+    [formatter setDateFormat:@"mm"];
+    end_minute=[formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"ss"];
+    end_ms=[formatter stringFromDate:[NSDate date]];
+    NSLog(@"%@,%@,%@",end_hour,end_minute,end_ms);
+}
+-(NSString*)time:(NSString*)begin_h begin_minute:(NSString*)begin_m begin_ms:(NSString*)begin_s endhour:(NSString*)end_h end_minute:(NSString*)end_m end_ms:(NSString*)end_s
+{
+    NSString* cha;
+    int cha_hour ,cha_minute,cha_ms;
+    int bh=[begin_h intValue];
+    int bm=[begin_m intValue];
+    int bs=[begin_s intValue];
+    int eh=[end_h intValue];
+    int em=[end_m intValue];
+    int es=[end_s intValue];
+    if (eh>=bh) {
+        cha_hour=eh-bh;
+    }
+    else
+        cha_hour=eh+24-bh;
+    if (em>=bm) {
+        cha_minute=em-bm;
+    }
+    else
+        cha_minute=em+60-bm;
+    if (es>=bs) {
+        cha_ms=es-bs;
+    }
+    else
+        cha_ms=es+60-bs;
+    cha=[NSString stringWithFormat:@"拨打时间为%d时%d份%d秒",cha_hour,cha_minute,cha_ms];
+    return  cha;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

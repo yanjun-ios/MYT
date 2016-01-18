@@ -49,9 +49,9 @@
 		9C04CD0B1C4744A6003AF9FD /* FollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD0A1C4744A6003AF9FD /* FollowViewController.m */; };
 		9C04CD0E1C478913003AF9FD /* messageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD0D1C478913003AF9FD /* messageDetailViewController.m */; };
 		9C04CD111C49F38B003AF9FD /* ContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD101C49F38B003AF9FD /* ContactsTableViewController.m */; };
-		9C04CD1D1C4BCB98003AF9FD /* ProvinceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1C1C4BCB98003AF9FD /* ProvinceTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C04CD201C4BCBED003AF9FD /* CitysTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1F1C4BCBED003AF9FD /* CitysTableViewController.m */; settings = {ASSET_TAGS = (); }; };
-		9C04CD231C4BCC6D003AF9FD /* RegionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD221C4BCC6D003AF9FD /* RegionsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9C04CD1D1C4BCB98003AF9FD /* ProvinceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1C1C4BCB98003AF9FD /* ProvinceTableViewController.m */; };
+		9C04CD201C4BCBED003AF9FD /* CitysTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1F1C4BCBED003AF9FD /* CitysTableViewController.m */; };
+		9C04CD231C4BCC6D003AF9FD /* RegionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD221C4BCC6D003AF9FD /* RegionsTableViewController.m */; };
 		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; };
 		9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FD1C166A9B00B48EFE /* IISideController.m */; };
 		9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FF1C166A9B00B48EFE /* IIViewDeckController.m */; };
@@ -82,6 +82,7 @@
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 		D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9430F951C44B3A800714898 /* FindmapViewController.m */; };
 		D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A815D91C48CDA500C5E698 /* TreeViewController.m */; };
+		D9A815DD1C4CB24B00C5E698 /* NeedsearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A815DC1C4CB24B00C5E698 /* NeedsearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +243,8 @@
 		D9430F951C44B3A800714898 /* FindmapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindmapViewController.m; sourceTree = "<group>"; };
 		D9A815D81C48CDA500C5E698 /* TreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeViewController.h; sourceTree = "<group>"; };
 		D9A815D91C48CDA500C5E698 /* TreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeViewController.m; sourceTree = "<group>"; };
+		D9A815DB1C4CB24B00C5E698 /* NeedsearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedsearchViewController.h; sourceTree = "<group>"; };
+		D9A815DC1C4CB24B00C5E698 /* NeedsearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedsearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +564,8 @@
 				9C04CD1F1C4BCBED003AF9FD /* CitysTableViewController.m */,
 				9C04CD211C4BCC6D003AF9FD /* RegionsTableViewController.h */,
 				9C04CD221C4BCC6D003AF9FD /* RegionsTableViewController.m */,
+				D9A815DB1C4CB24B00C5E698 /* NeedsearchViewController.h */,
+				D9A815DC1C4CB24B00C5E698 /* NeedsearchViewController.m */,
 			);
 			name = YJClient;
 			sourceTree = "<group>";
@@ -877,6 +882,7 @@
 				77A805D51C1DACBF00F9B15D /* TreeTableView.m in Sources */,
 				9C04CD0B1C4744A6003AF9FD /* FollowViewController.m in Sources */,
 				776ADB811C428DE90084401F /* ChangeinfoTableViewController.m in Sources */,
+				D9A815DD1C4CB24B00C5E698 /* NeedsearchViewController.m in Sources */,
 				18C0A40C1C1515FD00C380B5 /* main.m in Sources */,
 				D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */,
 				9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */,

@@ -157,7 +157,7 @@ static Z_NetRequestManager * sharedInstance = nil;
         if (call.callState == CTCallStateDialing){
             
             NSLog(@"Call Dialing");
-            [self performSelectorOnMainThread:@selector(beginTalktime:) withObject:nil waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(beginTalktime) withObject:nil waitUntilDone:YES];
         }
         
         if (call.callState == CTCallStateConnected){
@@ -172,7 +172,7 @@ static Z_NetRequestManager * sharedInstance = nil;
         
         if (call.callState == CTCallStateDisconnected){
             
-            [self performSelectorOnMainThread:@selector(closeTalktime:) withObject:nil waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(closeTalktime) withObject:nil waitUntilDone:YES];
             
             NSLog(@"Call Disconnected");
             calltime=[self time:begin_hour begin_minute:begin_minute begin_ms:begin_ms endhour:end_hour end_minute:end_minute end_ms:end_ms];
