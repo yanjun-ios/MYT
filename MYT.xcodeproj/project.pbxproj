@@ -52,12 +52,12 @@
 		9C04CD1D1C4BCB98003AF9FD /* ProvinceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1C1C4BCB98003AF9FD /* ProvinceTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9C04CD201C4BCBED003AF9FD /* CitysTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD1F1C4BCBED003AF9FD /* CitysTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9C04CD231C4BCC6D003AF9FD /* RegionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD221C4BCC6D003AF9FD /* RegionsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9C04CD281C4CB8CB003AF9FD /* rightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C04CD271C4CB8CB003AF9FD /* rightMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */; };
 		9C6F18031C166A9B00B48EFE /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FD1C166A9B00B48EFE /* IISideController.m */; };
 		9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F17FF1C166A9B00B48EFE /* IIViewDeckController.m */; };
 		9C6F18051C166A9B00B48EFE /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18011C166A9B00B48EFE /* IIWrapController.m */; };
 		9C6F18091C167CFA00B48EFE /* CilentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18081C167CFA00B48EFE /* CilentViewController.m */; };
-		9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */; };
 		9C6F18171C16DBB700B48EFE /* addTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F18161C16DBB700B48EFE /* addTableViewController.m */; };
 		9C6F181F1C17C31800B48EFE /* XNTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181A1C17C31800B48EFE /* XNTabBar.m */; };
 		9C6F18201C17C31800B48EFE /* XNTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6F181C1C17C31800B48EFE /* XNTabBarButton.m */; };
@@ -182,6 +182,7 @@
 		9C04CD1F1C4BCBED003AF9FD /* CitysTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitysTableViewController.m; sourceTree = "<group>"; };
 		9C04CD211C4BCC6D003AF9FD /* RegionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionsTableViewController.h; sourceTree = "<group>"; };
 		9C04CD221C4BCC6D003AF9FD /* RegionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionsTableViewController.m; sourceTree = "<group>"; };
+		9C04CD271C4CB8CB003AF9FD /* rightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightMenuViewController.m; sourceTree = "<group>"; };
 		9C6F17F51C15812700B48EFE /* MYTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYTLoginViewController.h; sourceTree = "<group>"; };
 		9C6F17F61C15812700B48EFE /* MYTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYTLoginViewController.m; sourceTree = "<group>"; };
 		9C6F17FC1C166A9B00B48EFE /* IISideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IISideController.h; sourceTree = "<group>"; };
@@ -194,7 +195,6 @@
 		9C6F18071C167CFA00B48EFE /* CilentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CilentViewController.h; sourceTree = "<group>"; };
 		9C6F18081C167CFA00B48EFE /* CilentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CilentViewController.m; sourceTree = "<group>"; };
 		9C6F180D1C168F6000B48EFE /* rightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightMenuViewController.h; sourceTree = "<group>"; };
-		9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightMenuViewController.m; sourceTree = "<group>"; };
 		9C6F18151C16DBB700B48EFE /* addTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addTableViewController.h; sourceTree = "<group>"; };
 		9C6F18161C16DBB700B48EFE /* addTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = addTableViewController.m; path = MYT/addTableViewController.m; sourceTree = SOURCE_ROOT; };
 		9C6F18191C17C31800B48EFE /* XNTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XNTabBar.h; sourceTree = "<group>"; };
@@ -548,7 +548,7 @@
 				9C6F18071C167CFA00B48EFE /* CilentViewController.h */,
 				9C6F18081C167CFA00B48EFE /* CilentViewController.m */,
 				9C6F180D1C168F6000B48EFE /* rightMenuViewController.h */,
-				9C6F180E1C168F6000B48EFE /* rightMenuViewController.m */,
+				9C04CD271C4CB8CB003AF9FD /* rightMenuViewController.m */,
 				9C6F18151C16DBB700B48EFE /* addTableViewController.h */,
 				9C6F18161C16DBB700B48EFE /* addTableViewController.m */,
 				776ADB7F1C428DE90084401F /* ChangeinfoTableViewController.h */,
@@ -825,9 +825,9 @@
 				9CA6D8EC1C1831FC007E7D7A /* addContactsTableViewController.m in Sources */,
 				18C0A4121C1515FD00C380B5 /* ViewController.m in Sources */,
 				77BFE88C1C467B3800EEF7F1 /* MpViewController.m in Sources */,
+				9C04CD281C4CB8CB003AF9FD /* rightMenuViewController.m in Sources */,
 				77A7223E1C4A750900715D4D /* AddneedViewController.m in Sources */,
 				9C6F18041C166A9B00B48EFE /* IIViewDeckController.m in Sources */,
-				9C6F180F1C168F6000B48EFE /* rightMenuViewController.m in Sources */,
 				9C6F17F71C15812700B48EFE /* MYTLoginViewController.m in Sources */,
 				18C0A4591C15187D00C380B5 /* Utility.m in Sources */,
 				9CA6D8F21C1965B2007E7D7A /* MainViewController.m in Sources */,
