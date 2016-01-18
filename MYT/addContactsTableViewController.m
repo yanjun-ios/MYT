@@ -86,9 +86,9 @@
     UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
     CGRect rect=[textField convertRect:textField.bounds toView:window];
     float y1=rect.origin.y;
-    if(y1>200)
+    if(y1>216)
     {
-    self.tableView.frame=CGRectMake(0, -y1+200, ScreenWidth, ScreenHeight);
+    self.tableView.frame=CGRectMake(0, -216, ScreenWidth, ScreenHeight);
     }
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
