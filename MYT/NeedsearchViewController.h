@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NeedsearchViewController : UIViewController
-
+@interface NeedsearchViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(nonatomic,assign)NSArray *nodearr;
 @end

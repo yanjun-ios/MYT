@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *findcust;
 @property (weak, nonatomic) IBOutlet UILabel *Label_customer;
 //@property(nonatomic,assign)BOOL ifrefresh;
+@property(nonatomic,assign)NSArray *nodearr;
 - (IBAction)rightMenuClick:(id)sender;
 - (IBAction)addClientClick:(id)sender;
 - (IBAction)locationClick:(id)sender;

@@ -162,5 +162,10 @@
       TreeViewController * stock=segue.destinationViewController;
      stock.nodearr=nodear;
     }
+    else if ([segue.identifier isEqual:@"cilentmanage"]) {
+        CilentViewController * stock=segue.destinationViewController;
+        stock.nodearr=nodear;
+    }
+
 }
 @end
