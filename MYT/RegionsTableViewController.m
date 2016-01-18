@@ -9,6 +9,7 @@
 #import "RegionsTableViewController.h"
 #import "NetRequestManager.h"
 #import "addTableViewController.h"
+#import "CilentViewController.h"
 @interface RegionsTableViewController ()
 {
     NSMutableDictionary* locationSelected;
@@ -92,10 +93,21 @@
     //保存市
     [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityName"] forKey:@"cityName"];
     [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityCcode"] forKey:@"cityCcode"];
-    addTableViewController* contro=[self.navigationController.viewControllers objectAtIndex:3];
-    self.LocationDelegate=contro;
-    [self.LocationDelegate passLovation:locationSelected];
-    [self.navigationController popToViewController:contro animated:YES];
+    if ([NetRequestManager sharedInstance].FROMDECK==1) {
+        CilentViewController* contro=[self.navigationController.viewControllers objectAtIndex:2];
+        self.LocationDelegate=contro;
+        [self.LocationDelegate passLovation:locationSelected];
+        [self.navigationController popToViewController:contro animated:YES];
+        [NetRequestManager sharedInstance].FROMDECK=0;
+    }else
+    {
+        addTableViewController* contro=[self.navigationController.viewControllers objectAtIndex:3];
+        self.LocationDelegate=contro;
+        [self.LocationDelegate passLovation:locationSelected];
+        [self.navigationController popToViewController:contro animated:YES];
+    }
+    
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex NS_DEPRECATED_IOS(2_0, 9_0)

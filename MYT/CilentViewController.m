@@ -49,7 +49,9 @@
 
 {
     [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-    
+    if ([NetRequestManager sharedInstance].FROMDECK==1) {
+        [self.viewDeckController openRightView];
+    }
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
@@ -194,6 +196,13 @@
         for (int i = 0; i<init.count; i++) {
             [data addObject:[init objectAtIndex:i]];
         }
+        if (init.count==0) {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showInfoWithStatus:@"没有搜索到客户!"];
+            }];
+            
+        }
+
         [_tableview reloadData];
         //NSLog(@"%d",data.count);
         
@@ -225,7 +234,7 @@
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
-            [_tableview reloadData];
+                        [_tableview reloadData];
             //NSLog(@"%d",data.count);
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -493,7 +502,25 @@
 
 }
 
-
+-(void)passLovation:(NSDictionary *)locationDic
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];//user_id
+    [parDic setValue:@"" forKey:@"cusname"];
+    [parDic setValue:@1 forKey:@"pageNum"];
+    [parDic setValue:@100 forKey:@"pageSize"];
+    [parDic setValue:[locationDic objectForKey:@"provinceCode"] forKey:@"province"];
+    [parDic setValue:[locationDic objectForKey:@"cityCode"] forKey:@"city"];
+    [parDic setValue:[locationDic objectForKey:@"regioncode"] forKey:@"district"];
+    [parDic setValue:@"ALL" forKey:@"isneed"];
+    NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:parDic];
+    
+    NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
+    [DIC setObject:parStr forKey:@"paraMap"];
+    [self searchClient:DIC];
+   
+    NSLog(@"%@",locationDic);
+}
 
 
 //添加客户按钮
