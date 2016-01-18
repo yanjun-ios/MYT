@@ -241,8 +241,8 @@
         }
         
     }
-//    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
-//    
+    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
+    
 //    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
 //    btnGread.tag=10000+indexPath.row;
 //    [btnGread setTitle:@"0万" forState:0];
@@ -260,7 +260,10 @@
     
     UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
     btnGread.tag=10000+indexPath.row;
-    [btnGread setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"] forState:0];
+    
+  int feat= ((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"]).intValue;
+    
+    [btnGread setTitle:[NSString stringWithFormat:@"%d",feat] forState:0];
     
     UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
     btnfollow.tag=20000+indexPath.row;
@@ -484,7 +487,7 @@
     [parDic setValue:year forKey:@"year"];
     [parDic setValue:bengin forKey:@"monthS"];
     [parDic setValue:end forKey:@"monthE"];
-    [parDic setValue:teamid forKey:@"depId"];
+    [parDic setValue:teamid forKey:@"depid"];
     [parDic setValue:userid forKey:@"userid"];
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic = (NSDictionary*)responseObject;

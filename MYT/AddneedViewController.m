@@ -31,6 +31,10 @@
     self.navigationController.navigationBarHidden=NO;
 }
 - (void)viewDidLoad {
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
    
    _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
