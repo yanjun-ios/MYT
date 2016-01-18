@@ -42,11 +42,13 @@
 - (void)viewDidLoad {
     pageNum=1;
     btnHasSelectd=100;
-    if(currentVersion>=7)
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.edgesForExtendedLayout = UIRectEdgeBottom | UIRectEdgeLeft | UIRectEdgeRight;
+    /*if(currentVersion>=7)
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+    }*/
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loaData)];
     _tableview.mj_footer.automaticallyHidden = NO;
     [_tableview.mj_footer beginRefreshing];
@@ -133,10 +135,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [tableArry count];;
+    return [tableArry count];
+
 }
 
--(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 100;
 }
