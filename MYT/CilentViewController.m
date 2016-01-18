@@ -33,7 +33,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
   
-   // [_tableview reloadData];
+    [_tableview reloadData];
     
     
 }
@@ -48,10 +48,13 @@
 -(void)viewWillAppear:(BOOL)animated
 
 {
+    
     [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
     if ([NetRequestManager sharedInstance].FROMDECK==1) {
         [self.viewDeckController openRightView];
     }
+    
+    [self initinfor];
       // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
    
@@ -61,7 +64,8 @@
 - (void)viewDidLoad {
     
     callCenter = [[CTCallCenter alloc] init];
-   
+    _tableview.delegate=self;
+    _tableview.dataSource=self;
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     _tableview.mj_footer.automaticallyHidden = NO;
    
@@ -70,12 +74,11 @@
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
-    data = [[NSMutableArray alloc]init];
-    //tableview设置
-    _tableview.delegate=self;
-    _tableview.dataSource=self;
     
-    [self initinfor];
+    //tableview设置
+    
+    
+    
     //设置搜索框的代理
     _findcust.delegate=self;
     [super viewDidLoad];
@@ -87,7 +90,8 @@
 {
     j=1;
     
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
+    if (!data&&[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
+        data = [[NSMutableArray alloc]init];
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
@@ -116,7 +120,7 @@
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
-            [_tableview reloadData];
+            //[_tableview reloadData];
             NSLog(@"%@",data);
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -292,7 +296,7 @@
     static NSString *CellIdentifier = @"cell2";
     // 通过indexPath创建cell实例 每一个cell都是单独的
    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    UITableViewCell* cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     // 判断为空进行初始化  --（当拉动页面显示超过主页面内容的时候就会重用之前的cell，而不会再次初始化）
     if (!cell) {
         
@@ -327,7 +331,7 @@
     }
         NSDictionary* customer=[data objectAtIndex:[indexPath section]];
   //  NSString *d=[NSString stringWithFormat:@"%ld",(long)[indexPath row]];
-    
+    NSLog(@"%@",customer);
   //  NSLog(@"%@",d);
         int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
     
