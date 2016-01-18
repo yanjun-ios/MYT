@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ghU-B4-La7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -4690,10 +4690,10 @@
             </objects>
             <point key="canvasLocation" x="5838.75" y="1641.375"/>
         </scene>
-        <!--Right Menu View Controller-->
+        <!--The Menu View Controller-->
         <scene sceneID="tRc-ZB-QVY">
             <objects>
-                <viewController storyboardIdentifier="rightNav" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HIa-Fs-jvm" customClass="rightMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="rightNav" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HIa-Fs-jvm" customClass="TheMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TXf-f4-PE5"/>
                         <viewControllerLayoutGuide type="bottom" id="5it-eu-kp0"/>
@@ -4809,9 +4809,6 @@
                                         <include reference="dF0-VN-U9N"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <action selector="clearClick:" destination="HIa-Fs-jvm" eventType="touchUpInside" id="wnR-m1-XOo"/>
-                                </connections>
                             </button>
                             <searchBar contentMode="redraw" placeholder="输入关键字查询" translatesAutoresizingMaskIntoConstraints="NO" id="RuW-PT-toj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4994,7 +4991,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="celectLocation:" destination="HIa-Fs-jvm" eventType="touchUpInside" id="OFE-pt-5q4"/>
+                                            <action selector="clickLocation:" destination="HIa-Fs-jvm" eventType="touchUpInside" id="nux-wd-R5W"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="1234" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdq-ps-A7e">
@@ -5190,13 +5187,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="Lsn-dC-X1i"/>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <connections>
-                        <outlet property="btnClear" destination="ctz-gJ-emj" id="4HU-uO-KPL"/>
-                        <outlet property="view_four" destination="udA-wn-IMT" id="zKu-vg-7UL"/>
-                        <outlet property="view_one" destination="afD-jP-EsI" id="IkY-FJ-IOa"/>
-                        <outlet property="view_three" destination="B3A-QZ-Ofw" id="b9c-Gh-n3Z"/>
-                        <outlet property="view_two" destination="5NN-VQ-7Yk" id="efL-CK-bmG"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="meW-Z5-als" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
