@@ -8,18 +8,23 @@
 
 #import "rightMenuViewController.h"
 #import "Utility.h"
+#import "IIViewDeckController.h"
+#import "ProvinceTableViewController.h"
+#import "NetRequestManager.h"
 @interface rightMenuViewController ()
-
+{
+    NSDictionary* locationCodeDic;
+}
 @end
 
 @implementation rightMenuViewController
 
 - (void)viewDidLoad {
-     [[Utility sharedInstance] setLayerView:_btnClear borderW:1 borderColor:[UIColor whiteColor] radius:3];
+    [[Utility sharedInstance] setLayerView:_btnClear borderW:1 borderColor:[UIColor whiteColor] radius:3];
     [[Utility sharedInstance] setLayerView:_view_one borderW:0 borderColor:[UIColor clearColor] radius:3];
-     [[Utility sharedInstance] setLayerView:_view_two borderW:0 borderColor:[UIColor clearColor] radius:3];
-     [[Utility sharedInstance] setLayerView:_view_three borderW:0 borderColor:[UIColor clearColor] radius:3];
-     [[Utility sharedInstance] setLayerView:_view_four borderW:0 borderColor:[UIColor clearColor] radius:3];
+    [[Utility sharedInstance] setLayerView:_view_two borderW:0 borderColor:[UIColor clearColor] radius:3];
+    [[Utility sharedInstance] setLayerView:_view_three borderW:0 borderColor:[UIColor clearColor] radius:3];
+    [[Utility sharedInstance] setLayerView:_view_four borderW:0 borderColor:[UIColor clearColor] radius:3];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -29,15 +34,33 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)clearClick:(id)sender {
+    
+    
 }
+
+//选择区域向右的箭头按钮
+- (IBAction)celectLocation:(id)sender {
+    
+    [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+        [NetRequestManager sharedInstance].FROMDECK=1;
+        UINavigationController * navVC = (UINavigationController *) self.viewDeckController.centerController;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UITableViewController *ProvinceContro= (UITableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"Province"];
+        [navVC pushViewController:ProvinceContro animated:YES];
+        
+    }];
+    
+}
+
+
 @end
