@@ -334,8 +334,8 @@
     [toFollowDIc setValue:staffid forKey:@"staffid"];
     [toFollowDIc setValue:Uid forKey:@"userid"];
     [toFollowDIc setValue:Fyear forKey:@"year"];
-    [toFollowDIc setValue:Fbegin forKey:@"beginMonth"];
-    [toFollowDIc setValue:Fend forKey:@"endMonth"];
+    [toFollowDIc setValue:Fbegin forKey:@"monthS"];
+    [toFollowDIc setValue:Fend forKey:@"monthE"];
     [self performSegueWithIdentifier:@"follow" sender:self];
 }
 

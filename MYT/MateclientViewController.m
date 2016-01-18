@@ -135,11 +135,11 @@
             [cell1.contentView addSubview:company];
             
             //设置产品种类匹配数
-            UILabel* mateNum=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-140, 12, 40, 20)];
+            UILabel* mateNum=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2+20, 12, 40, 20)];
             mateNum.font=[UIFont systemFontOfSize:14];
             mateNum.textColor=[UIColor redColor];
             mateNum.tag=10002;
-            mateNum.textAlignment=NSTextAlignmentCenter;
+            //mateNum.textAlignment=NSTextAlignmentCenter;
             //mateNum.text=@"30";
             [cell1.contentView addSubview:mateNum];
             
