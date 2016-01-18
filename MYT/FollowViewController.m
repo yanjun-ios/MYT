@@ -34,9 +34,9 @@
     self.navigationController.navigationBarHidden=NO;
     [btnSelected setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [btnSelected setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
-    UIView* line=[[UIView alloc]initWithFrame:CGRectMake(20, 38, 60, 2)];
-    line.backgroundColor=[UIColor redColor];
-    [_topView addSubview:line];
+//    UIView* line=[[UIView alloc]initWithFrame:CGRectMake(20, 38, 60, 2)];
+//    line.backgroundColor=[UIColor redColor];
+//    [_topView addSubview:line];
 }
 
 - (void)viewDidLoad {
@@ -56,6 +56,7 @@
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [_tableview setTableFooterView:view];
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -74,7 +75,7 @@
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifi];
         //姓名
         UILabel* name=[[UILabel alloc]init];
-        name.frame=CGRectMake(15, 12, 50, 20);
+        name.frame=CGRectMake(15, 12, ScreenWidth-120, 20);
         name.font=[UIFont systemFontOfSize:16];
         name.textColor=[UIColor darkGrayColor];
         name.tag=1000;
@@ -82,7 +83,7 @@
 
         //电话
         UILabel* phoneNum=[[UILabel alloc]init];
-        phoneNum.frame=CGRectMake(85, 12, 200, 20);
+        phoneNum.frame=CGRectMake(ScreenWidth-110, 12, 110, 20);
         phoneNum.font=[UIFont systemFontOfSize:16];
         phoneNum.textColor=[UIColor darkGrayColor];
         phoneNum.tag=1001;
@@ -97,21 +98,29 @@
         time.tag=1002;
         [cell.contentView addSubview:time];
     }
-    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"张三";
-     ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"13655421171";
+    
     UILabel* lab=(UILabel*)[cell.contentView viewWithTag:1002];
     switch (btnHasSelectd) {
         case 100:
+            ((UILabel*)[cell.contentView viewWithTag:1000]).font=[UIFont systemFontOfSize:16];
+            ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"contactsname"];
+            ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"mobilephone"];
             lab.textColor=[UIColor greenColor];
-            lab.text=@"2015-12-30 32:23:32";
+            lab.text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"time"];
             break;
         case 101:
+            ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"custtname"];
+            ((UILabel*)[cell.contentView viewWithTag:1000]).font=[UIFont systemFontOfSize:14];
+            //((UILabel*)[cell.contentView viewWithTag:1001]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"mobilephone"];
             lab.textColor=[UIColor redColor];
             lab.text=@"未拨打";
             break;
         case 102:
+            ((UILabel*)[cell.contentView viewWithTag:1000]).font=[UIFont systemFontOfSize:14];
+            ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"custtname"];
+           // ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"mobilephone"];
             lab.textColor=[UIColor orangeColor];
-            lab.text=@"放弃理由是电话停机了,所以没打";
+            lab.text=[[tableArry objectAtIndex:indexPath.row] objectForKey:@"gpreason"];
             break;
         default:
             break;
@@ -125,6 +134,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [tableArry count];;
+}
+
+-(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
 }
 
 /*
@@ -141,7 +155,7 @@
 {
     [_parDic setValue:@"10" forKey:@"pageSize"];
     [_parDic setValue:[NSString stringWithFormat:@"%d",pageNum] forKey:@"pageNum"];
-    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@""] parameters:_parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getFollowInfo.action"] parameters:_parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         pageNum++;
       NSDictionary* jsonDic=(NSDictionary*)responseObject;
         [calledList addObjectsFromArray:[[jsonDic objectForKey:@"hasCalled"] objectForKey:@"list"]];
@@ -193,5 +207,6 @@
             break;
     }
 
+    [_tableview.mj_footer endRefreshing];
 }
 @end

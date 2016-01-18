@@ -153,12 +153,16 @@
     [parDic setValue:year forKey:@"year"];
     [parDic setValue:bengin forKey:@"monthS"];
     [parDic setValue:end forKey:@"monthE"];
-    [parDic setValue:teamid forKey:@"depId"];
+    [parDic setValue:teamid forKey:@"depid"];
     [parDic setValue:userid forKey:@"userid"];
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonDic = (NSDictionary*)responseObject;
-        _labSelf.text=[NSString stringWithFormat:@"%@元",[jsonDic objectForKey:@"curfeat"]];
-        _labSelf.text=[jsonDic objectForKey:@"ranking"];
+       
+       // int curfeat=((NSNumber*)[jsonDic objectForKey:@"curfeat"]).intValue;
+        _labSelf.text=[[jsonDic objectForKey:@"curfeat"] stringByAppendingString:@"￥"];
+        
+        int ranking=((NSNumber*)[jsonDic objectForKey:@"ranking"]).intValue;
+        _labRank.text=[NSString stringWithFormat:@"%d",ranking];
         [_tableview reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

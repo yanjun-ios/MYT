@@ -64,6 +64,11 @@
         
         [nodear addObject:nodea];
     }
+    //消除多余空白行
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor clearColor];
+    [self.tableView setTableFooterView:view];
+    
     [self initwithnodear];
     NSLog(@"%@",_tempedata);
    // UISwipeGestureRecognizer* recognizer;

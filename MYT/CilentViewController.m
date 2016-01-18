@@ -33,7 +33,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
   
-    [_tableview reloadData];
+   // [_tableview reloadData];
     
     
 }
@@ -52,69 +52,16 @@
     if ([NetRequestManager sharedInstance].FROMDECK==1) {
         [self.viewDeckController openRightView];
     }
-    _tableview.rowHeight=UITableViewAutomaticDimension;
-    _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
-    
-    [self initinfor];
-   // [_tableview reloadData];
+      // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
    
     
     
 }
--(void)initinfor
-{ j=1;
-    
-    if (!data&&[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
-        data = [[NSMutableArray alloc]init];
-        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        [parDic setValue:@"5" forKey:@"pageSize"];
-        NSString *stringJ = [NSString stringWithFormat:@"%d",j];
-        
-        [parDic setValue:stringJ forKey:@"pageNum"];
-//        NSDictionary* responseObject= [[Y_NetRequestManager sharedInstance] getClientList:parDic];
-//       if(responseObject)
-//        {
-//            NSArray *init=[responseObject objectForKey:@"list"];
-//            for (int i = 0; i<init.count; i++) {
-//                [data addObject:[init objectAtIndex:i]];
-//                       [_tableview reloadData];
-//            }
-//        }else
-//        {
-//            [self qq_performSVHUDBlock:^{
-//               [SVProgressHUD showErrorWithStatus:@"暂时没有任何数据！"];
-//            }];
-//        }
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            
-            NSLog(@"%@",responseObject);
-            NSArray *init=[responseObject objectForKey:@"list"];
-            for (int i = 0; i<init.count; i++) {
-                [data addObject:[init objectAtIndex:i]];
-            }
-           // [_tableview reloadData];
-            NSLog(@"%@",data);
-
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            
-            [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
-            }];
-        }];
-   }
-   
-  // [_tableview.mj_footer beginRefreshing];
-    
-}
 - (void)viewDidLoad {
     
     callCenter = [[CTCallCenter alloc] init];
-    _tableview.delegate=self;
-    _tableview.dataSource=self;
+   
     _tableview.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     _tableview.mj_footer.automaticallyHidden = NO;
    
@@ -123,13 +70,69 @@
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
     
+    data = [[NSMutableArray alloc]init];
+    //tableview设置
+    _tableview.delegate=self;
+    _tableview.dataSource=self;
     
+    [self initinfor];
     //设置搜索框的代理
     _findcust.delegate=self;
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
 }
+
+-(void)initinfor
+{
+    j=1;
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:@"5" forKey:@"pageSize"];
+        NSString *stringJ = [NSString stringWithFormat:@"%d",j];
+        
+        [parDic setValue:stringJ forKey:@"pageNum"];
+        //        NSDictionary* responseObject= [[Y_NetRequestManager sharedInstance] getClientList:parDic];
+        //       if(responseObject)
+        //        {
+        //            NSArray *init=[responseObject objectForKey:@"list"];
+        //            for (int i = 0; i<init.count; i++) {
+        //                [data addObject:[init objectAtIndex:i]];
+        //                       [_tableview reloadData];
+        //            }
+        //        }else
+        //        {
+        //            [self qq_performSVHUDBlock:^{
+        //               [SVProgressHUD showErrorWithStatus:@"暂时没有任何数据！"];
+        //            }];
+        //        }
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSLog(@"%@",responseObject);
+            NSArray *init=[responseObject objectForKey:@"list"];
+            for (int i = 0; i<init.count; i++) {
+                [data addObject:[init objectAtIndex:i]];
+            }
+            [_tableview reloadData];
+            NSLog(@"%@",data);
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+            }];
+        }];
+    }
+    
+    // [_tableview.mj_footer beginRefreshing];
+    
+}
+
+
 /*- (void)example01
 {
     __unsafe_unretained __typeof(self) weakSelf = self;
@@ -193,9 +196,7 @@
         NSLog(@"%@",responseObject);
         NSArray *init=[responseObject objectForKey:@"list"];
         [data removeAllObjects];
-        for (int i = 0; i<init.count; i++) {
-            [data addObject:[init objectAtIndex:i]];
-        }
+        [data addObjectsFromArray:init];
         if (init.count==0) {
             [self qq_performSVHUDBlock:^{
                 [SVProgressHUD showInfoWithStatus:@"没有搜索到客户!"];
@@ -288,9 +289,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%@",data);
-    static NSString *CellIdentifier = @"cell";
+    static NSString *CellIdentifier = @"cell2";
     // 通过indexPath创建cell实例 每一个cell都是单独的
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+   // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell* cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     // 判断为空进行初始化  --（当拉动页面显示超过主页面内容的时候就会重用之前的cell，而不会再次初始化）
     if (!cell) {
         

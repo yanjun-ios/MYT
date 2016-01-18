@@ -31,6 +31,11 @@
         self.delegate = self;
         _data =data;
         _tempData = [self createTempData:data];
+        
+        //消除多余空白行
+        UIView *view = [UIView new];
+        view.backgroundColor = [UIColor clearColor];
+        [self setTableFooterView:view];
     }
     return self;
 }
