@@ -25,6 +25,7 @@
     NSString* end_hour;
     NSString* end_minute;
     NSString* end_ms;
+    int totalpage;//总页数
 }
 
 @end
@@ -114,7 +115,7 @@
         //            }];
         //        }
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            
+            totalpage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
            // NSLog(@"%@",responseObject);
             NSArray *init=[responseObject objectForKey:@"list"];
             for (int i = 0; i<init.count; i++) {
@@ -193,7 +194,12 @@
     [self searchClient:DIC];
 }
 
-
+-(NSIndexPath *)tableView:(UITableView *)tableView
+ willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_findcust resignFirstResponder];
+    return indexPath;
+}
 -(void)searchClient:(NSDictionary*)parDic
 {
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/queryCuss.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -225,7 +231,7 @@
 - (void)loadMoreData
 {
     // 1.添加假数据
-    if (j<5) {
+    if (j<totalpage+1) {
         j++;
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
