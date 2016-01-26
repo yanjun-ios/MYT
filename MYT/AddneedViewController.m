@@ -555,7 +555,7 @@
     }//清空所有textfield
 
     if (typjson.count||wuljson.count) {
-        NSString *clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+        NSString *clientidstr=_clientId;
         NSDictionary* jsondic=[[NSDictionary alloc]initWithObjectsAndKeys:typjson,@"T",wuljson,@"W",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"],@"userid",clientidstr,@"cusid", nil];
         NSString*  datastr=[[NetRequestManager sharedInstance]DataToJsonString:jsondic];
         NSMutableDictionary *pir=[[NSMutableDictionary alloc]init];

@@ -12,7 +12,7 @@
 #import "MJRefresh.h"
 @interface CusMarkViewController ()
 {
-    int clientId;
+    NSString* clientId;
     int num;
     NSMutableArray* arry;
 
@@ -61,7 +61,7 @@
 -(void)loaData
 {
     NSString* NUM = [NSString stringWithFormat:@"%d",num];
-    NSString* cusid=[NSString stringWithFormat:@"%d",clientId];
+    NSString* cusid=clientId;
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     [parDic setObject:cusid forKey:@"cusid"];

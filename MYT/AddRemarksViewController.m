@@ -42,7 +42,7 @@
 {
 
    NSString*  Userid= [[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
-    NSString* Clientid=[NSString stringWithFormat:@"%d",[NetRequestManager sharedInstance].clientId];
+    NSString* Clientid=[NetRequestManager sharedInstance].clientId;
     NSString* Content=_textView.text;
     if (Content.length==0) {
         [self qq_performSVHUDBlock:^{

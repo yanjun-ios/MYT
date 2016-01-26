@@ -16,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *_TF_QQ;
 @property (weak, nonatomic) IBOutlet UITextField *_TF_Email;
 @property (weak, nonatomic) IBOutlet UITextField *_TF_other;
-@property(nonatomic,assign)int clientId;
+@property(nonatomic,retain)NSString* clientId;
 @end

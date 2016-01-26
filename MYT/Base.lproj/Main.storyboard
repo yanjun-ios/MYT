@@ -9846,7 +9846,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wE5-np-UfF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5283" y="-327"/>
+            <point key="canvasLocation" x="5270.25" y="-361.875"/>
         </scene>
         <!--用料需求-->
         <scene sceneID="aTc-eo-dLc">
@@ -9926,10 +9926,10 @@
         <image name="选择" width="15" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="isS-60-a2j"/>
-        <segue reference="uDY-cg-zof"/>
-        <segue reference="cpN-Vg-WFn"/>
-        <segue reference="4Td-en-ejO"/>
+        <segue reference="5Dp-Ma-leV"/>
+        <segue reference="eoT-fv-M7m"/>
         <segue reference="JeF-lr-eim"/>
+        <segue reference="4Td-en-ejO"/>
+        <segue reference="isS-60-a2j"/>
     </inferredMetricsTieBreakers>
 </document>

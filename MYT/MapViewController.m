@@ -183,7 +183,7 @@
         for (int i=0; i<array.count; i++) {
             if (view.annotation.coordinate.latitude==((MKPointAnnotation*)array[i]).coordinate.latitude) {
                 // clientId=;
-                int clientId=((NSNumber*)(view.annotation.subtitle)).intValue;
+                NSString* clientId=(view.annotation.subtitle);
                 toIndex=0;
                 [NetRequestManager sharedInstance].clientId=clientId;
                 [self performSegueWithIdentifier:@"tabbar" sender:nil];

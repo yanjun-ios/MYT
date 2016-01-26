@@ -98,7 +98,7 @@
 
 -(void)finishclick
 { if (__TF_Company.text.length!=0&&__TF_Email.text.length!=0&&__TF_Name.text.length!=0&&__TF_other.text.length!=0&&__TF_Phone.text.length!=0&&__TF_QQ.text.length!=0&&__TF_Telephone.text.length!=0) {
-    NSString *clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+    NSString *clientidstr=_clientId;
     [addcusjson setObject:__TF_Name.text forKey:@"contactsName"];
     [addcusjson setObject:__TF_Email.text forKey:@"email"];
     [addcusjson setObject:__TF_Telephone.text forKey:@"mobilePhone"];

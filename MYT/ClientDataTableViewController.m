@@ -63,9 +63,9 @@
 }
 
 
--(void)loadData:(int)clientId
+-(void)loadData:(NSString*)clientId
 {
-    NSString* cusid=[NSString stringWithFormat:@"%d",clientId];
+    NSString* cusid=clientId;
     NSMutableDictionary* pardic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [pardic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     [pardic setObject:cusid forKey:@"cusid"];

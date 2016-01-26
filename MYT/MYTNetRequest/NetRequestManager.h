@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NetRequestManager : NSObject
-@property(nonatomic,assign)int clientId;//单例传值，客户管理页面点击查看详情的时候将客户id传值给tabbar
+@property(nonatomic,retain)NSString* clientId;//单例传值，客户管理页面点击查看详情的时候将客户id传值给tabbar
 @property(nonatomic,retain)NSDictionary* AREALIST;
 @property(nonatomic,assign)int FROMDECK;
 /**

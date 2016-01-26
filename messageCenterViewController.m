@@ -15,7 +15,7 @@
 @interface messageCenterViewController ()
 {
     int num;
-    NSArray* jsonlist;
+    NSMutableArray* jsonlist;
     NSString* detail;
 }
 @end
@@ -23,6 +23,7 @@
 @implementation messageCenterViewController
 
 - (void)viewDidLoad {
+    jsonlist=[[NSMutableArray alloc]init];
     num=1;
      _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loaData)];
     _tableView.mj_footer.automaticallyHidden = NO;
@@ -151,7 +152,7 @@
     [parDic setObject:@"10" forKey:@"pageSize"];
     [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getMsgList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         num++;
-        jsonlist=[(NSDictionary*)responseObject objectForKey:@"list"];
+        [jsonlist addObjectsFromArray:[(NSDictionary*)responseObject objectForKey:@"list"]];
         [_tableView reloadData];
         [_tableView.mj_footer endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

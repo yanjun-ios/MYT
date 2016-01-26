@@ -18,7 +18,7 @@
     NSMutableArray *data;//客户数据都在这儿
     int j;
     CTCallCenter *callCenter;
-    int clientId;
+    NSString* clientID;
     NSString* begin_hour;
     NSString* begin_minute;
     NSString* begin_ms;
@@ -333,10 +333,10 @@
   //  NSString *d=[NSString stringWithFormat:@"%ld",(long)[indexPath row]];
     NSLog(@"%@",customer);
   //  NSLog(@"%@",d);
-        int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
-    
-        ((UIButton*)[cell.contentView viewWithTag:190]).tag=custo_id;
-        ((UIButton*)[cell.contentView viewWithTag:200]).tag=custo_id+2000;//添加联系人tag为客户id+2000
+        //int custo_id=((NSNumber*)[customer objectForKey:@"id"]).intValue;//获取客户id
+        int index=90000+[indexPath section];
+        ((UIButton*)[cell.contentView viewWithTag:190]).tag=index;
+        ((UIButton*)[cell.contentView viewWithTag:200]).tag=index+10000;//添加联系人
         NSString* custo_name=[customer objectForKey:@"cus_name"];//客户名称 公司或者个体户
         ((UILabel*)[cell.contentView viewWithTag:148]).text=custo_name;
         NSArray* contacts=[customer objectForKey:@"contacts"];//联系人数组
@@ -471,9 +471,11 @@
 -(void)clickToTaba:(id)sender
 {
    UIButton* btn =  (UIButton*)sender;
-    clientId=(int)btn.tag;
+    //clientId=(int)btn.tag-90000;
+    int indexP=(int)btn.tag-90000;
+     clientID=[[data objectAtIndex:indexP] objectForKey:@"id"];
     toIndex=0;
-    [NetRequestManager sharedInstance].clientId=clientId;
+    [NetRequestManager sharedInstance].clientId=clientID;
     [self performSegueWithIdentifier:@"toTab" sender:nil];
    
 }
@@ -481,9 +483,9 @@
 -(void)addContactsClick:(id)sender
 {
     UIButton* btn =  (UIButton*)sender;
-    clientId=(int)btn.tag-2000;
+    int indexPa=(int)btn.tag-100000;
     toIndex=2;
-    [NetRequestManager sharedInstance].clientId=clientId;
+    [NetRequestManager sharedInstance].clientId=[[data objectAtIndex:indexPa] objectForKey:@"id"];
     [self performSegueWithIdentifier:@"toTab" sender:nil];
     
 }

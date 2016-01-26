@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ClientDataTableViewController : UITableViewController
-@property(nonatomic,assign)int clientId;
+@property(nonatomic,retain)NSString* clientId;
 @property (weak, nonatomic) IBOutlet UILabel *lab_cusname;
 @property (weak, nonatomic) IBOutlet UILabel *lab_custtname;
 @property (weak, nonatomic) IBOutlet UILabel *lab_telephone;
