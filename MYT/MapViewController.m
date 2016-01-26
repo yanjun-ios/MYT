@@ -91,7 +91,7 @@
     //异步请求
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusDist.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         cusDist=[responseObject objectForKey:@"list"];
-        NSLog(@"%@",[cusDist objectAtIndex:0]);
+        //NSLog(@"%@",[cusDist objectAtIndex:0]);
         NSLog(@"%lu",(unsigned long)cusDist.count);
         [self addAnnotation];
         
