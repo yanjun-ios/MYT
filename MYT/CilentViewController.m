@@ -94,7 +94,7 @@
         data = [[NSMutableArray alloc]init];
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
         [parDic setValue:@"5" forKey:@"pageSize"];
         NSString *stringJ = [NSString stringWithFormat:@"%d",j];
         
@@ -115,13 +115,13 @@
         //        }
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getAppUserList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             
-            NSLog(@"%@",responseObject);
+           // NSLog(@"%@",responseObject);
             NSArray *init=[responseObject objectForKey:@"list"];
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
             //[_tableview reloadData];
-            NSLog(@"%@",data);
+            //NSLog(@"%@",data);
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             

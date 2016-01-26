@@ -24,7 +24,7 @@
     arelist=[[[NetRequestManager sharedInstance] AREALIST] objectForKey:@"china"];
     //保存区域
     [locationSelected setValue:@"" forKey:@"regionName"];
-    [locationSelected setValue:@"" forKey:@"regioncode"];
+    [locationSelected setValue:@"" forKey:@"regionCode"];
     if ([_regionsList count]==0) {
         [self initAlertView:@""];
     }
@@ -77,7 +77,7 @@
     
     //保存区域
     [locationSelected setValue:[[_regionsList objectAtIndex:indexPath.row] objectForKey:@"regionName"] forKey:@"regionName"];
-    [locationSelected setValue:[[_regionsList objectAtIndex:indexPath.row] objectForKey:@"regioncode"] forKey:@"regioncode"];
+    [locationSelected setValue:[[_regionsList objectAtIndex:indexPath.row] objectForKey:@"regionCode"] forKey:@"regionCode"];
     [self initAlertView:[[_regionsList objectAtIndex:indexPath.row] objectForKey:@"regionName"]];
     
     //[self.navigationController popToViewController:[[self.navigationController.viewControllers objectAtIndex:3] ani];
@@ -92,7 +92,7 @@
     
     //保存市
     [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityName"] forKey:@"cityName"];
-    [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityCcode"] forKey:@"cityCcode"];
+    [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityCode"] forKey:@"cityCode"];
     if ([NetRequestManager sharedInstance].FROMDECK==1) {
         CilentViewController* contro=[self.navigationController.viewControllers objectAtIndex:2];
         self.LocationDelegate=contro;

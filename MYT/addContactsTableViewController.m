@@ -103,8 +103,8 @@
     [addcusjson setObject:__TF_Email.text forKey:@"email"];
     [addcusjson setObject:__TF_Telephone.text forKey:@"mobilePhone"];
     [addcusjson setObject:__TF_QQ.text forKey:@"qq"];
-    [addcusjson setObject:@"男" forKey:@"sex"];
-    [addcusjson setObject:@".." forKey:@"remark"];//经度
+    [addcusjson setObject:@"0" forKey:@"sex"];
+    [addcusjson setObject:__TF_other.text forKey:@"remark"];//经度
     [addcusjson setObject:__TF_Phone.text forKey:@"phone"];//纬度
     [addcusjson setObject:clientidstr forKey:@"cusid"];
     NSLog(@"%@",clientidstr);

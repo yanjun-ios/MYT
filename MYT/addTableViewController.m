@@ -169,11 +169,11 @@
          [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
         [addcusjson setObject:lati forKey:@"longitude"];//经度
         [addcusjson setObject:longi forKey:@"latitude"];//纬度
-        [addcusjson setObject:@"0" forKey:@"province"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
         //[locationCodeDic objectForKey:@"provinceCode"]
-        [addcusjson setObject:@"0" forKey:@"city"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];
         //[locationCodeDic objectForKey:@"cityCode"]
-        [addcusjson setObject:@"0" forKey:@"district"];
+        [addcusjson setObject:[locationCodeDic objectForKey:@"regionCode"] forKey:@"district"];
         //[locationCodeDic objectForKey:@"regioncode"]
         [addcusjson setObject:_TF_website.text forKey:@"website"];
         if (qiyeorperson==1) {
@@ -189,7 +189,7 @@
     //[addcusjson setObject:@"0" forKey:@"bank"];
     //[addcusjson setObject:@"0" forKey:@"account"];
         //有数据时SET这个[[NSUserDefaults standardUserDefaults]objectForKey:@"username"]
-    [addcusjson setObject:@"2" forKey:@"userid"];
+    [addcusjson setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
      
              NSData *data = [NSJSONSerialization dataWithJSONObject:addcusjson options:NSJSONWritingPrettyPrinted error:nil];
         NSString*  datastr=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
