@@ -149,21 +149,21 @@
 
 #pragma mark 添加大头针
 -(void)addAnnotation{
-    CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(36.08, 120.35);
+   /* CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(36.08, 120.35);
     KCAnnotation *annotation1=[[KCAnnotation alloc]init];
     annotation1.title=@"CMJ Studio";
     annotation1.subtitle=@"Kenshin Cui's Studios";
     annotation1.coordinate=location1;
-    [_mapView addAnnotation:annotation1];
-    float lati=40;
-    float longi=120;
+    [_mapView addAnnotation:annotation1];*/
+    
+   
     for (int i=0; i<cusDist.count; i++) {
         NSDictionary *cust=[cusDist objectAtIndex:i];
         
-        //((NSNumber*)[cust objectForKey:@"latitude"]).floatValue;
+        float lati1=((NSNumber*)[cust objectForKey:@"latitude"]).floatValue;
         
-        //((NSNumber*)[cust objectForKey:@"longitude"]).floatValue;
-        CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(lati,longi);
+         float longi1=((NSNumber*)[cust objectForKey:@"longitude"]).floatValue;
+        CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(lati1,longi1);
         KCAnnotation *annotation1=[[KCAnnotation alloc]init];
         annotation1.title=[cust objectForKey:@"cusname"];
         annotation1.subtitle=[cust objectForKey:@"cusid"];
@@ -171,8 +171,8 @@
         [addAnnotations addObject:annotation1];
         [_mapView addAnnotation:annotation1];
         //[_mapView selectAnnotation:annotation1 animated:YES];
-        lati=lati+5;
-        longi=longi+5;
+        //lati=lati+5;
+        //longi=longi+5;
     }
     ifload=NO;
 }
