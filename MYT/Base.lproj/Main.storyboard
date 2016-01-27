@@ -682,6 +682,13 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Wf-dI-hWP">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="200" y="0.0" width="80" height="60"/>
+                                        </variation>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6Z-0G-cJK">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <subviews>
@@ -786,6 +793,7 @@
                                         <exclude reference="2FM-Kf-pcg"/>
                                         <exclude reference="CS7-2b-Amq"/>
                                         <exclude reference="0jn-Oi-gMi"/>
+                                        <exclude reference="7Wf-dI-hWP"/>
                                         <exclude reference="z6Z-0G-cJK"/>
                                     </mask>
                                     <mask key="constraints">
@@ -805,6 +813,7 @@
                                         <include reference="2FM-Kf-pcg"/>
                                         <include reference="CS7-2b-Amq"/>
                                         <include reference="0jn-Oi-gMi"/>
+                                        <include reference="7Wf-dI-hWP"/>
                                         <include reference="z6Z-0G-cJK"/>
                                     </mask>
                                     <mask key="constraints">

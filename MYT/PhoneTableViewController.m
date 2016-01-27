@@ -52,7 +52,7 @@
         
         //姓名
         UILabel* name=[[UILabel alloc]init];
-        name.frame=CGRectMake(15, 12, 50, 20);
+        name.frame=CGRectMake(15, 12, 80, 20);
         name.font=[UIFont systemFontOfSize:18];
         name.textColor=[UIColor darkGrayColor];
         name.tag=1000;
@@ -61,7 +61,7 @@
         //电话号码
         UILabel* phoneNumber=[[UILabel alloc]init];
         phoneNumber.frame=CGRectMake(0, 0, 200, 20);
-        phoneNumber.center=CGPointMake(ScreenWidth/2, 22);
+        phoneNumber.center=CGPointMake(ScreenWidth/2+50, 22);
         phoneNumber.font=[UIFont systemFontOfSize:18];
         phoneNumber.textColor=[UIColor darkGrayColor];
         phoneNumber.tag=1001;
@@ -69,9 +69,9 @@
         
         //电话
         UIButton* phone=[[UIButton alloc]init];
-        phone.frame=CGRectMake(0, 0, 30, 30);
+        phone.frame=CGRectMake(0, 0, 40, 40);
         phone.center=CGPointMake(ScreenWidth-35, 22);
-        [phone setImage:[UIImage imageNamed:@"phone"] forState:0];
+        [phone setImage:[UIImage imageNamed:@"电话小"] forState:0];
         [phone addTarget:self action:@selector(clickPhoneNumber:) forControlEvents:UIControlEventTouchUpInside];
         phone.tag=1002;
         [cell.contentView addSubview:phone];
@@ -125,12 +125,12 @@
 */
 
 - (IBAction)addphone:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+   /* UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
    
     XNTabBarController *tabbat=(XNTabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabbar"];
     tabbat.index=2;
-    [self.navigationController pushViewController:tabbat animated:YES];
+    [self.navigationController pushViewController:tabbat animated:YES];*/
 }
 
 @end

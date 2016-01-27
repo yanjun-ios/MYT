@@ -10,6 +10,8 @@
 #import "Node.h"
 #import "ButtomView.h"
 #import "ProductdetalViewController.h"
+#import"Utility.h"
+#import "MJRefresh.h"
 @interface TreeViewController ()
 {
     NSString *parent;
@@ -21,7 +23,11 @@
     NSMutableArray *_tempedata;//要显示的所有数据
     __block  NSMutableArray  *typearr;//存类型为T的物料类别
     __block  NSMutableArray  *wularr;//存类型为W的物料类别
+    NSMutableArray *typea;
+    NSMutableArray *wula;
+    NSMutableArray *ndone;
     BOOL findclick;
+    int z;
 }
 @end
 
@@ -53,10 +59,15 @@
     nodear=[[NSMutableArray alloc] init];
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
-    nodear=[[NSMutableArray alloc]init];
-   
+    
+    ndone=[[NSMutableArray alloc]init];
+    typea=[[NSMutableArray alloc]init];
+    wula=[[NSMutableArray alloc]init];
+    
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     _findtext.delegate=self;
     _findview.hidden=YES;
+    z=1;
     for(int i=0;i<_nodearr.count;i++)
     {
         NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
@@ -80,6 +91,94 @@
   //  [self.view addGestureRecognizer:recognizer];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+- (void)loadMoreData
+{
+    // 1.添加假数据
+    if (z<_totlePage+1) {
+        //[nodear removeAllObjects];
+        [typea removeAllObjects];
+        [wula removeAllObjects];
+        NSLog(@"%@",ndone);
+        NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:@"null" forKey:@"parentid"];
+        [parDic setValue:pagenum forKey:@"pageNum"];
+        [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
+        dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_sync(concurrentQueue, ^{
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                
+               
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                        [typea addObject:dic];
+                    }
+                    else
+                    {
+                        [wula addObject:dic];
+                    }
+                }
+                for (int i=0; i<typea.count; i++) {
+                    NSDictionary * typeinfo=[typea objectAtIndex:i];
+                    int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                    int matecounts=((NSNumber*)[typeinfo objectForKey:@"matecounts"]).intValue;
+                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 counts:counts matecounts:matecounts];
+                    [ndone addObject:node];
+                }
+                for (int i=0; i<wula.count; i++) {
+                    NSDictionary * wulinfo=[wula objectAtIndex:i];
+                    int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                    int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                    int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1 counts:counts matecounts:matecounts];
+                    [ndone addObject:node];
+                    
+                }
+                NSLog(@"%@",ndone);
+                for(int i=0;i<ndone.count;i++)
+                {
+                    NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                    [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                    
+                    [nodear addObject:nodea];
+                }
+                [self initwithnodear];
+                [_tableView reloadData];
+                //将请求到的第一层数据分类
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                }];
+            }];
+            
+            /*download the image here*/
+            
+        });
+
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
+    
+    
+    
+    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+    
+    // 刷新表格
+    
+    
+    // 拿到当前的上拉刷新控件，结束刷新状态
+    [_tableView.mj_footer endRefreshing];
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _tempedata.count;
