@@ -131,7 +131,7 @@
     
     if ([segue.identifier isEqualToString:@"contacts"]) {
         ContactsTableViewController* destination=[segue destinationViewController];
-        destination.cusid=[NSString stringWithFormat:@"%d",_clientId];
+        destination.cusid=[NSString stringWithFormat:@"%@",_clientId];
     }
     else if ([segue.identifier isEqualToString:@"cplace"])
     {

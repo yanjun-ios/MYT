@@ -94,8 +94,8 @@
     float longi=_longi.floatValue;
     CLLocationCoordinate2D location1=CLLocationCoordinate2DMake(lat, longi);
     KCAnnotation *annotation1=[[KCAnnotation alloc]init];
-    annotation1.title=@"CMJ Studio";
-    annotation1.subtitle=@"Kenshin Cui's Studios";
+  //  annotation1.title=@"CMJ Studio";
+   // annotation1.subtitle=@"Kenshin Cui's Studios";
     annotation1.coordinate=location1;
     [_mapView addAnnotation:annotation1];
     
