@@ -33,7 +33,7 @@
 @implementation CilentViewController
 -(void)viewDidAppear:(BOOL)animated
 {
-  
+  NSLog(@"%@",data);
     [_tableview reloadData];
     
     
@@ -55,6 +55,7 @@
         [self.viewDeckController openRightView];
     }
     
+    
     [self initinfor];
       // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
@@ -74,12 +75,12 @@
     _tableview.sectionHeaderHeight=10;
     _tableview.rowHeight=UITableViewAutomaticDimension;
     _tableview.estimatedRowHeight=44.0;//这个必须加上，否则出现高度无法自适应问题。
-    
+    //[_tableview reloadData];
     
     //tableview设置
     
     
-    
+    [_tableview reloadData];
     //设置搜索框的代理
     _findcust.delegate=self;
     [super viewDidLoad];
@@ -91,7 +92,7 @@
 {
     j=1;
     
-    if (!data&&[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]) {
         data = [[NSMutableArray alloc]init];
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
@@ -121,8 +122,8 @@
             for (int i = 0; i<init.count; i++) {
                 [data addObject:[init objectAtIndex:i]];
             }
-            //[_tableview reloadData];
-            //NSLog(@"%@",data);
+            [_tableview reloadData];
+            NSLog(@"%@",data);
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
