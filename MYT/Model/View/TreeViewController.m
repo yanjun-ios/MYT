@@ -712,7 +712,13 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(NSIndexPath *)tableView:(UITableView *)tableView
+ willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_stocksearch resignFirstResponder];
+     [_findtext resignFirstResponder];
+    return indexPath;
+}
 - (IBAction)click_find:(id)sender {
     NSString *findtext = [_findtext.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([findtext isEqualToString:@""]) {

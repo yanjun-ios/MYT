@@ -712,6 +712,13 @@
     
    
 //}
+-(NSIndexPath *)tableView:(UITableView *)tableView
+ willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_stocksearch resignFirstResponder];
+    [_findtext resignFirstResponder];
+    return indexPath;
+}
 - (IBAction)click_ok:(id)sender {
     for (int i=0; i<_tempedata.count; i++) {
         
