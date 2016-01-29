@@ -18,6 +18,7 @@
     __block  NSMutableArray  *typear;//存类型为T的物料类别
     __block  NSMutableArray  *wular;//存类型为W的物料类别
     __block NSArray *jsonary;
+    int totlepage;
 }
 @end
 
@@ -193,6 +194,7 @@
     if ([segue.identifier isEqual:@"addneed"]) {
         AddneedViewController * stock=segue.destinationViewController;
         stock.nodearr=nodear;
+        stock.totlePage=totlepage;
     }
 }
 
@@ -209,10 +211,13 @@
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
     [parDic setValue:@"null" forKey:@"parentid"];
+    [parDic setValue:@"1" forKey:@"pageNum"];
+    [parDic setValue:@"5" forKey:@"pageSize"];
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_sync(concurrentQueue, ^{
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
             [nodear removeAllObjects];
             init=[responseObject objectForKey:@"list"];
             for (NSDictionary *dic in init) {

@@ -10,6 +10,7 @@
 #import "Node1.h"
 #import "NetRequestManager.h"
 #import "QQRequestManager.h"
+#import "MJRefresh.h"
 @interface AddneedViewController ()
 {
     NSArray *init;
@@ -21,21 +22,31 @@
     NSMutableArray * typjson;
     NSMutableArray*  wuljson;
     UIAlertView *alert ;
-    
+    NSMutableArray *typea;
+    NSMutableArray *wula;
+    NSMutableArray *ndone;
+    int z;
+    BOOL iffindtext;
+    BOOL findclick;
 }
 
 @end
 @implementation AddneedViewController
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     self.navigationController.navigationBarHidden=NO;
+    findclick=NO;
 }
 - (void)viewDidLoad {
+   
     //消除多余空白行
+    _findtext.delegate=self;
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
-   
+    z=1;
+    iffindtext=NO;
    _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -46,8 +57,12 @@
     nodear=[[NSMutableArray alloc]init];
     typjson=[[NSMutableArray alloc]init];
     wuljson=[[NSMutableArray alloc]init];
+    ndone=[[NSMutableArray alloc]init];
+    typea=[[NSMutableArray alloc]init];
+    wula=[[NSMutableArray alloc]init];
     
-
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    _stocksearch.delegate=self;
     NSLog(@"%@",_nodearr);
     for(int i=0;i<_nodearr.count;i++)
     {
@@ -58,9 +73,188 @@
     }
     [self initwithnodear];
     NSLog(@"%@",nodear);
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    z=1;
+    NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([findtext  isEqualToString:@""]) {
+        iffindtext=NO;
+    }
+    else
+        iffindtext=YES;
+    [nodear removeAllObjects];
+    [ndone removeAllObjects];
+    [typea removeAllObjects];
+    [wula removeAllObjects];
+    NSLog(@"%@",ndone);
+    NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+    [parDic setValue:@"null" forKey:@"parentid"];
+    [parDic setValue:pagenum forKey:@"pageNum"];
+    if (iffindtext) {
+        [parDic setValue:findtext forKey:@"search"];
+    }
+    [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_sync(concurrentQueue, ^{
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            _totlePage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+            init=[responseObject objectForKey:@"list"];
+            for (NSDictionary *dic in init) {
+                if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                    [typea addObject:dic];
+                }
+                else
+                {
+                    [wula addObject:dic];
+                }
+            }
+            for (int i=0; i<typea.count; i++) {
+                NSDictionary * typeinfo=[typea objectAtIndex:i];
+                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+            
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                [ndone addObject:node];
+            }
+            for (int i=0; i<wula.count; i++) {
+                NSDictionary * wulinfo=[wula objectAtIndex:i];
+                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:-1 needcount:counts];
+                [ndone addObject:node];
+                
+            }
+            NSLog(@"%@",ndone);
+            for(int i=0;i<ndone.count;i++)
+            {
+                NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                
+                [nodear addObject:nodea];
+            }
+            
+            [self initwithnodear];
+            [_tableView reloadData];
+            //将请求到的第一层数据分类
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+            }];
+        }];
+        
+        /*download the image here*/
+        
+    });
+}
+
+- (void)loadMoreData
+{
+    NSString *find=[_stocksearch.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
+    // 1.添加假数据
+    if (z<_totlePage+1) {
+        
+        [ndone removeAllObjects];
+        [typea removeAllObjects];
+        [wula removeAllObjects];
+        NSLog(@"%@",ndone);
+        NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        if (iffindtext) {
+            [parDic setValue:findtext forKey:@"search"];
+        }
+        [parDic setValue:@"null" forKey:@"parentid"];
+        [parDic setValue:pagenum forKey:@"pageNum"];
+        [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
+        dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_sync(concurrentQueue, ^{
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                
+                
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                        [typea addObject:dic];
+                    }
+                    else
+                    {
+                        [wula addObject:dic];
+                    }
+                }
+                for (int i=0; i<typea.count; i++) {
+                    NSDictionary * typeinfo=[typea objectAtIndex:i];
+                    int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                   
+                    Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                    [ndone addObject:node];
+                }
+                for (int i=0; i<wula.count; i++) {
+                    NSDictionary * wulinfo=[wula objectAtIndex:i];
+                    int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                    int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                   
+                    Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:-1 needcount:counts];
+                    [ndone addObject:node];
+                    
+                }
+                NSLog(@"%@",ndone);
+                for(int i=0;i<ndone.count;i++)
+                {
+                    NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                    [nodea addObject:[ndone objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                    
+                    [nodear addObject:nodea];
+                }
+                [self initwithnodear];
+                [_tableView reloadData];
+                //将请求到的第一层数据分类
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                }];
+            }];
+            
+            /*download the image here*/
+            
+        });
+        z++;
+        
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
+    
+    
+    
+    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+    
+    // 刷新表格
+    
+    
+    // 拿到当前的上拉刷新控件，结束刷新状态
+    [_tableView.mj_footer endRefreshing];
+    
+}
+
 -(void)initwithnodear
 {
     [_tempedata removeAllObjects];
@@ -181,7 +375,7 @@
     textfield.delegate=self;
     textfield.text=@"";
     textfield.tag=1000;
-    NSLog(@"%d",textfield.tag);
+    NSLog(@"%ld",(long)textfield.tag);
 
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
@@ -591,5 +785,49 @@
             [SVProgressHUD showErrorWithStatus:@"请输入需求量后再提交"];
         }];
    
+}
+
+- (IBAction)click_find:(id)sender {
+    NSString *findtext = [_findtext.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([findtext isEqualToString:@""]) {
+        [self qq_performSVHUDBlock:^{
+            [SVProgressHUD showErrorWithStatus:@"请输入搜索内容"];
+        }];
+    }//空的话
+    else
+    {
+        NSLog(@"%@",findtext);
+        NSLog(@"%@",_tempedata);
+        for (int i=0;i<_tempedata.count;i++) {
+            Node1 *node=(Node1*)[_tempedata objectAtIndex:i];
+            NSLog(@"%@",node.name);
+            if ([node.name rangeOfString:findtext].location !=NSNotFound) {
+                NSLog(@"找到了");
+                NSUInteger sectionCount = [self.tableView numberOfSections];
+                if (sectionCount) {
+                    NSUInteger rowCount = i;
+                    if (rowCount) {
+                        NSUInteger ii[2] = {0, i};
+                        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
+                        [self.tableView scrollToRowAtIndexPath:indexPath
+                                              atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                    }
+                }
+            }
+        }
+    }
+
+}
+- (IBAction)find:(id)sender {
+    if (!findclick) {
+        _findview.hidden=NO;
+        findclick=YES;
+    }
+    else
+    {
+        findclick=NO;
+        _findview.hidden=YES;
+    }
+
 }
 @end

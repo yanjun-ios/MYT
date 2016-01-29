@@ -127,7 +127,7 @@
                     int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
                     int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
                     int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
-                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1 counts:counts matecounts:matecounts];
+                    Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid counts:counts matecounts:matecounts];
                     [nodear addObject:node];
                     
                 }

@@ -28,6 +28,7 @@
     NSMutableArray *ndone;
     BOOL findclick;
     int z;
+    BOOL iffindtext;
 }
 @end
 
@@ -53,6 +54,7 @@
 }
 
 - (void)viewDidLoad {
+    iffindtext=NO;
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     _tempedata=[[NSMutableArray alloc]init];
@@ -89,14 +91,100 @@
     // 例如 SwipeGesture 可以指定方向
     // 而 TapGesture 則可以指定次數
   //  [self.view addGestureRecognizer:recognizer];
+    //设置搜索框的代理
+    _stocksearch.delegate=self;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    z=1;
+    NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([findtext  isEqualToString:@""]) {
+        iffindtext=NO;
+    }
+    else
+        iffindtext=YES;
+    [nodear removeAllObjects];
+    [ndone removeAllObjects];
+    [typea removeAllObjects];
+    [wula removeAllObjects];
+    NSLog(@"%@",ndone);
+    NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+    [parDic setValue:@"null" forKey:@"parentid"];
+    [parDic setValue:pagenum forKey:@"pageNum"];
+    if (iffindtext) {
+        [parDic setValue:findtext forKey:@"search"];
+    }
+    [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
+    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_sync(concurrentQueue, ^{
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            _totlePage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+            init=[responseObject objectForKey:@"list"];
+            for (NSDictionary *dic in init) {
+                if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                    [typea addObject:dic];
+                }
+                else
+                {
+                    [wula addObject:dic];
+                }
+            }
+            for (int i=0; i<typea.count; i++) {
+                NSDictionary * typeinfo=[typea objectAtIndex:i];
+                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                int matecounts=((NSNumber*)[typeinfo objectForKey:@"matecounts"]).intValue;
+                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 counts:counts matecounts:matecounts];
+                [ndone addObject:node];
+            }
+            for (int i=0; i<wula.count; i++) {
+                NSDictionary * wulinfo=[wula objectAtIndex:i];
+                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+                Node * node=[[Node alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:-1 counts:counts matecounts:matecounts];
+                [ndone addObject:node];
+                
+            }
+            NSLog(@"%@",ndone);
+            for(int i=0;i<ndone.count;i++)
+            {
+                NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                
+                [nodear addObject:nodea];
+            }
+            
+            [self initwithnodear];
+            [_tableView reloadData];
+            //将请求到的第一层数据分类
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+            }];
+        }];
+        
+        /*download the image here*/
+        
+    });
+}
 - (void)loadMoreData
 {
+    NSString *find=[_stocksearch.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     // 1.添加假数据
     if (z<_totlePage+1) {
-        //[nodear removeAllObjects];
+        [ndone removeAllObjects];
         [typea removeAllObjects];
         [wula removeAllObjects];
         NSLog(@"%@",ndone);
@@ -104,6 +192,9 @@
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        if (iffindtext) {
+            [parDic setValue:findtext forKey:@"search"];
+        }
         [parDic setValue:@"null" forKey:@"parentid"];
         [parDic setValue:pagenum forKey:@"pageNum"];
         [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
@@ -144,7 +235,7 @@
                 for(int i=0;i<ndone.count;i++)
                 {
                     NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
-                    [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                    [nodea addObject:[ndone objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
                     
                     [nodear addObject:nodea];
                 }
@@ -162,7 +253,7 @@
             /*download the image here*/
             
         });
-
+        z++;
     }
     else
     {
