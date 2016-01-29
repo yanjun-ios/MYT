@@ -25,7 +25,7 @@
     NSMutableArray *typea;
     NSMutableArray *wula;
     NSMutableArray *ndone;
-    int z;
+    int zf;
     BOOL iffindtext;
     BOOL findclick;
 }
@@ -45,7 +45,7 @@
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
-    z=1;
+    zf=1;
     iffindtext=NO;
    _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
@@ -79,7 +79,7 @@
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    z=1;
+    zf=1;
     NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([findtext  isEqualToString:@""]) {
@@ -92,7 +92,7 @@
     [typea removeAllObjects];
     [wula removeAllObjects];
     NSLog(@"%@",ndone);
-    NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+    NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
@@ -164,13 +164,13 @@
     NSString *find=[_stocksearch.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     // 1.添加假数据
-    if (z<_totlePage+1) {
+    if (zf<_totlePage+1) {
         
         [ndone removeAllObjects];
         [typea removeAllObjects];
         [wula removeAllObjects];
         NSLog(@"%@",ndone);
-        NSString *pagenum=[NSString stringWithFormat:@"%d",z];
+        NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
@@ -235,7 +235,7 @@
             /*download the image here*/
             
         });
-        z++;
+        zf++;
         
     }
     else
