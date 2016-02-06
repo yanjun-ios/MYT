@@ -41,6 +41,7 @@
 - (void)viewDidLoad {
    
     //消除多余空白行
+    _findview.hidden=YES;
     _findtext.delegate=self;
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
@@ -120,17 +121,17 @@
             }
             for (int i=0; i<typea.count; i++) {
                 NSDictionary * typeinfo=[typea objectAtIndex:i];
-                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                NSString* nodeid=[typeinfo objectForKey:@"typeid"];
                 int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
             
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                 [ndone addObject:node];
             }
             for (int i=0; i<wula.count; i++) {
                 NSDictionary * wulinfo=[wula objectAtIndex:i];
-                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                NSString* nodeid=[wulinfo objectForKey:@"matid"];
                 int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:-1 needcount:counts];
+                Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
                 [ndone addObject:node];
                 
             }
@@ -165,7 +166,7 @@
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     // 1.添加假数据
     if (zf<_totlePage+1) {
-        
+        zf++;
         [ndone removeAllObjects];
         [typea removeAllObjects];
         [wula removeAllObjects];
@@ -198,18 +199,18 @@
                 }
                 for (int i=0; i<typea.count; i++) {
                     NSDictionary * typeinfo=[typea objectAtIndex:i];
-                    int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                    NSString* nodeid=[typeinfo objectForKey:@"typeid"];
                     int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
                    
-                    Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                     [ndone addObject:node];
                 }
                 for (int i=0; i<wula.count; i++) {
                     NSDictionary * wulinfo=[wula objectAtIndex:i];
-                    int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                    NSString* nodeid=[wulinfo objectForKey:@"matid"];
                     int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
                    
-                    Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:-1 needcount:counts];
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
                     [ndone addObject:node];
                     
                 }
@@ -260,7 +261,7 @@
     [_tempedata removeAllObjects];
     for (int i=0; i<nodear.count; i++) {
         for (int j=0; j<((NSMutableArray*)[nodear objectAtIndex:i]).count; j++) {
-            [_tempedata addObject:[(NSMutableArray*)[nodear objectAtIndex:i] objectAtIndex:j]];
+            [_tempedata addObject:(Node1*)[(NSMutableArray*)[nodear objectAtIndex:i] objectAtIndex:j]];
         }
     }//暂时测试2级
     // [_tableView reloadData];
@@ -283,7 +284,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Node1 *node = [_tempedata objectAtIndex:indexPath.row];
-    
+    NSLog(@"%@",node.nodeId);
     static NSString *NODE_CELL_ID ;
     if (node.depth==0||node.depth==1) {
         NODE_CELL_ID = @"node_cell_id0";
@@ -362,13 +363,13 @@
             [cell.contentView addSubview:text];
             //设置边框样式，只有设置了才会显示边框样式
             
-            //  text.borderStyle = UITextBorderStyleRoundedRect;
+              text.borderStyle = UITextBorderStyleRoundedRect;
         }
         
     }
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
     label2.font=[UIFont systemFontOfSize:14];
-    label2.text=[NSString stringWithFormat:@"%d",node.needcount];
+    label2.text=[NSString stringWithFormat:@"%@",node.nodeId];
     
     //输入框
     UITextField* textfield=(UITextField*)[cell.contentView viewWithTag:1000];
@@ -426,8 +427,10 @@
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        NSString *nodeid=[NSString stringWithFormat:@"%d",parentNode.nodeId];
+        NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
         [parDic setValue:nodeid forKey:@"parentid"];
+        [parDic setValue:@"1" forKey:@"pageNum"];
+        [parDic setValue:@"10000" forKey:@"pageSize"];
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"%@",responseObject);
             init=[responseObject objectForKey:@"list"];
@@ -442,13 +445,15 @@
             }
             for (int i=0; i<typearr.count; i++) {
                 NSDictionary * typeinfo=[typearr objectAtIndex:i];
-                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                NSString* nodeid=[typeinfo objectForKey:@"typeid"];
                 int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
-                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:1 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                 
                 if (parentNode.expand) {
                     NSLog(@"%@",[nodear objectAtIndex:j]);
                     [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
+                    NSLog(@"%@",node1.nodeId);
                     endPosition++;
                     
                     
@@ -458,9 +463,9 @@
             
             for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
-                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                NSString* nodeid=[wulinfo objectForKey:@"matid"];
                 int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid typid:-1 needcount:counts];
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid typid:@"-1" needcount:counts];
                 if(parentNode.expand)
                 {
                     [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];
@@ -485,7 +490,6 @@
             
             NSLog(@"%@",nodear);
             
-            NSLog(@"%@",nodear);
             [typearr removeAllObjects];
             [wularr removeAllObjects];
             [self initwithnodear];
@@ -525,11 +529,13 @@
         
         __block int j;
         __block int k;
-        for (int i=0;i<_nodearr.count;i++) {
+        NSLog(@"%@",nodear);
+        for (int i=0;i<nodear.count;i++) {
             
             for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
                 arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
-                if (((Node1*)[arr objectAtIndex:z]).nodeId==parentNode.nodeId) {
+                NSLog(@"%@he%@",((Node1*)[arr objectAtIndex:z]).nodeId,parentNode.nodeId);
+                if ([((Node1*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
                     j=z;//获得第2层的插入位置
                     k=i;//获取在nodear中相对于哪一个数组
                 }
@@ -544,8 +550,10 @@
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        NSString *nodeid=[NSString stringWithFormat:@"%d",parentNode.nodeId];
+        NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
         [parDic setValue:nodeid forKey:@"parentid"];
+        [parDic setValue:@"1" forKey:@"pageNum"];
+        [parDic setValue:@"10000" forKey:@"pageSize"];
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"%@",responseObject);
             init=[responseObject objectForKey:@"list"];
@@ -561,9 +569,9 @@
             NSLog(@"%hd",parentNode.expand);
             for (int i=0; i<wularr.count; i++) {
                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
-                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                NSString* nodeid=[wulinfo objectForKey:@"matid"];
                 int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid typid:-1 needcount:counts];
+                Node1 * node1=[[Node1 alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid typid:@"-1" needcount:counts];
                 NSLog(@"%hd",parentNode.expand);
                 if (parentNode.expand) {
                     //  NSLog(@"%@",[nodear objectAtIndex:j]);
@@ -720,26 +728,30 @@
     return indexPath;
 }
 - (IBAction)click_ok:(id)sender {
+    NSLog(@"%@",_tempedata);
     for (int i=0; i<_tempedata.count; i++) {
-        
+        Node1 *node = [_tempedata objectAtIndex:i];
+        NSLog(@"%@",node.nodeId);
         NSIndexPath *pathOne=[NSIndexPath indexPathForRow:i inSection:0];//获取cell的位置
         UITableViewCell *cell=(UITableViewCell *)[_tableView cellForRowAtIndexPath:pathOne];//获取具体位置的cell
         UITextField *textone=[cell.contentView viewWithTag:1000];
         NSString *need = [textone.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSLog(@"%@",need);
-        Node1* node=[_tempedata objectAtIndex:i];
-        NSString* nodeid=[NSString stringWithFormat:@"%d",node.nodeId];
+        Node1* node2=(Node1*)[_tempedata objectAtIndex:i];
+        //NSString* nodeid=[NSString stringWithFormat:@"%@",node.nodeId];
         if (![need isEqualToString:@""]&&need) {
             //  [alert show];
             // if (ifs) {
-            if (node.typid==node.nodeId) {
+            NSLog(@"%@",node2.name);
+            NSLog(@"%@he%@",node2.typid,node2.nodeId);
+            if ([node2.typid isEqual:node2.nodeId]) {
                 NSDictionary* dic;
-                dic=[NSDictionary dictionaryWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                dic=[NSDictionary dictionaryWithObjectsAndKeys:node2.nodeId,@"id",need,@"ct", nil];
                 [typjson addObject:dic];
             }//是物料规格
-            else if(node.matid==node.nodeId)
+            else if([node2.matid isEqual:node2.nodeId])
             {
-                NSDictionary* dic=[[NSDictionary alloc]initWithObjectsAndKeys:nodeid,@"id",need,@"ct", nil];
+                NSDictionary* dic=[[NSDictionary alloc]initWithObjectsAndKeys:node2.nodeId,@"id",need,@"ct", nil];
                 [wuljson addObject:dic];
             }//是物料
             

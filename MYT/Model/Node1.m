@@ -9,7 +9,7 @@
 #import "Node1.h"
 
 @implementation Node1
-- (instancetype)initWithParentId : (int)parentId nodeId : (int)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(int)matid typid:(int)typid needcount:(int)needcount{
+- (instancetype)initWithParentId : (NSString*)parentId nodeId : (NSString*)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(NSString*)matid typid:(NSString*)typid needcount:(int)needcount{
     self = [self init];
     if (self) {
         self.parentId = parentId;

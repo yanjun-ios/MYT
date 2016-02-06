@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 //放错地方了 应该在YJCrud
 @interface ChangeinfoTableViewController : UITableViewController
-@property(nonatomic,assign)int clientId;
+@property(nonatomic,assign)NSString* clientId;
 @end

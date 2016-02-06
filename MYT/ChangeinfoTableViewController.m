@@ -106,7 +106,7 @@
 }
 -(void)getneed
 {
-    NSString * clientidstr=[NSString stringWithFormat:@"%d",_clientId];
+    NSString * clientidstr=[NSString stringWithFormat:@"%@",_clientId];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
     [parDic setValue:clientidstr forKey:@"cusid"];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
@@ -231,16 +231,16 @@
             }
             for (int i=0; i<typear.count; i++) {
                 NSDictionary * typeinfo=[typear objectAtIndex:i];
-                int nodeid=((NSNumber*)[typeinfo objectForKey:@"typeid"]).intValue;
+                NSString* nodeid=[typeinfo objectForKey:@"typeid"];
                 int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:-1 typid:nodeid needcount:counts];
+                Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                 [nodear addObject:node];
             }
             for (int i=0; i<wular.count; i++) {
                 NSDictionary * wulinfo=[wular objectAtIndex:i];
-                int nodeid=((NSNumber*)[wulinfo objectForKey:@"matid"]).intValue;
+                NSString* nodeid=[wulinfo objectForKey:@"matid"];
                 int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-                Node1 * node=[[Node1 alloc]initWithParentId:-1 nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid typid:-1 needcount:counts];
+                Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid typid:@"-1" needcount:counts];
                 [nodear addObject:node];
                 
             }
