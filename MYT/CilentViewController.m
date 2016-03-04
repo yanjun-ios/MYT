@@ -51,10 +51,13 @@
 {
     
     [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-    if ([NetRequestManager sharedInstance].FROMDECK==1) {
-        [self.viewDeckController openRightView];
+//    if ([NetRequestManager sharedInstance].FROMDECK==1) {
+//        [self.viewDeckController openRightView];
+//    }
+    if (self.viewDeckController.openRightView) {
+        [self.viewDeckController closeRightView];
     }
-    
+
     
     [self initinfor];
       // [_tableview reloadData];

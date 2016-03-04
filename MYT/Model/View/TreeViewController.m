@@ -96,6 +96,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+
+//////第一级搜索
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     zf=1;
@@ -183,6 +185,8 @@
         
     });
 }
+
+//////加载更多////////
 - (void)loadMoreData
 {
     NSString *find=[_stocksearch.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -420,6 +424,7 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    init=[[NSArray alloc]init];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
      Node *parentNode = [_tempedata objectAtIndex:indexPath.row];
  NSLog(@"%hd",parentNode.child);
