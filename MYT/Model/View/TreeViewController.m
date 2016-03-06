@@ -100,6 +100,7 @@
 //////第一级搜索
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+   
     zf=1;
     NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -340,16 +341,7 @@
             //if(node.child)
             // {
             
-            if (node.depth==0) {
-                NSLog(@"%@",node.name);
-                image.frame=CGRectMake(2, 16,8, 8);
-           }
-            
-            else if(node.depth==1)
-            {
-                NSLog(@"%@",node.name);
-                image.frame=CGRectMake(25, 16,8, 8);
-            }
+           
         
             
             
@@ -396,6 +388,17 @@
     label3.text=[NSString stringWithFormat:@"%d",node.matecounts];
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+    if (node.depth==0) {
+        NSLog(@"%@",node.name);
+        image.frame=CGRectMake(2, 16,8, 8);
+    }
+    
+    else if(node.depth==1)
+    {
+        NSLog(@"%@",node.name);
+        image.frame=CGRectMake(25, 16,8, 8);
+        //image.frame=CGRectMake(2, 16,8, 8);
+    }
     image.image=[UIImage imageNamed:@"公司库存向右"];
     
     
