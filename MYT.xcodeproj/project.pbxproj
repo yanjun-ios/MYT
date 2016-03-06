@@ -79,6 +79,7 @@
 		9CD75FFB1C434120001C7C98 /* TradingLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFA1C434120001C7C98 /* TradingLogViewController.m */; };
 		9CD75FFE1C43484C001C7C98 /* CallLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFD1C43484C001C7C98 /* CallLogViewController.m */; };
 		9CD760011C436058001C7C98 /* CusMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD760001C436058001C7C98 /* CusMarkViewController.m */; };
+		9CEBD4351C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 		D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9430F951C44B3A800714898 /* FindmapViewController.m */; };
 		D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A815D91C48CDA500C5E698 /* TreeViewController.m */; };
@@ -238,6 +239,8 @@
 		9CD75FFD1C43484C001C7C98 /* CallLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallLogViewController.m; sourceTree = "<group>"; };
 		9CD75FFF1C436058001C7C98 /* CusMarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CusMarkViewController.h; sourceTree = "<group>"; };
 		9CD760001C436058001C7C98 /* CusMarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CusMarkViewController.m; sourceTree = "<group>"; };
+		9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.2.6.a; sourceTree = "<group>"; };
+		9CEBD4341C8C1CDC0079095B /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D9430F941C44B3A800714898 /* FindmapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindmapViewController.h; sourceTree = "<group>"; };
 		D9430F951C44B3A800714898 /* FindmapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindmapViewController.m; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 				776ADB651C4166460084401F /* QuartzCore.framework in Frameworks */,
 				773C66BE1C3F6248008450AF /* libsqlite3.0.tbd in Frameworks */,
 				ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */,
+				9CEBD4351C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +298,7 @@
 		18C0A4081C1515FD00C380B5 /* MYT */ = {
 			isa = PBXGroup;
 			children = (
+				9CEBD4321C8C1CDC0079095B /* UMessage_Sdk_1.2.6 */,
 				776ADB6A1C4166E20084401F /* Location */,
 				9CD75FEB1C414752001C7C98 /* MYTNetRequest */,
 				77B5CEEF1C1C5E440044D0F6 /* Zyxphone */,
@@ -671,6 +676,15 @@
 			path = MYTNetRequest;
 			sourceTree = "<group>";
 		};
+		9CEBD4321C8C1CDC0079095B /* UMessage_Sdk_1.2.6 */ = {
+			isa = PBXGroup;
+			children = (
+				9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */,
+				9CEBD4341C8C1CDC0079095B /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.2.6;
+			sourceTree = "<group>";
+		};
 		AE3652CD9A41E04F68A6B8C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -735,7 +749,7 @@
 				TargetAttributes = {
 					18C0A4051C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = S88XP9GKDZ;
+						DevelopmentTeam = 7FHA4R58AH;
 					};
 					18C0A41E1C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1017,8 +1031,13 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDJY.MYT;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.QDYJ.MYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bda15c4-189d-4d43-abb8-e2d02626c671";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1033,8 +1052,13 @@
 				INFOPLIST_FILE = MYT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDJY.MYT;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.QDYJ.MYT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6bda15c4-189d-4d43-abb8-e2d02626c671";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
