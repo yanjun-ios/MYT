@@ -10,6 +10,8 @@
 #import "Node1.h"
 #import "AddneedViewController.h"
 #import "NetRequestManager.h"
+#import"Utility.h"
+#import "MJRefresh.h"
 #import "QQRequestManager.h"
 @interface ChangeinfoTableViewController ()
 {
@@ -19,6 +21,8 @@
     __block  NSMutableArray  *wular;//存类型为W的物料类别
     __block NSArray *jsonary;
     int totlepage;
+    NSMutableArray *mujson;
+    int zf;
 }
 @end
 
@@ -38,16 +42,18 @@
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
     [self getstock];
-    [self getneed];
+     [self getneed];
    
 }
 - (void)viewDidLoad {
     
     //消除多余空白行
+    mujson=[[NSMutableArray alloc]init];
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
     [self.tableView setTableFooterView:view];
     
+    //self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     _clientId= [NetRequestManager sharedInstance].clientId;
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -66,7 +72,7 @@
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
-    
+   
     
     [super viewDidLoad];
     
@@ -106,11 +112,15 @@
 }
 -(void)getneed
 {
+    zf=1;
     NSString * clientidstr=[NSString stringWithFormat:@"%@",_clientId];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+    [parDic setValue:@50 forKey:@"pageSize"];
+    NSString * num=[NSString stringWithFormat:@"%d",zf];
+    [parDic setValue:num forKey:@"pageNum"];
     [parDic setValue:clientidstr forKey:@"cusid"];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@""] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getCusMatReqIf"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         jsonary=[responseObject objectForKey:@"list"];
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -119,6 +129,46 @@
         }];
     }];
 }
+//////加载更多////////
+/*- (void)loadMoreData
+{
+    
+    // 1.添加假数据
+    if (zf<10) {
+        NSString * clientidstr=[NSString stringWithFormat:@"%@",_clientId];
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+        [parDic setValue:@5 forKey:@"pageSize"];
+        NSString * num=[NSString stringWithFormat:@"%d",zf];
+        [parDic setValue:num forKey:@"pageNum"];
+        [parDic setValue:clientidstr forKey:@"cusid"];
+        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+        [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getCusMatReqIf"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            jsonary=[responseObject objectForKey:@"list"];
+            [self.tableView reloadData];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"网络请求错误！"];
+            }];
+        }];
+        zf++;
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
+    
+    
+    
+    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+    
+    // 刷新表格
+    
+    
+    // 拿到当前的上拉刷新控件，结束刷新状态
+    [self.tableView.mj_footer endRefreshing];
+    
+}*/
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return  jsonary.count;
@@ -130,13 +180,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* identif=@"cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identif];
     if (!cell) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identif];
         
         //物料或者物料规格名字
-        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 60, 20)];
+        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 100, 20)];
         name.font=[UIFont systemFontOfSize:14];
         name.textColor=[UIColor darkGrayColor];
         name.tag=1000;
@@ -152,22 +201,27 @@
         [cell.contentView addSubview:phone];
         
   
-        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 11, 60, 20)];
+        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-30, 11, 60, 20)];
         need.font=[UIFont systemFontOfSize:14];
         need.textColor=[UIColor darkGrayColor];
         need.tag=1002;
         [cell.contentView addSubview:need];
     }
-    if ([[[jsonary objectAtIndex:indexPath.row] objectForKey:@"tw"] isEqualToString:@"T"]) {
-        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"typename"];
-        ((UILabel*)[cell.contentView viewWithTag:1001]).text=@"物料规格";
-        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"needs"];
+    if ([[[jsonary objectAtIndex:indexPath.row] objectForKey:@"TW"] isEqualToString:@"T"]) {
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"%@%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"CODE"],[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NAME"]];
+        
+            NSLog(@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NAME"]);
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"TYPE"]];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NEED"]];
     }
     else
     {
-        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"mattername"];
-        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"spec"];
-        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonary objectAtIndex:indexPath.row] objectForKey:@"needs"];
+        ((UILabel*)[cell.contentView viewWithTag:1000]).text=[NSString stringWithFormat:@"%@%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"CODE"],[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NAME"]];
+        
+        NSLog(@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NAME"]);
+        ((UILabel*)[cell.contentView viewWithTag:1001]).text=[NSString stringWithFormat:@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"TYPE"]];
+        ((UILabel*)[cell.contentView viewWithTag:1002]).text=[NSString stringWithFormat:@"%@",[[jsonary objectAtIndex:indexPath.row] objectForKey:@"NEED"]];
+
     }
     
     

@@ -326,17 +326,7 @@
             image.tag=13;
             //if(node.child)
             // {
-            
-            if (node.depth==0) {
-                NSLog(@"%@",node.name);
-                image.frame=CGRectMake(2, 16,8, 8);
-            }
-            
-            else if(node.depth==1)
-            {
-                NSLog(@"%@",node.name);
-                image.frame=CGRectMake(25, 16,8, 8);
-            }
+           
             
             
             
@@ -380,6 +370,17 @@
 
     
     UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+    if (node.depth==0) {
+        NSLog(@"%@",node.name);
+        image.frame=CGRectMake(2, 16,8, 8);
+    }
+    
+    else if(node.depth==1)
+    {
+        NSLog(@"%@",node.name);
+        image.frame=CGRectMake(25, 16,8, 8);
+        //image.frame=CGRectMake(2, 16,8, 8);
+    }
     image.image=[UIImage imageNamed:@"公司库存向右"];
     
     
