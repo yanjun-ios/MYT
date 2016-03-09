@@ -368,7 +368,7 @@
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [btn_contact setImage:[UIImage imageNamed:@"电话小"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
-                int phonenumber=((NSNumber*)contacts_phone).intValue;
+                NSInteger  phonenumber=((NSNumber*)contacts_phone).integerValue;
                 btn_contact.tag=phonenumber;
                 //[indexPath row]*100+i;
                 jgx=jgx+90;
@@ -390,7 +390,7 @@
                 [btn_contact setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [btn_contact setImage:[UIImage imageNamed:@"电话小"]  forState:UIControlStateNormal];
                 [[Utility sharedInstance] setLayerView:btn_contact borderW:1 borderColor:[UIColor redColor] radius:4];
-                int phonenumber=((NSNumber*)contacts_phone).intValue;
+                NSInteger phonenumber=((NSNumber*)contacts_phone).integerValue;
                 btn_contact.tag=phonenumber;
                 //[indexPath row]*100+i;
                 jgx=jgx+90;
@@ -408,8 +408,8 @@
 {
     
     UIButton* btn =  (UIButton*)sender;
-    int phonenumber=(int)btn.tag;
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%d",phonenumber];
+    NSInteger phonenumber=(NSInteger)btn.tag;
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%ld",(long)phonenumber];
     UIWebView * callWebview = [[UIWebView alloc] init];
     [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
     [self.view addSubview:callWebview];
