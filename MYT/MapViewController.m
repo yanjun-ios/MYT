@@ -21,6 +21,7 @@
     BOOL ifload;
     NSString*  lati;
     NSString*  longi;
+    int nearcount;
 }
 @end
 
@@ -40,7 +41,7 @@
         
         [self getCusdist];
         //NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
-        
+        _customer_behind.text=[NSString stringWithFormat:@"附近有%d个客户",nearcount];
         NSLog(@"%@,%@",lati,longi);
         [self getAddressByLatitude:lati longitude:longi];
         
@@ -91,6 +92,7 @@
     //异步请求
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusDist.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         cusDist=[responseObject objectForKey:@"list"];
+        nearcount=((NSNumber*)[responseObject objectForKey:@"nearcount"]).intValue;
         //NSLog(@"%@",[cusDist objectAtIndex:0]);
         NSLog(@"%lu",(unsigned long)cusDist.count);
         [self addAnnotation];
