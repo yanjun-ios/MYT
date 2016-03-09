@@ -167,8 +167,8 @@
         [addcusjson setObject:_TF_MobilePhone.text forKey:@"cusTtName"];
        [addcusjson setObject:_TF_MobilePhone.text forKey:@"mobilePhone"];
          [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
-        [addcusjson setObject:lati forKey:@"longitude"];//经度
-        [addcusjson setObject:longi forKey:@"latitude"];//纬度
+        [addcusjson setObject:longi forKey:@"longitude"];//经度
+        [addcusjson setObject:lati forKey:@"latitude"];//纬度
         [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
         //[locationCodeDic objectForKey:@"provinceCode"]
         [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];

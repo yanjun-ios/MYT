@@ -84,8 +84,8 @@
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     //此处要改参数
-    [parDic setValue:@"24" forKey:@"lon"];//单例的经度
-    [parDic setValue:@"36" forKey:@"lat"];//单例的纬度
+    [parDic setValue:longi forKey:@"lon"];//单例的经度
+    [parDic setValue:lati forKey:@"lat"];//单例的纬度
     [parDic setValue:@"1000" forKey:@"raidus"];//范围
    // [self getAddressByLatitude:39 longitude:120];
     //异步请求
