@@ -21,6 +21,7 @@
     BOOL ifload;
     NSString*  lati;
     NSString*  longi;
+    int nearcount;
 }
 @end
 
@@ -40,7 +41,7 @@
         
         [self getCusdist];
         //NSDictionary *location=[[Z_NetRequestManager sharedInstance] getlongla];
-        
+        _customer_behind.text=[NSString stringWithFormat:@"附近有%d个客户",nearcount];
         NSLog(@"%@,%@",lati,longi);
         [self getAddressByLatitude:lati longitude:longi];
         
@@ -84,13 +85,14 @@
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     //此处要改参数
-    [parDic setValue:@"24" forKey:@"lon"];//单例的经度
-    [parDic setValue:@"36" forKey:@"lat"];//单例的纬度
+    [parDic setValue:longi forKey:@"lon"];//单例的经度
+    [parDic setValue:lati forKey:@"lat"];//单例的纬度
     [parDic setValue:@"1000" forKey:@"raidus"];//范围
    // [self getAddressByLatitude:39 longitude:120];
     //异步请求
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getCusDist.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         cusDist=[responseObject objectForKey:@"list"];
+        nearcount=((NSNumber*)[responseObject objectForKey:@"nearcount"]).intValue;
         //NSLog(@"%@",[cusDist objectAtIndex:0]);
         NSLog(@"%lu",(unsigned long)cusDist.count);
         [self addAnnotation];
