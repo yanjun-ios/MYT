@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Wyf-NJ-SbM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Wyf-NJ-SbM">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -37,10 +36,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="登录LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="F5M-gm-Dhk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="登录新LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="F5M-gm-Dhk">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="F5M-gm-Dhk" secondAttribute="height" multiplier="3:1" id="T3g-FM-jMr"/>
+                                    <constraint firstAttribute="width" secondItem="F5M-gm-Dhk" secondAttribute="height" multiplier="2:1" id="T3g-FM-jMr"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -183,6 +182,9 @@
                                         <include reference="Ycf-Lz-dUS"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="40" y="329" width="320" height="120"/>
+                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLp-to-Yob">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -191,6 +193,9 @@
                                 <state key="normal" title="登陆">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="40" y="469" width="320" height="60"/>
+                                </variation>
                                 <connections>
                                     <action selector="loginInto:" destination="okU-J7-ZtE" eventType="touchUpInside" id="Sad-J1-LY9"/>
                                 </connections>
@@ -211,7 +216,7 @@
                             <constraint firstItem="aLp-to-Yob" firstAttribute="leading" secondItem="4jq-Z4-rCq" secondAttribute="leading" id="hiW-jD-HaT"/>
                             <constraint firstItem="4jq-Z4-rCq" firstAttribute="top" secondItem="F5M-gm-Dhk" secondAttribute="bottom" constant="40" id="lDU-UX-vIH"/>
                             <constraint firstItem="F5M-gm-Dhk" firstAttribute="centerX" secondItem="76q-Dm-8xD" secondAttribute="centerX" id="o3v-aM-DIu"/>
-                            <constraint firstItem="F5M-gm-Dhk" firstAttribute="top" secondItem="9UY-xf-BgU" secondAttribute="bottom" multiplier="5" id="x8k-tu-ZkZ"/>
+                            <constraint firstItem="F5M-gm-Dhk" firstAttribute="top" secondItem="9UY-xf-BgU" secondAttribute="bottom" multiplier="4" id="x8k-tu-ZkZ"/>
                             <constraint firstItem="4jq-Z4-rCq" firstAttribute="height" secondItem="76q-Dm-8xD" secondAttribute="height" multiplier="0.15" id="yYc-CY-sqo"/>
                         </constraints>
                         <variation key="default">
@@ -10151,7 +10156,7 @@
         <image name="ok" width="28" height="27"/>
         <image name="phone" width="20" height="20"/>
         <image name="tabBar3" width="60" height="49"/>
-        <image name="title" width="160" height="57"/>
+        <image name="title" width="322" height="96"/>
         <image name="toright" width="15" height="15"/>
         <image name="touxiang" width="117" height="117"/>
         <image name="个体户" width="27" height="27"/>
@@ -10172,7 +10177,7 @@
         <image name="消息中心" width="116" height="116"/>
         <image name="添加客户" width="29" height="30"/>
         <image name="电话小" width="20" height="20"/>
-        <image name="登录LOGO" width="274" height="81"/>
+        <image name="登录新LOGO" width="309" height="200"/>
         <image name="返回按钮" width="23" height="33"/>
         <image name="选择" width="15" height="24"/>
     </resources>

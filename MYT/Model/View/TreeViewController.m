@@ -448,7 +448,7 @@
             }
         }
         }
-        [self performSegueWithIdentifier:@"product" sender:self];
+        //[self performSegueWithIdentifier:@"product" sender:self];
     }
     __block  NSUInteger startPosition = indexPath.row+1;
     __block  NSUInteger endPosition = startPosition;

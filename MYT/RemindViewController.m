@@ -72,7 +72,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
    // return 4;
-    return ([[[jsonarry objectAtIndex:section] objectForKey:@"follows"] count]+1);
+    return (int)([[[jsonarry objectAtIndex:section] objectForKey:@"follows"] count])+1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {return  25;}
@@ -142,6 +142,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     if (indexPath.row==0) {
         rmdidToRight=[[jsonarry objectAtIndex:indexPath.section] objectForKey:@"rmdid"];
 
@@ -175,6 +177,7 @@
         if(!cell)
         {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+            cell.contentView.backgroundColor=[UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
             //设置产品种类
             UILabel* productType=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 150, 20)];
             productType.font=[UIFont systemFontOfSize:14];
@@ -236,10 +239,10 @@
             [rightImg setImage:[UIImage imageNamed:@"向右"]];
             [cell1.contentView addSubview:rightImg];
         }
-          NSArray* follows=[[jsonarry objectAtIndex:[indexPath section]] objectForKey:@"follows"];
+        NSArray* follows=[[jsonarry objectAtIndex:[indexPath section]] objectForKey:@"follows"];
         NSDictionary* cus= [follows objectAtIndex:[indexPath row]-1];
         ((UILabel*)[cell1.contentView viewWithTag:10000]).text=[cus objectForKey:@"cusname"];
-        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=[cus objectForKey:@"ctcusmatch"];
+        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=((NSNumber*)[cus objectForKey:@"ctcusmatch"]).stringValue;
 //        ((UILabel*)[cell1.contentView viewWithTag:10000]).text=@"huadenumye";
 //        ((UILabel*)[cell1.contentView viewWithTag:10001]).text=@"30";
         return cell1;
