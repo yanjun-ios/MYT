@@ -501,7 +501,7 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         [self qq_performSVHUDBlock:^{
-            [SVProgressHUD showErrorWithStatus:@"数据请求错误，请检查网络！"];
+            [SVProgressHUD showErrorWithStatus:@"暂无数据！"];
         }];
 
     }];
