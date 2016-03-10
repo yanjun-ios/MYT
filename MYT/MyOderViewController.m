@@ -271,7 +271,7 @@
         [cell.contentView addSubview:tradMony];
         
     }
-    NSDictionary* dic=[orderlist objectAtIndex:[indexPath row]];
+    NSDictionary* dic=[orderlist objectAtIndex:[indexPath section]];
     
     //客户名称
     ((UILabel*)[cell.contentView viewWithTag:100]).text=[dic objectForKey:@"cusname"];
