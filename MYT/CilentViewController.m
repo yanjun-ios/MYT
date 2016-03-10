@@ -312,7 +312,7 @@
         
         //创建客户名称lab
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        UILabel* lab=[[UILabel alloc]initWithFrame:CGRectMake(8, 16, 300, 21)];
+        UILabel* lab=[[UILabel alloc]initWithFrame:CGRectMake(14, 16, 300, 21)];
         lab.font=[UIFont systemFontOfSize:16];
         lab.textColor=[UIColor redColor];
         lab.tag=148;
