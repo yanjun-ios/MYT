@@ -448,7 +448,7 @@
             }
         }
         }
-        //[self performSegueWithIdentifier:@"product" sender:self];
+        [self performSegueWithIdentifier:@"product" sender:self];
     }
     __block  NSUInteger startPosition = indexPath.row+1;
     __block  NSUInteger endPosition = startPosition;
@@ -576,6 +576,7 @@
                 if ([((Node*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
                     j=z;//获得第2层的插入位置
                     k=i;//获取在nodear中相对于哪一个数组
+                    break;
                 }
             }
            // if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
@@ -623,8 +624,8 @@
                     {
                         NSLog(@"%@",nodear);
                         for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-                            Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
-                            if (nod.nodeId==nodeid) {
+                            Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:indexPath.row+1];
+                            if ([nod.nodeId isEqualToString:nodeid]) {
                                 [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
                             }
                             NSLog(@"%@",nodear);

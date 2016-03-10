@@ -274,7 +274,7 @@
     NSDictionary* dic=[orderlist objectAtIndex:[indexPath row]];
     
     //客户名称
-    ((UILabel*)[cell.contentView viewWithTag:100]).text=[dic objectForKey:@"custtname"];
+    ((UILabel*)[cell.contentView viewWithTag:100]).text=[dic objectForKey:@"cusname"];
     ((UILabel*)[cell.contentView viewWithTag:101]).text=[dic objectForKey:@"dlvdate"];
      ((UILabel*)[cell.contentView viewWithTag:102]).text=[dic objectForKey:@"obdcode"];
     ((UILabel*)[cell.contentView viewWithTag:103]).text= [NSString stringWithFormat:@"%d￥",[(NSNumber*)[dic objectForKey:@"money"] intValue]];;
