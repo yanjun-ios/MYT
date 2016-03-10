@@ -79,7 +79,7 @@
 		9CD75FFB1C434120001C7C98 /* TradingLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFA1C434120001C7C98 /* TradingLogViewController.m */; };
 		9CD75FFE1C43484C001C7C98 /* CallLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD75FFD1C43484C001C7C98 /* CallLogViewController.m */; };
 		9CD760011C436058001C7C98 /* CusMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD760001C436058001C7C98 /* CusMarkViewController.m */; };
-		9CEBD4351C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */; settings = {ASSET_TAGS = (); }; };
+		9CEBD4351C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 		D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9430F951C44B3A800714898 /* FindmapViewController.m */; };
 		D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A815D91C48CDA500C5E698 /* TreeViewController.m */; };
@@ -1036,7 +1036,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDJY.MYT;
+				PRODUCT_BUNDLE_IDENTIFIER = sjdhfghfsildfkk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7f846df7-cc22-4ff9-9c8b-49f8c60df306";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1058,7 +1058,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDJY.MYT;
+				PRODUCT_BUNDLE_IDENTIFIER = sjdhfghfsildfkk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7f846df7-cc22-4ff9-9c8b-49f8c60df306";
 				TARGETED_DEVICE_FAMILY = 1;
