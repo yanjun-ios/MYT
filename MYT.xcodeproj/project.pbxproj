@@ -97,7 +97,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		18C0A4061C1515FD00C380B5 /* 托乔木仓.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "托乔木仓.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18C0A4061C1515FD00C380B5 /* MYT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MYT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C0A40A1C1515FD00C380B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18C0A40B1C1515FD00C380B5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		18C0A40D1C1515FD00C380B5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		18C0A4141C1515FD00C380B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18C0A4161C1515FD00C380B5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		18C0A4191C1515FD00C380B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		18C0A41F1C1515FD00C380B5 /* 托乔木仓.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "托乔木仓.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18C0A41F1C1515FD00C380B5 /* MYTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MYTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C0A4241C1515FD00C380B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18C0A4251C1515FD00C380B5 /* MYTTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYTTests.m; sourceTree = "<group>"; };
 		18C0A4311C1517CF00C380B5 /* QQRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQRequestManager.h; sourceTree = "<group>"; };
@@ -289,8 +289,8 @@
 		18C0A4071C1515FD00C380B5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18C0A4061C1515FD00C380B5 /* 托乔木仓.app */,
-				18C0A41F1C1515FD00C380B5 /* 托乔木仓.xctest */,
+				18C0A4061C1515FD00C380B5 /* MYT.app */,
+				18C0A41F1C1515FD00C380B5 /* MYTTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -701,9 +701,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		18C0A4051C1515FD00C380B5 /* 托乔木仓 */ = {
+		18C0A4051C1515FD00C380B5 /* MYT */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18C0A4291C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "托乔木仓" */;
+			buildConfigurationList = 18C0A4291C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "MYT" */;
 			buildPhases = (
 				A3D8AAAD48E4C55D56BB6F16 /* Check Pods Manifest.lock */,
 				18C0A4021C1515FD00C380B5 /* Sources */,
@@ -715,14 +715,14 @@
 			);
 			dependencies = (
 			);
-			name = "托乔木仓";
+			name = MYT;
 			productName = MYT;
-			productReference = 18C0A4061C1515FD00C380B5 /* 托乔木仓.app */;
+			productReference = 18C0A4061C1515FD00C380B5 /* MYT.app */;
 			productType = "com.apple.product-type.application";
 		};
-		18C0A41E1C1515FD00C380B5 /* 托乔木仓Tests */ = {
+		18C0A41E1C1515FD00C380B5 /* MYTTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18C0A42C1C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "托乔木仓Tests" */;
+			buildConfigurationList = 18C0A42C1C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "MYTTests" */;
 			buildPhases = (
 				18C0A41B1C1515FD00C380B5 /* Sources */,
 				18C0A41C1C1515FD00C380B5 /* Frameworks */,
@@ -733,9 +733,9 @@
 			dependencies = (
 				18C0A4211C1515FD00C380B5 /* PBXTargetDependency */,
 			);
-			name = "托乔木仓Tests";
+			name = MYTTests;
 			productName = MYTTests;
-			productReference = 18C0A41F1C1515FD00C380B5 /* 托乔木仓.xctest */;
+			productReference = 18C0A41F1C1515FD00C380B5 /* MYTTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -749,7 +749,7 @@
 				TargetAttributes = {
 					18C0A4051C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 39G4M9BD4F;
+						DevelopmentTeam = S88XP9GKDZ;
 					};
 					18C0A41E1C1515FD00C380B5 = {
 						CreatedOnToolsVersion = 6.4;
@@ -757,7 +757,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 18C0A4011C1515FD00C380B5 /* Build configuration list for PBXProject "托乔木仓" */;
+			buildConfigurationList = 18C0A4011C1515FD00C380B5 /* Build configuration list for PBXProject "MYT" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -770,8 +770,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				18C0A4051C1515FD00C380B5 /* 托乔木仓 */,
-				18C0A41E1C1515FD00C380B5 /* 托乔木仓Tests */,
+				18C0A4051C1515FD00C380B5 /* MYT */,
+				18C0A41E1C1515FD00C380B5 /* MYTTests */,
 			);
 		};
 /* End PBXProject section */
@@ -916,7 +916,7 @@
 /* Begin PBXTargetDependency section */
 		18C0A4211C1515FD00C380B5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 18C0A4051C1515FD00C380B5 /* 托乔木仓 */;
+			target = 18C0A4051C1515FD00C380B5 /* MYT */;
 			targetProxy = 18C0A4201C1515FD00C380B5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1036,8 +1036,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDYJ.MYTsunjiaping;
-				PRODUCT_NAME = "托乔木仓";
+				PRODUCT_BUNDLE_IDENTIFIER = sjdhfghfsildfkk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1058,8 +1058,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/MYT/UMessage_Sdk_1.2.6",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.QDYJ.MYTsunjiaping;
-				PRODUCT_NAME = "托乔木仓";
+				PRODUCT_BUNDLE_IDENTIFIER = sjdhfghfsildfkk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1079,8 +1079,8 @@
 				);
 				INFOPLIST_FILE = MYTTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "托乔木仓";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/托乔木仓.app/托乔木仓";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MYT.app/MYT";
 			};
 			name = Debug;
 		};
@@ -1094,15 +1094,15 @@
 				);
 				INFOPLIST_FILE = MYTTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "托乔木仓";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/托乔木仓.app/托乔木仓";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MYT.app/MYT";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		18C0A4011C1515FD00C380B5 /* Build configuration list for PBXProject "托乔木仓" */ = {
+		18C0A4011C1515FD00C380B5 /* Build configuration list for PBXProject "MYT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18C0A4271C1515FD00C380B5 /* Debug */,
@@ -1111,7 +1111,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18C0A4291C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "托乔木仓" */ = {
+		18C0A4291C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "MYT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18C0A42A1C1515FD00C380B5 /* Debug */,
@@ -1120,7 +1120,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18C0A42C1C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "托乔木仓Tests" */ = {
+		18C0A42C1C1515FD00C380B5 /* Build configuration list for PBXNativeTarget "MYTTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18C0A42D1C1515FD00C380B5 /* Debug */,
