@@ -215,7 +215,7 @@
         
         //业绩
         UIButton* gread=[[UIButton alloc]init];
-        gread.frame=CGRectMake(0, 0, 50, 20);
+        gread.frame=CGRectMake(0, 0, 100, 20);
         gread.center=CGPointMake(ScreenWidth/2, 22);
         gread.titleLabel.font=[UIFont systemFontOfSize:16];
         [gread setTitleColor:[UIColor orangeColor] forState:0];
@@ -230,8 +230,8 @@
         follow.titleLabel.font=[UIFont systemFontOfSize:16];
         [follow setTitleColor:[UIColor colorWithRed:66.0/255 green:143.0/255 blue:68.0/255 alpha:1.0] forState:0];
       
-        follow.tag=1002;
-        [cell.contentView addSubview:follow];
+        follow.tag=20000;
+        
         
         int ismanager=[[[NSUserDefaults standardUserDefaults] objectForKey:@"profess_state"] intValue];
         if (ismanager==1) {
@@ -239,9 +239,9 @@
             //[gread addTarget:self action:@selector(clickGread:) forControlEvents:UIControlEventTouchUpInside];
              [follow addTarget:self action:@selector(clickFollow:) forControlEvents:UIControlEventTouchUpInside];
         }
-        
+        [cell.contentView addSubview:follow];
     }
-    ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
+   // ((UILabel*)[cell.contentView viewWithTag:1000]).text=@"马云";
     
 //    UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
 //    btnGread.tag=10000+indexPath.row;
@@ -258,15 +258,16 @@
     }
     staffname.text=[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"staffname"];
     
+    //业绩设置
     UIButton* btnGread = (UIButton*)[cell.contentView viewWithTag:1001];
-    btnGread.tag=10000+indexPath.row;
+    //btnGread.tag=10000+indexPath.row;
+   int feat= ((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"]).intValue;
+    [btnGread setTitle:[NSString stringWithFormat:@"%d￥",feat] forState:0];
     
-  int feat= ((NSNumber*)[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"feat"]).intValue;
     
-    [btnGread setTitle:[NSString stringWithFormat:@"%d",feat] forState:0];
-    
-    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:1002];
-    btnfollow.tag=20000+indexPath.row;
+    //跟及率
+   
+    UIButton* btnfollow = (UIButton*)[cell.contentView viewWithTag:20000];
     [btnfollow setTitle:[[[jsonDic objectForKey:@"list"] objectAtIndex:[indexPath row]] objectForKey:@"rate"] forState:0];
         return cell;
  
@@ -323,7 +324,10 @@
 ////cell中跟机率点击事件
 -(void)clickFollow:(UIButton*)btn
 {
-    int index=btn.tag-20000;
+   UITableViewCell* cell = (UITableViewCell *)[[btn superview] superview];
+    NSIndexPath* path=[_tableview1 indexPathForCell:cell];
+    
+    int index=path.row;
     //获取职员id
    NSString* staffid = [[[jsonDic objectForKey:@"list"] objectAtIndex:index] objectForKey:@"staffid"];
     NSString* Uid=Theuserid;
@@ -490,6 +494,7 @@
     [parDic setValue:teamid forKey:@"depid"];
     [parDic setValue:userid forKey:@"userid"];
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingPathComponent:@"yd/getDepStaffList.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+        jsonDic=[[NSDictionary alloc]init];
         jsonDic = (NSDictionary*)responseObject;
         if ([[jsonDic objectForKey:@"list"] count]==0) {
             [self qq_performSVHUDBlock:^{
