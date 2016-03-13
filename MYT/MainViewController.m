@@ -95,34 +95,34 @@
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
     [parDic setValue:@"null" forKey:@"parentid"];
-    [parDic setValue:@"1" forKey:@"pageNum"];
-    [parDic setValue:@"5" forKey:@"pageSize"];//先请求1页中5个
+   // [parDic setValue:@"1" forKey:@"pageNum"];
+   // [parDic setValue:@"5" forKey:@"pageSize"];//先请求1页中5个
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
    
         dispatch_sync(concurrentQueue, ^{
-            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTypeIvtTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                 
                 totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
                 [nodear removeAllObjects];
                 init=[responseObject objectForKey:@"list"];
                 for (NSDictionary *dic in init) {
-                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                   // if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
                         [typear addObject:dic];
-                    }
-                    else
-                    {
-                        [wular addObject:dic];
-                    }
+                   // }
+                   // else
+                   // {
+                   //     [wular addObject:dic];
+                   // }
                 }
                 for (int i=0; i<typear.count; i++) {
                     NSDictionary * typeinfo=[typear objectAtIndex:i];
-                    NSString* nodeid=[typeinfo objectForKey:@"typeid"];
-                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
-                    int matecounts=((NSNumber*)[typeinfo objectForKey:@"matecounts"]).intValue;
-                    Node * node=[[Node alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    NSString* nodeid=[typeinfo objectForKey:@"id"];
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
+                    int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
+                    Node * node=[[Node alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:0 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
                     [nodear addObject:node];
                 }
-                for (int i=0; i<wular.count; i++) {
+              /*  for (int i=0; i<wular.count; i++) {
                     NSDictionary * wulinfo=[wular objectAtIndex:i];
                     NSString* nodeid=[wulinfo objectForKey:@"matid"];
                     int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
@@ -130,7 +130,7 @@
                     Node * node=[[Node alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid counts:counts matecounts:matecounts];
                     [nodear addObject:node];
                     
-                }
+                }*/
                 NSLog(@"%@",nodear);
                
                                 //将请求到的第一层数据分类

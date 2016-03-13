@@ -8,7 +8,15 @@
 
 #import "ProductdetalViewController.h"
 #import "ButtomView.h"
+#import "MJRefresh.h"
+#import "Utility.h"
 @interface ProductdetalViewController ()
+{
+    int zf;
+    int totlepage;
+    NSArray * jsonarr;
+    NSMutableArray *date;
+}
 
 @end
 
@@ -17,25 +25,45 @@
 - (void)viewDidLoad {
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-49, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
+    date=[[NSMutableArray alloc]init];
     _tableView.dataSource=self;
     _tableView.delegate=self;
-    _jibie.textColor=[UIColor orangeColor];
-    _jibie.text=[NSString stringWithFormat:@"%@>%@>%@",_depth0,_depth1,_depth2];
-    _jibie.font=[UIFont fontWithName:@"ArialMT" size:14];
-    
+    //zf=1;
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+      [self initinfo];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"%@",jsonarr);
+    [_tableView reloadData];
+    
+    
+}
 -(void)initinfo
 {
+    zf=1;
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-    [parDic setValue:@"null" forKey:@"parentid"];
-    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    [parDic setValue:_matid forKey:@"typeid"];
+    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+    NSString* num=[NSString stringWithFormat:@"%d",zf];
+    [parDic setValue:@10 forKey:@"pageSize"];
+    [parDic setValue:num forKey:@"pageNum"];
     
-    dispatch_sync(concurrentQueue, ^{
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+  // dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    //dispatch_sync(concurrentQueue, ^{
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatDtl.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+            jsonarr=[responseObject objectForKey:@"list"];
+            for (NSDictionary* i in jsonarr) {
+                [date addObject:i];
+            }
+            [_tableView reloadData];
                         //将请求到的第一层数据分类
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -47,8 +75,55 @@
         
         /*download the image here*/
         
-    });
+   // });
 
+}
+- (void)loadMoreData
+{
+    // 1.添加假数据
+    if (zf<totlepage+1) {
+        zf++;
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:_matid forKey:@"typeid"];
+        //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        NSString* num=[NSString stringWithFormat:@"%d",zf];
+        [parDic setValue:@10 forKey:@"pageSize"];
+        [parDic setValue:num forKey:@"pageNum"];
+        
+        // dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        //dispatch_sync(concurrentQueue, ^{
+        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatDtl.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+            jsonarr=[responseObject objectForKey:@"list"];
+            for (NSDictionary* i in jsonarr) {
+                [date addObject:i];
+            }
+            [_tableView reloadData];
+            //将请求到的第一层数据分类
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+            }];
+        }];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
+    
+    
+    
+    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+    
+    // 刷新表格
+    
+    
+    // 拿到当前的上拉刷新控件，结束刷新状态
+    [_tableView.mj_footer endRefreshing];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -104,12 +179,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    NSDictionary* maitinfo=[date objectAtIndex:indexPath.row];
+    UILabel* maitname=(UILabel*)[cell.contentView viewWithTag:120];
+    maitname.text=[maitinfo objectForKey:@"matterName"];
+    UILabel* maticount=(UILabel*)[cell.contentView viewWithTag:121];
+    maticount.text=[maitinfo objectForKey:@"invCt"];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return 10;
+    return date.count;
 }
 /*
 #pragma mark - Navigation

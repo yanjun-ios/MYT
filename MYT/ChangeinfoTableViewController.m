@@ -41,7 +41,7 @@
     //barbtn.image=searchimage;
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
-    [self getstock];
+   // [self getstock];
      [self getneed];
    
 }
@@ -236,25 +236,25 @@
 }
 -(void)finishclick
 {
-    if (nodear.count) {
+   // if (nodear.count) {
          [self performSegueWithIdentifier:@"addneed" sender:self];
-    }
-    else
-        [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+   // }
+    //else
+      //  [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
    
 }
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqual:@"addneed"]) {
         AddneedViewController * stock=segue.destinationViewController;
         stock.nodearr=nodear;
         stock.totlePage=totlepage;
     }
-}
+}*/
 
 #pragma mark - Table view data source
 
--(void)getstock
+/*-(void)getstock
 {
     
     [nodear removeAllObjects];
@@ -307,13 +307,13 @@
             [self qq_performSVHUDBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
             }];
-        }];
+        }];*/
         
         /*download the image here*/
         
-    });
+   // });
     
-}
+//}
 
 
 /*

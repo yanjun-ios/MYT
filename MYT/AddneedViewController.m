@@ -28,6 +28,7 @@
     int zf;
     BOOL iffindtext;
     BOOL findclick;
+    int totlepage;
 }
 
 @end
@@ -51,7 +52,7 @@
    _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    _tempedata=[[NSMutableArray alloc]init];
+  /*  _tempedata=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc] init];
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
@@ -73,7 +74,7 @@
         [nodear addObject:nodea];
     }
     [self initwithnodear];
-    NSLog(@"%@",nodear);
+    NSLog(@"%@",nodear);*/
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -93,16 +94,71 @@
     [typea removeAllObjects];
     [wula removeAllObjects];
     NSLog(@"%@",ndone);
-    NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
-    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-    [parDic setValue:@"null" forKey:@"parentid"];
-    [parDic setValue:pagenum forKey:@"pageNum"];
+   
     if (iffindtext) {
-        [parDic setValue:findtext forKey:@"search"];
+        NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
+        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        //[parDic setValue:@"null" forKey:@"parentid"];
+        [parDic setValue:pagenum forKey:@"pageNum"];
+        [parDic setValue:findtext forKey:@"name"];
+        [parDic setValue:@"10" forKey:@"pageSize"];//依次请求
+        dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_sync(concurrentQueue, ^{
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                
+                totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                        [typea addObject:dic];
+                    }
+                    else
+                    {
+                        [wula addObject:dic];
+                    }
+                }
+                for (int i=0; i<wula.count; i++) {
+                    NSDictionary * wulinfo=[wula objectAtIndex:i];
+                    NSString* nodeid=[wulinfo objectForKey:@"id"];
+                    int counts=((NSNumber*)[wulinfo objectForKey:@"invCt"]).intValue;
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"matterName"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
+                    [ndone addObject:node];
+                    
+                }
+                for (int i=0; i<typea.count; i++) {
+                    NSDictionary * typeinfo=[typea objectAtIndex:i];
+                    NSString* nodeid=[typeinfo objectForKey:@"id"];
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                    
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
+                    [ndone addObject:node];
+                }
+                //先物料后物料类别
+                NSLog(@"%@",ndone);
+                /*for(int i=0;i<ndone.count;i++)
+                {
+                    NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                    [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                    
+                    [nodear addObject:nodea];
+                }
+                
+                [self initwithnodear];*/
+                [_tableView reloadData];
+                //将请求到的第一层数据分类
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                }];
+            }];
+
+        });
     }
-    [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
+}
+   /* [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
     dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     dispatch_sync(concurrentQueue, ^{
@@ -153,19 +209,19 @@
             [self qq_performSVHUDBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
             }];
-        }];
+        }];*/
         
         /*download the image here*/
         
-    });
-}
+   // });
 
+                      
 - (void)loadMoreData
 {
     NSString *find=[_stocksearch.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     // 1.添加假数据
-    if (zf<_totlePage+1) {
+    if (zf<totlepage+1) {
         zf++;
         [ndone removeAllObjects];
         [typea removeAllObjects];
@@ -175,9 +231,10 @@
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+        [parDic setValue:findtext forKey:@"search"];
+
         if (iffindtext) {
-            [parDic setValue:findtext forKey:@"search"];
-        }
+                   }
         [parDic setValue:@"null" forKey:@"parentid"];
         [parDic setValue:pagenum forKey:@"pageNum"];
         [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
