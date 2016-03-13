@@ -85,15 +85,15 @@
     if (!cell) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
         //产品名称
-        UILabel* productName=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 100, 20)];
+        UILabel* productName=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 140, 20)];
         productName.font=[UIFont systemFontOfSize:14];
         productName.textColor=[UIColor darkGrayColor];
         productName.tag=1000;
         productName.textAlignment=NSTextAlignmentLeft;
         [cell.contentView addSubview:productName];
         //产品需求量
-        UILabel* productNeeds=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 20)];
-        productNeeds.center=CGPointMake(ScreenWidth/2, 22);
+        UILabel* productNeeds=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 20)];
+        productNeeds.center=CGPointMake(ScreenWidth/2+50, 22);
         productNeeds.font=[UIFont systemFontOfSize:14];
         productNeeds.textColor=[UIColor darkGrayColor];
         productNeeds.tag=1001;
@@ -101,16 +101,18 @@
         [cell.contentView addSubview:productNeeds];
         
         //库存量
-        UILabel* save=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 12, 30, 20)];
+        UILabel* save=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-70, 12, 60, 20)];
         save.font=[UIFont systemFontOfSize:14];
         save.textColor=[UIColor darkGrayColor];
         save.tag=1002;
         save.textAlignment=NSTextAlignmentRight;
+        
         [cell.contentView addSubview:save];
     }
     ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"mattername"];
-    ((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ctdem"];
-    ((UILabel*)[cell.contentView viewWithTag:1002]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ivtct"];
+    //((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ctdem"];
+    //((UILabel*)[cell.contentView viewWithTag:1001]).text=@"1000000";
+    ((UILabel*)[cell.contentView viewWithTag:1002]).text=((NSNumber*)[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ivtct"]).stringValue;
     return cell;
 }
 
@@ -183,34 +185,43 @@
 {
     if (buttonIndex==1) {
         NSString* text = ((UITextField*)[alertView textFieldAtIndex:0]).text;
-        NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
-        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
-        NSString* dtlid=[jsonDic objectForKey:@"dtlid"];
-        [parDic setValue:dtlid forKey:@"dtlid"];
-        [parDic setValue:userid forKey:@"userid"];
-        [parDic setValue:text forKey:@"gpReason"];
-                [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/giveupCall.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            num++;
-            int status= ((NSNumber*)[responseObject objectForKey:@"status"]).intValue;
-            
-            if (status==1) {
+        if (text.length!=0) {
+            NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
+            NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
+            NSString* dtlid=[jsonDic objectForKey:@"dtlid"];
+            [parDic setValue:dtlid forKey:@"dtlid"];
+            [parDic setValue:userid forKey:@"userid"];
+            [parDic setValue:text forKey:@"gpReason"];
+            [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/giveupCall.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                num++;
+                int status= ((NSNumber*)[responseObject objectForKey:@"status"]).intValue;
+                
+                if (status==1) {
+                    [self qq_performSVHUDBlock:^{
+                        [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
+                        
+                    }];
+                }else
+                {
+                    [self qq_performSVHUDBlock:^{
+                        [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"message"]];
+                    }];
+                }
+                
+                
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 [self qq_performSVHUDBlock:^{
-                    [SVProgressHUD showSuccessWithStatus:[responseObject objectForKey:@"message"]];
-                   
+                    [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
                 }];
-            }else
-            {
-                [self qq_performSVHUDBlock:^{
-                    [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"message"]];
-                }];
-            }
-            
-            
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"数据请求错误！"];
             }];
-        }];
+
+        }
+        else
+        {
+            [self qq_performSVHUDBlock:^{
+                [SVProgressHUD showErrorWithStatus:@"请填写放弃理由！"];
+            }];
+        }
     }
 }
 

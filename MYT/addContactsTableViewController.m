@@ -97,7 +97,9 @@
 }
 
 -(void)finishclick
-{ if (__TF_Company.text.length!=0&&__TF_Email.text.length!=0&&__TF_Name.text.length!=0&&__TF_other.text.length!=0&&__TF_Phone.text.length!=0&&__TF_QQ.text.length!=0&&__TF_Telephone.text.length!=0) {
+{
+    //姓名和手机号为必填项
+    if (__TF_Name.text.length!=0&&__TF_Telephone.text.length!=0) {
     NSString *clientidstr=_clientId;
     [addcusjson setObject:__TF_Name.text forKey:@"contactsName"];
     [addcusjson setObject:__TF_Email.text forKey:@"email"];
@@ -121,11 +123,11 @@
         }];
         if([responseObject objectForKey:@"status"])
         {
-            /*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:NO];
                 // 2秒后异步执行这里的代码...
                 
-            });*/
+            });
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -139,7 +141,7 @@
 }
 else
 {
-    [SVProgressHUD showSuccessWithStatus:@"请填写完信息再提交"];
+    [SVProgressHUD showErrorWithStatus:@"请填写完信息再提交"];
 }
 
 }

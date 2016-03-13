@@ -105,12 +105,19 @@ static Z_NetRequestManager * sharedInstance = nil;
 }
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location=[locations firstObject];//取出第一个位置
-    CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
-    NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
-    longi=coordinate.longitude;
-    lati=coordinate.latitude;
-    //如果不需要实时定位，使用完即使关闭定位服务
-     [_locationManager stopUpdatingLocation];
+    if (location.horizontalAccuracy < 200 && location.horizontalAccuracy != -1){
+        CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
+        NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+        longi=coordinate.longitude;
+        lati=coordinate.latitude;
+        //如果不需要实时定位，使用完即使关闭定位服务
+        [_locationManager stopUpdatingLocation];
+    } else {
+        [manager stopUpdatingLocation];	 //停止获取
+        [NSThread sleepForTimeInterval:10]; //阻塞10秒
+        [manager startUpdatingLocation];	//重新获取
+    }
+   
 }
 -(void)getAddressByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
     //反地理编码

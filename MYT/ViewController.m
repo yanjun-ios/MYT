@@ -33,7 +33,6 @@
         //[SVProgressHUD showErrorWithStatus:@"登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误登陆错误！"];
         [SVProgressHUD showSuccessWithStatus:@"修改成功！"];
     }];
-   
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
