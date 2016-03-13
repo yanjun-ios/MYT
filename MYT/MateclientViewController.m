@@ -71,7 +71,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  [jsonarry count];
+    return  [jsonarry count]+1;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -84,6 +84,7 @@
         if(!cell)
         {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+            cell.contentView.backgroundColor=[UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
             //设置产品种类
             UILabel* productType=[[UILabel alloc]initWithFrame:CGRectMake(20, 12, 150, 20)];
             productType.font=[UIFont systemFontOfSize:14];
@@ -149,7 +150,7 @@
             [cell1.contentView addSubview:btnPhone];
             btnPhone.tag=10003;
             //设置放弃按钮
-            UIButton* abandon=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-50, 7, 30, 30)];
+            UIButton* abandon=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-50, 7, 40, 30)];
             [abandon setTitle:@"放弃" forState:UIControlStateNormal];
             [abandon setTitleColor:[UIColor darkGrayColor] forState:0];
             abandon.titleLabel.font=[UIFont systemFontOfSize:12];
@@ -163,11 +164,10 @@
         
         //电话按钮
         UIButton* btnPhon=(UIButton*)[cell1.contentView viewWithTag:10003];
-        btnPhon.tag=100000+[indexPath row];
+        //btnPhon.tag=100000+[indexPath row];
         [btnPhon addTarget:self action:@selector(clickPhone:) forControlEvents:UIControlEventTouchUpInside];
         //放弃按钮
         UIButton* aband=(UIButton*)[cell1.contentView viewWithTag:10004];
-        aband.tag=100000+[indexPath row];
         [aband addTarget:self action:@selector(clickaband:) forControlEvents:UIControlEventTouchUpInside];
         switch (status) {
             case 0:
@@ -180,7 +180,10 @@
                 break;
             case 2:
                 //已放弃
+                [aband setTitle:@"已放弃" forState:UIControlStateNormal];
+                [aband setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 aband.enabled=NO;
+                
                 break;
                 
             default:
@@ -216,6 +219,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     if (indexPath.row>0) {
         dtlid=[[jsonarry objectAtIndex:indexPath.row-1] objectForKey:@"dtlid"];
         [self performSegueWithIdentifier:@"detail" sender:self];
@@ -286,7 +291,8 @@
     UITextField *tf = [alert textFieldAtIndex:0];
     tf.keyboardType = UIKeyboardTypeDefault;
    // NSString* text = tf.text;
-   int index=  btn.tag-100000;
+    UITableViewCell* cell=(UITableViewCell*)[[btn superview] superview];
+    int index= [_tableview indexPathForCell:cell].row;
     dtlid=[[jsonarry objectAtIndex:index-1] objectForKey:@"dtlid"];
     [alert show];
 }

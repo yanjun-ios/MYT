@@ -12,6 +12,7 @@
 #import <AFNetworking.h>
 @interface addTableViewController ()
 {
+    UILabel* locationLable;
     UIButton* btnSelected;
     NSString* lati;
     NSString* longi;
@@ -68,6 +69,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Getlocation:) name:@"coordinate"  object:nil];
     [super viewDidLoad];
+    
     
 }
 
@@ -160,15 +162,17 @@
 
 - (IBAction)click_finish:(id)sender {
     //这儿得改text有值
-    NSLog(@"%lu",_TF_CusName.text.length);
-    if (_TF_CusName.text.length!=0&&_TF_CusTtName.text.length!=0&&_TF_MobilePhone.text.length!=0&&lati&&longi&&_TF_website.text.length!=0&&_TF_CusCode.text.length!=0&&_TF_Phone.text.length!=0) {
+    //NSLog(@"%lu",_TF_CusName.text.length);
+    if (_TF_CusName.text.length!=0&&_TF_CusTtName.text.length!=0&&locationLable.text.length!=0) {
         [addcusjson setObject:_TF_CusName.text forKey:@"cusName"];
         [addcusjson setObject:_TF_CusCode.text forKey:@"cusCode"];
         [addcusjson setObject:_TF_MobilePhone.text forKey:@"cusTtName"];
        [addcusjson setObject:_TF_MobilePhone.text forKey:@"mobilePhone"];
          [addcusjson setObject:_TF_Phone.text forKey:@"phone"];
-        [addcusjson setObject:longi forKey:@"longitude"];//经度
-        [addcusjson setObject:lati forKey:@"latitude"];//纬度
+        if (longi!=nil&&lati!=nil) {
+            [addcusjson setObject:longi forKey:@"longitude"];//经度
+            [addcusjson setObject:lati forKey:@"latitude"];//纬度
+        }
         [addcusjson setObject:[locationCodeDic objectForKey:@"provinceCode"] forKey:@"province"];
         //[locationCodeDic objectForKey:@"provinceCode"]
         [addcusjson setObject:[locationCodeDic objectForKey:@"cityCode"] forKey:@"city"];
@@ -222,14 +226,14 @@
     }
     else
     {
-        [SVProgressHUD showSuccessWithStatus:@"请填写完信息再提交"];
+        [SVProgressHUD showErrorWithStatus:@"请填写完信息再提交"];
     }
     
 }
 -(void)passLovation:(NSDictionary *)locationDic
 {
-    UILabel* lab=(UILabel*)[self.view viewWithTag:1234];
-    lab.text=[[[locationDic objectForKey:@"provinceName"] stringByAppendingString:[locationDic objectForKey:@"cityName"]] stringByAppendingString:[locationDic objectForKey:@"regionName"]];
+    locationLable=(UILabel*)[self.view viewWithTag:1234];
+    locationLable.text=[[[locationDic objectForKey:@"provinceName"] stringByAppendingString:[locationDic objectForKey:@"cityName"]] stringByAppendingString:[locationDic objectForKey:@"regionName"]];
     locationCodeDic=locationDic;
      NSLog(@"%@",locationDic);
 }

@@ -101,13 +101,19 @@
         [NetRequestManager sharedInstance].FROMDECK=0;
     }else
     {
-        addTableViewController* contro=[self.navigationController.viewControllers objectAtIndex:3];
-        self.LocationDelegate=contro;
-        [self.LocationDelegate passLovation:locationSelected];
-        [self.navigationController popToViewController:contro animated:YES];
+        addTableViewController *addVC = [[addTableViewController alloc] init];
+        addTableViewController *target = nil;
+        for (UIViewController * controller in self.navigationController.viewControllers) { //遍历
+            if ([controller isKindOfClass:[addVC class]]) { //这里判断是否为你想要跳转的页面
+                target = (addTableViewController*)controller;
+            }
+        }
+        if (target) {
+            self.LocationDelegate=target;
+            [self.LocationDelegate passLovation:locationSelected];
+            [self.navigationController popToViewController:target animated:YES]; //跳转
+        }
     }
-    
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex NS_DEPRECATED_IOS(2_0, 9_0)

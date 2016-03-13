@@ -124,13 +124,6 @@
 }
 */
 
-- (IBAction)addphone:(id)sender {
-   /* UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-   
-    XNTabBarController *tabbat=(XNTabBarController *)[storyboard instantiateViewControllerWithIdentifier:@"tabbar"];
-    tabbat.index=2;
-    [self.navigationController pushViewController:tabbat animated:YES];*/
-}
+
 
 @end
