@@ -16,6 +16,8 @@
     int totlepage;
     NSArray * jsonarr;
     NSMutableArray *date;
+    int isInSearch;
+    int searMorePageNum;
 }
 
 @end
@@ -23,6 +25,7 @@
 @implementation ProductdetalViewController
 
 - (void)viewDidLoad {
+    _topSearchBar.delegate=self;
     ButtomView* BtmV=[[ButtomView alloc]initWithFrame:CGRectMake(0, ScreenHeight-49, ScreenWidth, 50)];
     [self.view addSubview:BtmV];
     date=[[NSMutableArray alloc]init];
@@ -50,34 +53,30 @@
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:_matid forKey:@"typeid"];
     //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-    NSString* num=[NSString stringWithFormat:@"%d",zf];
+    //NSString* num=[NSString stringWithFormat:@"%d",zf];
     [parDic setValue:@10 forKey:@"pageSize"];
-    [parDic setValue:num forKey:@"pageNum"];
+    [parDic setValue:@1 forKey:@"pageNum"];
     
-  // dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    //dispatch_sync(concurrentQueue, ^{
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatDtl.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    if (_topSearchBar.text.length==0||[_topSearchBar.text isEqualToString:@" "]) {
+        [parDic setValue:@"" forKey:@"searchtext"];
+    }else
+    {
+        [parDic setValue:_topSearchBar.text forKey:@"searchtext"];
+    }
+    [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatDtl.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
             jsonarr=[responseObject objectForKey:@"list"];
-            for (NSDictionary* i in jsonarr) {
-                [date addObject:i];
-            }
+            [date removeAllObjects];
+            [date addObjectsFromArray:jsonarr];
             [_tableView reloadData];
                         //将请求到的第一层数据分类
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            
             [self qq_performSVHUDBlock:^{
                 [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
             }];
         }];
-        
-        /*download the image here*/
-        
-   // });
-
 }
+
 - (void)loadMoreData
 {
     // 1.添加假数据
@@ -85,20 +84,14 @@
         zf++;
         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
         [parDic setValue:_matid forKey:@"typeid"];
-        //NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
         NSString* num=[NSString stringWithFormat:@"%d",zf];
         [parDic setValue:@10 forKey:@"pageSize"];
         [parDic setValue:num forKey:@"pageNum"];
-        
-        // dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        //dispatch_sync(concurrentQueue, ^{
+        [parDic setValue:_topSearchBar.text forKey:@"searchtext"];
         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatDtl.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+            //totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
             jsonarr=[responseObject objectForKey:@"list"];
-            for (NSDictionary* i in jsonarr) {
-                [date addObject:i];
-            }
+            [date addObjectsFromArray:jsonarr];
             [_tableView reloadData];
             //将请求到的第一层数据分类
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -130,7 +123,9 @@
     // Dispose of any resources that can be recreated.
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{return  0;}
+{
+    return  0;
+}
 /*- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, _tableView.frame.size.width, 60)];
@@ -183,7 +178,7 @@
     UILabel* maitname=(UILabel*)[cell.contentView viewWithTag:120];
     maitname.text=[maitinfo objectForKey:@"matterName"];
     UILabel* maticount=(UILabel*)[cell.contentView viewWithTag:121];
-    maticount.text=[maitinfo objectForKey:@"invCt"];
+    maticount.text=((NSNumber*)[maitinfo objectForKey:@"invCt"]).stringValue;
     return cell;
 }
 
@@ -191,6 +186,16 @@
 #warning Incomplete implementation, return the number of rows
     return date.count;
 }
+
+#pragma mark -- searchbar Delegat Method
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self initinfo];
+    
+}
+
+
+
 /*
 #pragma mark - Navigation
 

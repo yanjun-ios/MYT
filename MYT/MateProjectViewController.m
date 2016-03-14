@@ -110,7 +110,7 @@
         [cell.contentView addSubview:save];
     }
     ((UILabel*)[cell.contentView viewWithTag:1000]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"mattername"];
-    //((UILabel*)[cell.contentView viewWithTag:1001]).text=[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ctdem"];
+    ((UILabel*)[cell.contentView viewWithTag:1001]).text=((NSNumber*)[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ctdem"]).stringValue;
     //((UILabel*)[cell.contentView viewWithTag:1001]).text=@"1000000";
     ((UILabel*)[cell.contentView viewWithTag:1002]).text=((NSNumber*)[[jsonArry objectAtIndex:indexPath.row] objectForKey:@"ivtct"]).stringValue;
     return cell;

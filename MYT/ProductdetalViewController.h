@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProductdetalViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ProductdetalViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property(nonatomic,assign)NSString* depth0;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *jibie;
 @property(nonatomic,assign)NSString* depth1;
 @property(nonatomic,assign)NSString* depth2;
 @property(nonatomic,assign)NSString* matid;
+@property (weak, nonatomic) IBOutlet UISearchBar *topSearchBar;
 @end

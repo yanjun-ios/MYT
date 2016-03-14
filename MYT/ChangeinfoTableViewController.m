@@ -73,7 +73,10 @@
     //self.navigationItem.rightBarButtonItem=barbtn;
     self.tabBarController.navigationItem.rightBarButtonItem = rightBtn;
    
-    
+    if(currentVersion>=7)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.

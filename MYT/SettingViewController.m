@@ -15,6 +15,10 @@
 @implementation SettingViewController
 
 - (void)viewDidLoad {
+    
+    [SVProgressHUD showInfoWithStatus:@"功能完善中，敬请期待！"];
+    
+    
     _tableView.delegate=self;
     _tableView.dataSource=self;
     //消除多余空白行
@@ -59,7 +63,7 @@
     UISwitch* swich;
     if(swich==nil)
     {
-        swich=[[UISwitch alloc]initWithFrame:CGRectMake(cell.frame.size.width, 0, 50, 25)];
+        swich=[[UISwitch alloc]initWithFrame:CGRectMake(cell.frame.size.width-60, 0, 50, 25)];
         swich.center=CGPointMake(swich.center.x, cell.center.y);
         [swich setOn:YES];
     }

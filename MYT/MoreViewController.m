@@ -88,9 +88,9 @@
     }else if(indexPath.section==1&&indexPath.row==0)
     {
         cell.imageView.image=[UIImage imageNamed:@"checkUpdate"];
-        UIImageView* imgV=[[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth-50, 0, 30, 20)];
+        UIImageView* imgV=[[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth-50, 0, 30, 30)];
         imgV.center=CGPointMake(imgV.center.x, cell.center.y);
-        imgV.image=[UIImage imageNamed:@"NEW"];
+        imgV.image=[UIImage imageNamed:@"new"];
         [cell.contentView addSubview:imgV];
         cell.textLabel.text=@"检查更新";
     }
