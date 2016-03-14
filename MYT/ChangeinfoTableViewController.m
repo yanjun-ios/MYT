@@ -85,29 +85,37 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+-(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+
+    return 40;
+}
+
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
+    UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
+    view.backgroundColor=[UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
     //物料或者物料规格名字
     UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 100, 20)];
     name.font=[UIFont systemFontOfSize:14];
-    name.textColor=[UIColor lightGrayColor];
+    name.textColor=[UIColor darkGrayColor];
     name.text=@"名称";
     [view addSubview:name];
     
     //是物料还是物料规格
     UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80, 20)];
-    phone.center=CGPointMake(ScreenWidth/2, 21);
+    phone.center=CGPointMake(ScreenWidth/2+50, 21);
     phone.textAlignment=NSTextAlignmentCenter;
     phone.font=[UIFont systemFontOfSize:14];
-    phone.textColor=[UIColor lightGrayColor];
+    phone.textColor=[UIColor darkGrayColor];
     phone.text=@"类型";
     [view addSubview:phone];
     
     
     UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 11, 60, 20)];
     need.font=[UIFont systemFontOfSize:14];
-    need.textColor=[UIColor lightGrayColor];
+    need.textColor=[UIColor darkGrayColor];
     need.text=@"需求量";
     [view addSubview:need];
 
