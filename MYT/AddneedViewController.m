@@ -223,97 +223,97 @@
     // 1.添加假数据
     if (zf<totlepage+1) {
         zf++;
-        [ndone removeAllObjects];
+        //[ndone removeAllObjects];
         [typea removeAllObjects];
         [wula removeAllObjects];
         NSLog(@"%@",ndone);
-        NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
-        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        [parDic setValue:findtext forKey:@"search"];
+       
 
         if (iffindtext) {
-                   }
-        [parDic setValue:@"null" forKey:@"parentid"];
-        [parDic setValue:pagenum forKey:@"pageNum"];
-        [parDic setValue:@"5" forKey:@"pageSize"];//依次请求
-        dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        
-        dispatch_sync(concurrentQueue, ^{
-            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-                
-                
-                init=[responseObject objectForKey:@"list"];
-                for (NSDictionary *dic in init) {
-                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
-                        [typea addObject:dic];
+            NSString *pagenum=[NSString stringWithFormat:@"%d",zf];
+            NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+            //[parDic setValue:@"null" forKey:@"parentid"];
+            [parDic setValue:pagenum forKey:@"pageNum"];
+            [parDic setValue:findtext forKey:@"name"];
+            [parDic setValue:@"10" forKey:@"pageSize"];//依次请求
+            dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            
+            dispatch_sync(concurrentQueue, ^{
+                [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                    totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
+                    init=[responseObject objectForKey:@"list"];
+                    for (NSDictionary *dic in init) {
+                        if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                            [typea addObject:dic];
+                        }
+                        else
+                        {
+                            [wula addObject:dic];
+                        }
                     }
-                    else
-                    {
-                        [wula addObject:dic];
+                    for (int i=0; i<wula.count; i++) {
+                        NSDictionary * wulinfo=[wula objectAtIndex:i];
+                        NSString* nodeid=[wulinfo objectForKey:@"id"];
+                        int counts=((NSNumber*)[wulinfo objectForKey:@"invCt"]).intValue;
+                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"matterName"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
+                        [ndone addObject:node];
+                        
                     }
-                }
-                for (int i=0; i<typea.count; i++) {
-                    NSDictionary * typeinfo=[typea objectAtIndex:i];
-                    NSString* nodeid=[typeinfo objectForKey:@"typeid"];
-                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
-                   
-                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
-                    [ndone addObject:node];
-                }
-                for (int i=0; i<wula.count; i++) {
-                    NSDictionary * wulinfo=[wula objectAtIndex:i];
-                    NSString* nodeid=[wulinfo objectForKey:@"matid"];
-                    int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-                   
-                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
-                    [ndone addObject:node];
+                    for (int i=0; i<typea.count; i++) {
+                        NSDictionary * typeinfo=[typea objectAtIndex:i];
+                        NSString* nodeid=[typeinfo objectForKey:@"id"];
+                        int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                        
+                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
+                        [ndone addObject:node];
+                    }
+                    //先物料后物料类别
+                    NSLog(@"%@",ndone);
+                    /*for(int i=0;i<ndone.count;i++)
+                     {
+                     NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
+                     [nodea addObject:[_nodearr objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
+                     
+                     [nodear addObject:nodea];
+                     }
+                     
+                     [self initwithnodear];*/
+                    [_tableView reloadData];
+                    //将请求到的第一层数据分类
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
                     
-                }
-                NSLog(@"%@",ndone);
-                for(int i=0;i<ndone.count;i++)
-                {
-                    NSMutableArray *nodea=[[NSMutableArray alloc]init];//创建每行
-                    [nodea addObject:[ndone objectAtIndex:i]];//将第一层的node分别加入不同的可变数组
                     
-                    [nodear addObject:nodea];
-                }
-                [self initwithnodear];
-                [_tableView reloadData];
-                //将请求到的第一层数据分类
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                
-                
-                [self qq_performSVHUDBlock:^{
-                    [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                    [self qq_performSVHUDBlock:^{
+                        [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                    }];
                 }];
-            }];
+                
+                /*download the image here*/
+                
+            });
+           
             
-            /*download the image here*/
-            
-        });
-        zf++;
+        }
+        else
+        {
+            [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+        }
         
-    }
-    else
-    {
-        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
-    }
-    
-    
-    
-    // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
-    
-    // 刷新表格
-    
-    
-    // 拿到当前的上拉刷新控件，结束刷新状态
-    [_tableView.mj_footer endRefreshing];
+        
+        
+        // 2.模拟2秒后刷新表格UI（真实开发中，可以移除这段gcd代码）
+        
+        // 刷新表格
+        
+        
+        // 拿到当前的上拉刷新控件，结束刷新状态
+        [_tableView.mj_footer endRefreshing];
+        }
+       
     
 }
 
--(void)initwithnodear
+/*-(void)initwithnodear
 {
     [_tempedata removeAllObjects];
     for (int i=0; i<nodear.count; i++) {
@@ -322,13 +322,13 @@
         }
     }//暂时测试2级
     // [_tableView reloadData];
-}
+}*/
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _tempedata.count;
+    return ndone.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -340,26 +340,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Node1 *node = [_tempedata objectAtIndex:indexPath.row];
+    Node1 *node = [ndone objectAtIndex:indexPath.row];
     NSLog(@"%@",node.nodeId);
     static NSString *NODE_CELL_ID ;
-    if (node.depth==0||node.depth==1) {
+   // if (node.depth==0||node.depth==1) {
         NODE_CELL_ID = @"node_cell_id0";
         
         
         
-    }
+   // }
     /*else if(node.depth==1)
      {
      NODE_CELL_ID = @"node_cell_id1";
      }*/
-    else if(node.depth==2)
-    {
-        NODE_CELL_ID = @"node_cell_id2";
-    }
+   // else if(node.depth==2)
+   // {
+      //  NODE_CELL_ID = @"node_cell_id2";
+    //}
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
     if (!cell) {
-        if (node.depth==0||node.depth==1) {
+        //if (node.depth==0||node.depth==1) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
             //数量
             UILabel* count;
@@ -384,13 +384,13 @@
             //if(node.child)
             // {
            
-            
-            
+    }
+    
             
             //image.image=[UIImage imageNamed:@"left"];
-            [cell.contentView addSubview:image];
-        }
-        else if (node.depth==2)
+            //[cell.contentView addSubview:image];
+        //}
+       /* else if (node.depth==2)
         {
               cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
             UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 8, 80, 30)];
@@ -413,10 +413,10 @@
               text.borderStyle = UITextBorderStyleRoundedRect;
         }
         
-    }
+    }*/
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
     label2.font=[UIFont systemFontOfSize:14];
-    label2.text=[NSString stringWithFormat:@"%@",node.nodeId];
+    label2.text=[NSString stringWithFormat:@"%d",node.needcount];
     
     //输入框
     UITextField* textfield=(UITextField*)[cell.contentView viewWithTag:1000];
@@ -426,8 +426,8 @@
     NSLog(@"%ld",(long)textfield.tag);
 
     
-    UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-    if (node.depth==0) {
+    //UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+    /*if (node.depth==0) {
         NSLog(@"%@",node.name);
         image.frame=CGRectMake(2, 16,8, 8);
     }
@@ -438,14 +438,14 @@
         image.frame=CGRectMake(25, 16,8, 8);
         //image.frame=CGRectMake(2, 16,8, 8);
     }
-    image.image=[UIImage imageNamed:@"公司库存向右"];
+    image.image=[UIImage imageNamed:@"公司库存向右"];*/
     
     
     
     //
     // cell有缩进的方法
-    cell.indentationLevel = node.depth; // 缩进级别
-    cell.indentationWidth = 20.f; // 每个缩进级别的距离
+  //  cell.indentationLevel = node.depth; // 缩进级别
+    //cell.indentationWidth = 20.f; // 每个缩进级别的距离
     
     
     //    NSMutableString *name = [NSMutableString string];
@@ -462,7 +462,7 @@
 
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+/*- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     Node1 *parentNode = [_tempedata objectAtIndex:indexPath.row];
     NSLog(@"%hd",parentNode.child);
@@ -698,7 +698,7 @@
         UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
         image.image=[UIImage imageNamed:@"公司库存向右"];
     }
-}
+}*/
 /**
  *  删除该父节点下的所有子节点（包括孙子节点）
  *
@@ -706,7 +706,7 @@
  *
  *  @return 该父节点下一个相邻的统一级别的节点的位置
  */
--(NSUInteger)removeAllNodesAtParentNode : (Node1 *)parentNode{
+/*-(NSUInteger)removeAllNodesAtParentNode : (Node1 *)parentNode{
     
     NSUInteger startPosition = [_tempedata indexOfObject:parentNode];
     NSLog(@"%d",parentNode.depth);
@@ -729,7 +729,7 @@
         [_tempedata removeObjectsInRange:NSMakeRange(startPosition+1, endPosition-startPosition-1)];
     }
     return endPosition;
-}
+}*/
 
 //-(void)Getfirststock
 //{}
@@ -786,16 +786,16 @@
     return indexPath;
 }
 - (IBAction)click_ok:(id)sender {
-    NSLog(@"%@",_tempedata);
-    for (int i=0; i<_tempedata.count; i++) {
-        Node1 *node = [_tempedata objectAtIndex:i];
+    NSLog(@"%@",ndone);
+    for (int i=0; i<ndone.count; i++) {
+        Node1 *node = [ndone objectAtIndex:i];
         NSLog(@"%@",node.nodeId);
         NSIndexPath *pathOne=[NSIndexPath indexPathForRow:i inSection:0];//获取cell的位置
         UITableViewCell *cell=(UITableViewCell *)[_tableView cellForRowAtIndexPath:pathOne];//获取具体位置的cell
         UITextField *textone=[cell.contentView viewWithTag:1000];
         NSString *need = [textone.text stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSLog(@"%@",need);
-        Node1* node2=(Node1*)[_tempedata objectAtIndex:i];
+        Node1* node2=(Node1*)[ndone objectAtIndex:i];
         //NSString* nodeid=[NSString stringWithFormat:@"%@",node.nodeId];
         if (![need isEqualToString:@""]&&need) {
             //  [alert show];
@@ -817,7 +817,7 @@
             
         }
     }
-    for (int i=0; i<_tempedata.count; i++) {
+    for (int i=0; i<ndone.count; i++) {
         
         NSIndexPath *pathOne=[NSIndexPath indexPathForRow:i inSection:0];//获取cell的位置
         UITableViewCell *cell=(UITableViewCell *)[_tableView cellForRowAtIndexPath:pathOne];//获取具体位置的cell
@@ -864,7 +864,7 @@
    
 }
 
-- (IBAction)click_find:(id)sender {
+/*- (IBAction)click_find:(id)sender {
     NSString *findtext = [_findtext.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([findtext isEqualToString:@""]) {
         [self qq_performSVHUDBlock:^{
@@ -894,8 +894,8 @@
         }
     }
 
-}
-- (IBAction)find:(id)sender {
+}*/
+/*- (IBAction)find:(id)sender {
     if (!findclick) {
         _findview.hidden=NO;
         findclick=YES;
@@ -906,5 +906,5 @@
         _findview.hidden=YES;
     }
 
-}
+}*/
 @end

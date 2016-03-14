@@ -31,6 +31,7 @@
     BOOL iffindtext;
     __block NSMutableArray *deletarr;
     NSString *typeid;
+   __block NSArray* findarr;
 }
 @end
 
@@ -59,6 +60,8 @@
     iffindtext=NO;
     _tableView.delegate=self;
     _tableView.dataSource=self;
+    _tebleSearch.delegate=self;
+    _tebleSearch.dataSource=self;
     _tempedata=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc] init];
     typearr=[[NSMutableArray alloc]init];
@@ -86,6 +89,7 @@
     [self.tableView setTableFooterView:view];
     
     [self initwithnodear];
+    _tebleSearch.hidden=YES;
     NSLog(@"%@",_tempedata);
    // UISwipeGestureRecognizer* recognizer;
     // handleSwipeFrom 是偵測到手势，所要呼叫的方法
@@ -103,8 +107,6 @@
 //////第一级搜索
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-   
-    /*zf=1;
     NSString *find=[searchText stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *findtext = [find stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([findtext  isEqualToString:@""]) {
@@ -112,6 +114,42 @@
     }
     else
         iffindtext=YES;
+   
+    if (iffindtext)
+    { NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+        [parDic setValue:findtext forKey:@"searchtext"];
+      
+        dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_sync(concurrentQueue, ^{
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                
+                findarr=[responseObject objectForKey:@"list"];
+                _tebleSearch.frame=CGRectMake(0, _stocksearch.frame.origin.y+_stocksearch.frame.size.height, _stocksearch.frame.size.width, 20*findarr.count);
+                _tebleSearch.hidden=NO;
+                [_tebleSearch reloadData];
+                
+                
+                
+                //将请求到的第一层数据分类
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"请求数据失败"];
+                }];
+            }];
+            
+        });
+                      }
+    else
+        _tebleSearch.hidden=YES;
+    
+}
+                    
+    
+    /*zf=1;
+    
     [nodear removeAllObjects];
     [ndone removeAllObjects];
     [typea removeAllObjects];
@@ -188,7 +226,7 @@
         /*download the image here*/
         
     //});
-}
+
 
 //////加载更多////////废弃 不分页
 /*- (void)loadMoreData
@@ -287,7 +325,11 @@
 }*/
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSLog(@"%d",_tempedata.count);
-    return _tempedata.count;
+    if (tableView.tag==200) {
+         return _tempedata.count;
+    }
+   else
+       return findarr.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -296,149 +338,182 @@
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView.tag==201) {
+        return 20;
+    }
+    else
+        return 40;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Node *node = [_tempedata objectAtIndex:indexPath.row];
-    
-    static NSString *NODE_CELL_ID ;
-    //if (node.depth==0||node.depth==1) {
-    NODE_CELL_ID = @"node_cell_id0";
-    
-    
-    
-    // }
-    /*else if(node.depth==1)
-     {
-     NODE_CELL_ID = @"node_cell_id1";
-     }*/
-    // else if(node.depth==2)
-    // {
-    //    NODE_CELL_ID = @"node_cell_id2";
-    // }
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
-    if (!cell) {
-        //    if (node.depth==0||node.depth==1) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
-        //数量
-        UILabel* count;
-        count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+    if (tableView.tag==200) {
+        Node *node = [_tempedata objectAtIndex:indexPath.row];
         
-        count.tag=11;
-        count.textColor=[UIColor redColor];
-        count.font=[UIFont systemFontOfSize:14];
-        count.textAlignment=NSTextAlignmentCenter;
-        [cell.contentView addSubview:count];
-        
-        //匹配客户
-        UILabel* men;
-        men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-85, 15, 50, 15)];
-        men.tag=12;
-        men.textColor=[UIColor greenColor];
-        men.font=[UIFont systemFontOfSize:14];
-        men.textAlignment=NSTextAlignmentCenter;
-        [cell.contentView addSubview:men];
-        
-        //跳转按钮
-        UIButton * skip=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-30, 5, 35, 35)];
-        skip.tag=14;
-        //[[Utility sharedInstance] setLayerView:skip borderW:1 borderColor:[UIColor redColor] radius:4];
-        [cell.contentView addSubview:skip];
-        
-        UIImageView *image=[[UIImageView alloc] init];
-        image.tag=13;
-        //if(node.child)
-        // {
+        static NSString *NODE_CELL_ID ;
+        //if (node.depth==0||node.depth==1) {
+        NODE_CELL_ID = @"node_cell_id0";
         
         
         
-        
-        
-        //image.image=[UIImage imageNamed:@"left"];
-        [cell.contentView addSubview:image];
         // }
-        /* else if (node.depth==2)
+        /*else if(node.depth==1)
          {
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
-         UILabel* count;
-         count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
-         
-         count.tag=11;
-         count.textColor=[UIColor redColor];
-         count.font=[UIFont systemFontOfSize:14];
-         count.textAlignment=NSTextAlignmentCenter;
-         [cell.contentView addSubview:count];
-         
-         //匹配客户
-         UILabel* men;
-         men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
-         men.tag=12;
-         men.textColor=[UIColor greenColor];
-         men.font=[UIFont systemFontOfSize:14];
-         men.textAlignment=NSTextAlignmentCenter;
-         [cell.contentView addSubview:men];
-         
-         //  UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
-         //  text.borderStyle = UITextBorderStyleRoundedRect;
-         //  text.text=@"1";
-         // [cell.contentView addSubview:text];
-         //设置边框样式，只有设置了才会显示边框样式
-         
-         //  text.borderStyle = UITextBorderStyleRoundedRect;
+         NODE_CELL_ID = @"node_cell_id1";
          }*/
+        // else if(node.depth==2)
+        // {
+        //    NODE_CELL_ID = @"node_cell_id2";
+        // }
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
+        if (!cell) {
+            //    if (node.depth==0||node.depth==1) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+            //数量
+            UILabel* count;
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+            
+            count.tag=11;
+            count.textColor=[UIColor redColor];
+            count.font=[UIFont systemFontOfSize:14];
+            count.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:count];
+            
+            //匹配客户
+            UILabel* men;
+            men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-85, 15, 50, 15)];
+            men.tag=12;
+            men.textColor=[UIColor greenColor];
+            men.font=[UIFont systemFontOfSize:14];
+            men.textAlignment=NSTextAlignmentCenter;
+            [cell.contentView addSubview:men];
+            
+            //跳转按钮
+            UIButton * skip=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-30, 5, 35, 35)];
+            skip.tag=14;
+            //[[Utility sharedInstance] setLayerView:skip borderW:1 borderColor:[UIColor redColor] radius:4];
+            [cell.contentView addSubview:skip];
+            
+            UIImageView *image=[[UIImageView alloc] init];
+            image.tag=13;
+            //if(node.child)
+            // {
+            
+            
+            
+            
+            
+            //image.image=[UIImage imageNamed:@"left"];
+            [cell.contentView addSubview:image];
+            // }
+            /* else if (node.depth==2)
+             {
+             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
+             UILabel* count;
+             count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+             
+             count.tag=11;
+             count.textColor=[UIColor redColor];
+             count.font=[UIFont systemFontOfSize:14];
+             count.textAlignment=NSTextAlignmentCenter;
+             [cell.contentView addSubview:count];
+             
+             //匹配客户
+             UILabel* men;
+             men=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-80, 15, 80, 15)];
+             men.tag=12;
+             men.textColor=[UIColor greenColor];
+             men.font=[UIFont systemFontOfSize:14];
+             men.textAlignment=NSTextAlignmentCenter;
+             [cell.contentView addSubview:men];
+             
+             //  UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(20, 0, 130, 30)];
+             //  text.borderStyle = UITextBorderStyleRoundedRect;
+             //  text.text=@"1";
+             // [cell.contentView addSubview:text];
+             //设置边框样式，只有设置了才会显示边框样式
+             
+             //  text.borderStyle = UITextBorderStyleRoundedRect;
+             }*/
+            
+        }
+        UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
+        label2.font=[UIFont systemFontOfSize:14];
+        label2.text=[NSString stringWithFormat:@"%d",node.counts];
         
-    }
-    UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
-    label2.font=[UIFont systemFontOfSize:14];
-    label2.text=[NSString stringWithFormat:@"%d",node.counts];
-    
-    UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
-    label2.font=[UIFont systemFontOfSize:14];
-    label3.text=[NSString stringWithFormat:@"%d",node.matecounts];
-    
-    UIButton* skip=(UIButton*)[cell.contentView viewWithTag:14];
-    [skip addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
-    [skip setImage:[UIImage imageNamed:@"toright"]  forState:UIControlStateNormal];
-    skip.tag=indexPath.row+1000;
-    UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-    if (node.depth<=3) {
-        NSLog(@"%@",node.name);
-        image.frame=CGRectMake(3+node.depth*21, 16,8, 8);
+        UILabel* label3=(UILabel*)[cell.contentView viewWithTag:12];
+        label2.font=[UIFont systemFontOfSize:14];
+        label3.text=[NSString stringWithFormat:@"%d",node.matecounts];
+        
+        UIButton* skip=(UIButton*)[cell.contentView viewWithTag:14];
+        [skip addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
+        [skip setImage:[UIImage imageNamed:@"toright"]  forState:UIControlStateNormal];
+        skip.tag=indexPath.row+1000;
+        UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+        if (node.depth<=3) {
+            NSLog(@"%@",node.name);
+            image.frame=CGRectMake(3+node.depth*21, 16,8, 8);
+        }
+        else
+        {
+            NSLog(@"%@",node.name);
+            image.frame=CGRectMake(66, 16,8, 8);
+            //image.frame=CGRectMake(2, 16,8, 8);
+        }
+        image.image=[UIImage imageNamed:@"公司库存向右"];
+        
+        
+        
+        //
+        // cell有缩进的方法
+        if(node.depth<=3)
+        {
+            cell.indentationLevel = node.depth; // 缩进级别
+            cell.indentationWidth = 20.f; // 每个缩进级别的距离
+        }
+        else
+        {
+            cell.indentationLevel = 3; // 缩进级别
+            cell.indentationWidth = 20.f;
+        }
+        
+        
+        //    NSMutableString *name = [NSMutableString string];
+        //    for (int i=0; i<node.depth; i++) {
+        //        [name appendString:@"     "];
+        //    }
+        
+        //    [name appendString:node.name];
+        cell.textLabel.font=[UIFont systemFontOfSize:14];
+        cell.textLabel.text = node.name;
+        
+        return cell;
+
     }
     else
     {
-        NSLog(@"%@",node.name);
-        image.frame=CGRectMake(66, 16,8, 8);
-        //image.frame=CGRectMake(2, 16,8, 8);
+        static NSString *NODE_CELL_ID ;
+        //if (node.depth==0||node.depth==1) {
+        NODE_CELL_ID = @"node_cell_id0";
+        NSDictionary* dic=[findarr objectAtIndex:indexPath.row];
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
+        if (!cell) {
+            UILabel* typename;
+            typename=[[UILabel alloc]initWithFrame:CGRectMake(20, 0, 60, 20)];
+            
+            typename.tag=21;
+            typename.textColor=[UIColor blackColor];
+            typename.font=[UIFont systemFontOfSize:14];
+            typename.textAlignment=NSTextAlignmentLeft;
+            [cell.contentView addSubview:typename];
+        }
+        UILabel* label2=(UILabel*)[cell.contentView viewWithTag:21];
+        label2.font=[UIFont systemFontOfSize:14];
+        label2.text=[dic objectForKey:@"typeName"];
+        return cell;
     }
-    image.image=[UIImage imageNamed:@"公司库存向右"];
-    
-    
-    
-    //
-    // cell有缩进的方法
-    if(node.depth<=3)
-    {
-        cell.indentationLevel = node.depth; // 缩进级别
-        cell.indentationWidth = 20.f; // 每个缩进级别的距离
-    }
-    else
-    {
-        cell.indentationLevel = 3; // 缩进级别
-        cell.indentationWidth = 20.f;
-    }
-    
-    
-    //    NSMutableString *name = [NSMutableString string];
-    //    for (int i=0; i<node.depth; i++) {
-    //        [name appendString:@"     "];
-    //    }
-    
-    //    [name appendString:node.name];
-    cell.textLabel.font=[UIFont systemFontOfSize:14];
-    cell.textLabel.text = node.name;
-    
-    return cell;
+        
 }
 //点击skip按钮跳转
 -(void)skip:(id)sender
@@ -457,403 +532,411 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    init=[[NSArray alloc]init];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    Node *parentNode = [_tempedata objectAtIndex:indexPath.row];
-    
-    
-    NSLog(@"%hd",parentNode.child);
-    NSLog(@"%hd",parentNode.expand);
-    NSLog(@"%@",nodear);
-    /*if(![parentNode.matid isEqual:@"-1"])
-    {
-        for(Node *nd in _tempedata)
+    if (tableView.tag==200) {
+        init=[[NSArray alloc]init];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        Node *parentNode = [_tempedata objectAtIndex:indexPath.row];
+        
+        
+        NSLog(@"%hd",parentNode.child);
+        NSLog(@"%hd",parentNode.expand);
+        NSLog(@"%@",nodear);
+        /*if(![parentNode.matid isEqual:@"-1"])
+         {
+         for(Node *nd in _tempedata)
+         {
+         if (nd.nodeId==parentNode.parentId) {
+         parent=nd.name;
+         for (Node *ndd in _tempedata) {
+         if (ndd.nodeId==nd.parentId) {
+         pparent=ndd.name;
+         child=parentNode.name;
+         mat=parentNode.matid;
+         }
+         }
+         }
+         }
+         [self performSegueWithIdentifier:@"product" sender:self];
+         }*/
+        __block  NSUInteger startPosition = indexPath.row+1;
+        __block  NSUInteger endPosition = startPosition;
+        
+        if(parentNode.depth==0)
         {
-            if (nd.nodeId==parentNode.parentId) {
-                parent=nd.name;
-                for (Node *ndd in _tempedata) {
-                    if (ndd.nodeId==nd.parentId) {
-                        pparent=ndd.name;
-                        child=parentNode.name;
-                        mat=parentNode.matid;
+            NSMutableArray * arr=[[NSMutableArray alloc]init];
+            __block int j;
+            for (int i=0;i<_nodearr.count;i++) {
+                if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
+                    arr=(NSMutableArray*)[nodear objectAtIndex:i];
+                    j=i;
+                }
+            }
+            
+            NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+            [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+            NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+            NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
+            [parDic setValue:nodeid forKey:@"parentid"];
+            // [parDic setValue:@"1" forKey:@"pageNum"];
+            //[parDic setValue:@"10000" forKey:@"pageSize"];
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTypeIvtTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                NSLog(@"%@",responseObject);
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    // if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                    [typearr addObject:dic];
+                    //}
+                    //else
+                    //{
+                    //    [wularr addObject:dic];
+                    //}
+                }
+                for (int i=0; i<typearr.count; i++) {
+                    NSDictionary * typeinfo=[typearr objectAtIndex:i];
+                    NSString* nodeid=[typeinfo objectForKey:@"id"];
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
+                    int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
+                    Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    
+                    if (parentNode.expand) {
+                        NSLog(@"%@",[nodear objectAtIndex:j]);
+                        [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
+                        endPosition++;
+                        
+                        
+                    }
+                    
+                }
+                
+                /* for (int i=0; i<wularr.count; i++) {
+                 NSDictionary * wulinfo=[wularr objectAtIndex:i];
+                 NSString* nodeid=[wulinfo objectForKey:@"matid"];
+                 int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+                 int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+                 Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
+                 if(parentNode.expand)
+                 {
+                 [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];
+                 endPosition++;
+                 }
+                 }*/
+                if (!parentNode.expand) {
+                    NSLog(@"%@",(NSMutableArray*)[nodear objectAtIndex:j]);
+                    NSLog(@"%lu",(unsigned long)((NSMutableArray*)[nodear objectAtIndex:j]).count);
+                    int numj=((NSMutableArray*)[nodear objectAtIndex:j]).count;
+                    for (int i=1; i<numj; i++) {
+                        Node * nod=[(NSMutableArray*)[nodear objectAtIndex:j] objectAtIndex:1];
+                        
+                        [(NSMutableArray*)[nodear objectAtIndex:j] removeObject:nod];//移除
+                        NSLog(@"%@",(NSMutableArray*)[nodear objectAtIndex:j]);
+                    }//第一级全删
+                }
+                
+                if (!parentNode.expand) {
+                    endPosition = [self removeAllNodesAtParentNode:parentNode];
+                }
+                
+                NSLog(@"%@",nodear);
+                [typearr removeAllObjects];
+                [wularr removeAllObjects];
+                [self initwithnodear];
+                
+                NSMutableArray *indexPathArray = [NSMutableArray array];
+                //修正indexpath
+                for (NSUInteger i=startPosition; i<endPosition; i++) {
+                    NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [indexPathArray addObject:tempIndexPath];
+                }
+                if (parentNode.expand) {
+                    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+                }else{
+                    [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+                }
+                
+                parentNode.expand=!parentNode.expand;
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                
+                
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"请求错误"];
+                }];
+            }];
+            
+            //  }
+            // else
+            // {
+            
+            // }
+            
+        }
+        else
+        {
+            NSMutableArray * arr=[[NSMutableArray alloc]init];
+            
+            
+            __block int j;
+            __block int k;
+            for (int i=0;i<nodear.count;i++) {
+                
+                for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
+                    arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
+                    NSLog(@"%@he%@",((Node*)[arr objectAtIndex:z]).nodeId,parentNode.nodeId);
+                    if ([((Node*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
+                        j=z;//获得第2层的插入位置
+                        k=i;//获取在nodear中相对于哪一个数组
                     }
                 }
-            }
-        }
-        [self performSegueWithIdentifier:@"product" sender:self];
-    }*/
-    __block  NSUInteger startPosition = indexPath.row+1;
-    __block  NSUInteger endPosition = startPosition;
-    
-    if(parentNode.depth==0)
-    {
-        NSMutableArray * arr=[[NSMutableArray alloc]init];
-        __block int j;
-        for (int i=0;i<_nodearr.count;i++) {
-            if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
-                arr=(NSMutableArray*)[nodear objectAtIndex:i];
-                j=i;
-            }
-        }
-        
-        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
-        [parDic setValue:nodeid forKey:@"parentid"];
-       // [parDic setValue:@"1" forKey:@"pageNum"];
-        //[parDic setValue:@"10000" forKey:@"pageSize"];
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTypeIvtTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"%@",responseObject);
-            init=[responseObject objectForKey:@"list"];
-            for (NSDictionary *dic in init) {
-               // if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
-                    [typearr addObject:dic];
+                // if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
+                //   arr=(NSMutableArray*)[nodear objectAtIndex:i];
+                // j=i;
                 //}
-                //else
-                //{
-                //    [wularr addObject:dic];
-                //}
-            }
-            for (int i=0; i<typearr.count; i++) {
-                NSDictionary * typeinfo=[typearr objectAtIndex:i];
-                NSString* nodeid=[typeinfo objectForKey:@"id"];
-                int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
-                int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
-                Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
-                
-                if (parentNode.expand) {
-                    NSLog(@"%@",[nodear objectAtIndex:j]);
-                    [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];//增加
-                    endPosition++;
-                    
-                    
-                }
-                
-            }
-            
-            /* for (int i=0; i<wularr.count; i++) {
-             NSDictionary * wulinfo=[wularr objectAtIndex:i];
-             NSString* nodeid=[wulinfo objectForKey:@"matid"];
-             int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-             int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
-             Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:1 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
-             if(parentNode.expand)
-             {
-             [(NSMutableArray*)[nodear objectAtIndex:j] addObject:node1];
-             endPosition++;
-             }
-             }*/
-            if (!parentNode.expand) {
-                NSLog(@"%@",(NSMutableArray*)[nodear objectAtIndex:j]);
-                NSLog(@"%lu",(unsigned long)((NSMutableArray*)[nodear objectAtIndex:j]).count);
-                int numj=((NSMutableArray*)[nodear objectAtIndex:j]).count;
-                for (int i=1; i<numj; i++) {
-                    Node * nod=[(NSMutableArray*)[nodear objectAtIndex:j] objectAtIndex:1];
-                    
-                    [(NSMutableArray*)[nodear objectAtIndex:j] removeObject:nod];//移除
-                    NSLog(@"%@",(NSMutableArray*)[nodear objectAtIndex:j]);
-                }//第一级全删
-            }
-            
-            if (!parentNode.expand) {
-                endPosition = [self removeAllNodesAtParentNode:parentNode];
             }
             
             NSLog(@"%@",nodear);
-            [typearr removeAllObjects];
-            [wularr removeAllObjects];
-            [self initwithnodear];
-            
-            NSMutableArray *indexPathArray = [NSMutableArray array];
-            //修正indexpath
-            for (NSUInteger i=startPosition; i<endPosition; i++) {
-                NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                [indexPathArray addObject:tempIndexPath];
-            }
-            if (parentNode.expand) {
-                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-            }else{
-                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-            }
-            
-            parentNode.expand=!parentNode.expand;
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            
-            [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"请求错误"];
-            }];
-        }];
-        
-        //  }
-        // else
-        // {
-        
-        // }
-        
-    }
-    else
-    {
-        NSMutableArray * arr=[[NSMutableArray alloc]init];
-        
-        
-        __block int j;
-        __block int k;
-        for (int i=0;i<nodear.count;i++) {
-            
-            for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
-                arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
-                NSLog(@"%@he%@",((Node*)[arr objectAtIndex:z]).nodeId,parentNode.nodeId);
-                if ([((Node*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
-                    j=z;//获得第2层的插入位置
-                    k=i;//获取在nodear中相对于哪一个数组
-                }
-            }
-            // if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
-            //   arr=(NSMutableArray*)[nodear objectAtIndex:i];
-            // j=i;
-            //}
-        }
-        
-        NSLog(@"%@",nodear);
-        NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-        [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-        NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
-        [parDic setValue:nodeid forKey:@"parentid"];
-       // [parDic setValue:@"1" forKey:@"pageNum"];
-        //[parDic setValue:@"10000" forKey:@"pageSize"];
-        [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTypeIvtTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"%@",responseObject);
-            init=[responseObject objectForKey:@"list"];
-            for (NSDictionary *dic in init) {
-              //  if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+            NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+            [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+            NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+            NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
+            [parDic setValue:nodeid forKey:@"parentid"];
+            // [parDic setValue:@"1" forKey:@"pageNum"];
+            //[parDic setValue:@"10000" forKey:@"pageSize"];
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTypeIvtTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                NSLog(@"%@",responseObject);
+                init=[responseObject objectForKey:@"list"];
+                for (NSDictionary *dic in init) {
+                    //  if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
                     [typearr addObject:dic];
-               // }
-               // else
-                //{
-                //    [wularr addObject:dic];
-                //}
-            }
-            NSLog(@"%hd",parentNode.expand);
-            
-            NSLog(@"%@",nodear);
-            //这儿应该是相对数组位置 这个要改
-            int deletpath;
-            for (int i=0; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-                Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
-                if ([nod.nodeId isEqualToString:parentNode.nodeId]) {
-                    deletpath=i;
-                    break;
+                    // }
+                    // else
+                    //{
+                    //    [wularr addObject:dic];
+                    //}
                 }
-            }
-            for (int i=deletpath+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-                Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
-                if (nod.depth <=parentNode.depth) {
-                    break;
-                }
-                else
-                    [deletarr addObject:nod];
-                
-                NSLog(@"%@",deletarr);
-                
-            }
-            if (!parentNode.expand) {
-                for (int i=0;i<deletarr.count; i++) {
-                    [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:(Node*)[deletarr objectAtIndex:i]];
-                }
-            }
-            for (int i=0; i<typearr.count; i++) {
-                
-                NSDictionary * typeinfo=[typearr objectAtIndex:i];
-                NSString* nodeid=[typeinfo objectForKey:@"id"];
-                int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
-                int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
-                Node *  node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:parentNode.depth+1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
-                
                 NSLog(@"%hd",parentNode.expand);
-                if (parentNode.expand) {
-                    //  NSLog(@"%@",[nodear objectAtIndex:j]);
-                    [(NSMutableArray*)[nodear objectAtIndex:k] insertObject:node1 atIndex:j+i+1];//增加
-                    endPosition++;
+                
+                NSLog(@"%@",nodear);
+                //这儿应该是相对数组位置 这个要改
+                int deletpath;
+                for (int i=0; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
+                    Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
+                    if ([nod.nodeId isEqualToString:parentNode.nodeId]) {
+                        deletpath=i;
+                        break;
+                    }
+                }
+                for (int i=deletpath+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
+                    Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
+                    if (nod.depth <=parentNode.depth) {
+                        break;
+                    }
+                    else
+                        [deletarr addObject:nod];
                     
+                    NSLog(@"%@",deletarr);
                     
                 }
-                /*  else
-                 {
-                 NSLog(@"%@",nodear);
-                 for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-                 Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:(indexPath.row+1)];
-                 if (nod.depth ==parentNode.depth) {
-                 break;
-                 }
-                 if ([nod.nodeId isEqualToString:nodeid]) {
-                 [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
-                 }
-                 NSLog(@"%@",nodear);
-                 
-                 }//
-                 
-                 
-                 }*/
+                if (!parentNode.expand) {
+                    for (int i=0;i<deletarr.count; i++) {
+                        [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:(Node*)[deletarr objectAtIndex:i]];
+                    }
+                }
+                for (int i=0; i<typearr.count; i++) {
+                    
+                    NSDictionary * typeinfo=[typearr objectAtIndex:i];
+                    NSString* nodeid=[typeinfo objectForKey:@"id"];
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
+                    int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
+                    Node *  node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:parentNode.depth+1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    
+                    NSLog(@"%hd",parentNode.expand);
+                    if (parentNode.expand) {
+                        //  NSLog(@"%@",[nodear objectAtIndex:j]);
+                        [(NSMutableArray*)[nodear objectAtIndex:k] insertObject:node1 atIndex:j+i+1];//增加
+                        endPosition++;
+                        
+                        
+                    }
+                    /*  else
+                     {
+                     NSLog(@"%@",nodear);
+                     for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
+                     Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:(indexPath.row+1)];
+                     if (nod.depth ==parentNode.depth) {
+                     break;
+                     }
+                     if ([nod.nodeId isEqualToString:nodeid]) {
+                     [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
+                     }
+                     NSLog(@"%@",nodear);
+                     
+                     }//
+                     
+                     
+                     }*/
+                    
+                    
+                }//增加
+                if (!parentNode.expand) {
+                    endPosition = [self removeAllNodesAtParentNode:parentNode];
+                }
+                
+                NSLog(@"%@",nodear);
+                
+                NSLog(@"%@",nodear);
+                [typearr removeAllObjects];
+                [wularr removeAllObjects];
+                [deletarr removeAllObjects];
+                [self initwithnodear];
+                
+                NSMutableArray *indexPathArray = [NSMutableArray array];
+                //修正indexpath
+                for (NSUInteger i=startPosition; i<endPosition; i++) {
+                    NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                    [indexPathArray addObject:tempIndexPath];
+                }
+                if (parentNode.expand) {
+                    [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+                }else{
+                    [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+                }
+                
+                parentNode.expand=!parentNode.expand;
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 
                 
-            }//增加
-            if (!parentNode.expand) {
-                endPosition = [self removeAllNodesAtParentNode:parentNode];
-            }
-            
-            NSLog(@"%@",nodear);
-            
-            NSLog(@"%@",nodear);
-            [typearr removeAllObjects];
-            [wularr removeAllObjects];
-            [deletarr removeAllObjects];
-            [self initwithnodear];
-            
-            NSMutableArray *indexPathArray = [NSMutableArray array];
-            //修正indexpath
-            for (NSUInteger i=startPosition; i<endPosition; i++) {
-                NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                [indexPathArray addObject:tempIndexPath];
-            }
-            if (parentNode.expand) {
-                [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-            }else{
-                [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-            }
-            
-            parentNode.expand=!parentNode.expand;
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            
-            [self qq_performSVHUDBlock:^{
-                [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                [self qq_performSVHUDBlock:^{
+                    [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+                }];
             }];
-        }];
+            
+        }
+        //第2级可能有物料规格可能有物料
+        /* else if (parentNode.depth==1&&parentNode.child)
+         {
+         NSMutableArray * arr=[[NSMutableArray alloc]init];
+         NSMutableArray* insertdic=[[NSMutableArray alloc]init];
+         
+         __block int j;
+         __block int k;
+         for (int i=0;i<nodear.count;i++) {
+         
+         for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
+         arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
+         NSLog(@"%@he%@",((Node*)[arr objectAtIndex:z]).nodeId,parentNode.nodeId);
+         if ([((Node*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
+         j=z;//获得第2层的插入位置
+         k=i;//获取在nodear中相对于哪一个数组
+         }
+         }
+         // if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
+         //   arr=(NSMutableArray*)[nodear objectAtIndex:i];
+         // j=i;
+         //}
+         }
+         
+         NSLog(@"%@",nodear);
+         NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+         [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
+         NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
+         NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
+         [parDic setValue:nodeid forKey:@"parentid"];
+         [parDic setValue:@"1" forKey:@"pageNum"];
+         [parDic setValue:@"10000" forKey:@"pageSize"];
+         [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+         NSLog(@"%@",responseObject);
+         init=[responseObject objectForKey:@"list"];
+         for (NSDictionary *dic in init) {
+         if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+         [typearr addObject:dic];
+         }
+         else
+         {
+         [wularr addObject:dic];
+         }
+         }//第3级默认全部是物料了
+         NSLog(@"%hd",parentNode.expand);
+         for (int i=0; i<wularr.count; i++) {
+         NSDictionary * wulinfo=[wularr objectAtIndex:i];
+         NSString* nodeid=[wulinfo objectForKey:@"matid"];
+         int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
+         int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
+         Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
+         NSLog(@"%hd",parentNode.expand);
+         if (parentNode.expand) {
+         //  NSLog(@"%@",[nodear objectAtIndex:j]);
+         [(NSMutableArray*)[nodear objectAtIndex:k] insertObject:node1 atIndex:j+i+1];//增加
+         endPosition++;
+         
+         
+         }
+         else
+         {
+         NSLog(@"%@",nodear);
+         for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
+         Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
+         if (nod.nodeId==nodeid) {
+         [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
+         }
+         NSLog(@"%@",nodear);
+         
+         }
+         
+         
+         }
+         
+         
+         }
+         if (!parentNode.expand) {
+         endPosition = [self removeAllNodesAtParentNode:parentNode];
+         }
+         
+         NSLog(@"%@",nodear);
+         
+         NSLog(@"%@",nodear);
+         [typearr removeAllObjects];
+         [wularr removeAllObjects];
+         [self initwithnodear];
+         
+         NSMutableArray *indexPathArray = [NSMutableArray array];
+         //修正indexpath
+         for (NSUInteger i=startPosition; i<endPosition; i++) {
+         NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+         [indexPathArray addObject:tempIndexPath];
+         }
+         if (parentNode.expand) {
+         [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+         }else{
+         [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
+         }
+         
+         parentNode.expand=!parentNode.expand;
+         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         
+         
+         [self qq_performSVHUDBlock:^{
+         [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
+         }];
+         }];
+         }*/
         
-    }
-    //第2级可能有物料规格可能有物料
-    /* else if (parentNode.depth==1&&parentNode.child)
-     {
-     NSMutableArray * arr=[[NSMutableArray alloc]init];
-     NSMutableArray* insertdic=[[NSMutableArray alloc]init];
-     
-     __block int j;
-     __block int k;
-     for (int i=0;i<nodear.count;i++) {
-     
-     for (int z=0; z<((NSMutableArray*)[nodear objectAtIndex:i]).count; z++) {
-     arr=(NSMutableArray*)[nodear objectAtIndex:i];//获取第2层全部
-     NSLog(@"%@he%@",((Node*)[arr objectAtIndex:z]).nodeId,parentNode.nodeId);
-     if ([((Node*)[arr objectAtIndex:z]).nodeId isEqual:parentNode.nodeId]) {
-     j=z;//获得第2层的插入位置
-     k=i;//获取在nodear中相对于哪一个数组
-     }
-     }
-     // if (((Node*)[_nodearr objectAtIndex:i]).nodeId==parentNode.nodeId) {
-     //   arr=(NSMutableArray*)[nodear objectAtIndex:i];
-     // j=i;
-     //}
-     }
-     
-     NSLog(@"%@",nodear);
-     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
-     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
-     NSLog(@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]);
-     NSString *nodeid=[NSString stringWithFormat:@"%@",parentNode.nodeId];
-     [parDic setValue:nodeid forKey:@"parentid"];
-     [parDic setValue:@"1" forKey:@"pageNum"];
-     [parDic setValue:@"10000" forKey:@"pageSize"];
-     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-     NSLog(@"%@",responseObject);
-     init=[responseObject objectForKey:@"list"];
-     for (NSDictionary *dic in init) {
-     if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
-     [typearr addObject:dic];
-     }
-     else
-     {
-     [wularr addObject:dic];
-     }
-     }//第3级默认全部是物料了
-     NSLog(@"%hd",parentNode.expand);
-     for (int i=0; i<wularr.count; i++) {
-     NSDictionary * wulinfo=[wularr objectAtIndex:i];
-     NSString* nodeid=[wulinfo objectForKey:@"matid"];
-     int counts=((NSNumber*)[wulinfo objectForKey:@"counts"]).intValue;
-     int matecounts=((NSNumber*)[wulinfo objectForKey:@"matecounts"]).intValue;
-     Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[wulinfo objectForKey:@"mattername"] depth:2 expand:NO child:NO matid:nodeid counts:counts matecounts:matecounts];
-     NSLog(@"%hd",parentNode.expand);
-     if (parentNode.expand) {
-     //  NSLog(@"%@",[nodear objectAtIndex:j]);
-     [(NSMutableArray*)[nodear objectAtIndex:k] insertObject:node1 atIndex:j+i+1];//增加
-     endPosition++;
-     
-     
-     }
-     else
-     {
-     NSLog(@"%@",nodear);
-     for (int i=indexPath.row+1; i<((NSMutableArray*)[nodear objectAtIndex:k]).count; i++) {
-     Node * nod=[(NSMutableArray*)[nodear objectAtIndex:k] objectAtIndex:i];
-     if (nod.nodeId==nodeid) {
-     [(NSMutableArray*)[nodear objectAtIndex:k] removeObject:nod];//移除
-     }
-     NSLog(@"%@",nodear);
-     
-     }
-     
-     
-     }
-     
-     
-     }
-     if (!parentNode.expand) {
-     endPosition = [self removeAllNodesAtParentNode:parentNode];
-     }
-     
-     NSLog(@"%@",nodear);
-     
-     NSLog(@"%@",nodear);
-     [typearr removeAllObjects];
-     [wularr removeAllObjects];
-     [self initwithnodear];
-     
-     NSMutableArray *indexPathArray = [NSMutableArray array];
-     //修正indexpath
-     for (NSUInteger i=startPosition; i<endPosition; i++) {
-     NSIndexPath *tempIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
-     [indexPathArray addObject:tempIndexPath];
-     }
-     if (parentNode.expand) {
-     [self.tableView insertRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-     }else{
-     [self.tableView deleteRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationNone];
-     }
-     
-     parentNode.expand=!parentNode.expand;
-     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-     
-     
-     [self qq_performSVHUDBlock:^{
-     [SVProgressHUD showErrorWithStatus:@"账号或密码错误"];
-     }];
-     }];
-     }*/
-    
-    if(parentNode.expand)
-    {
-        UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-        image.image=[UIImage imageNamed:@"公司库存向下"];
+        if(parentNode.expand)
+        {
+            UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+            image.image=[UIImage imageNamed:@"公司库存向下"];
+        }
+        else
+        {
+            UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
+            image.image=[UIImage imageNamed:@"公司库存向右"];
+        }
+
     }
     else
     {
-        UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
-        image.image=[UIImage imageNamed:@"公司库存向右"];
+        typeid=[[findarr objectAtIndex:indexPath.row] objectForKey:@"id"];
+        [self performSegueWithIdentifier:@"product" sender:self];
     }
-}
+  }
 /**
  *  删除该父节点下的所有子节点（包括孙子节点）
  *

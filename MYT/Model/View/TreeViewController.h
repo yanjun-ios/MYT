@@ -16,5 +16,6 @@
 - (IBAction)find:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *stocksearch;
 @property(nonatomic,assign)NSArray *nodearr;
+@property (weak, nonatomic) IBOutlet UITableView *tebleSearch;
 @property(nonatomic,assign)int totlePage;
 @end
