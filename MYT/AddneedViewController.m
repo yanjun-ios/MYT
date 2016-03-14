@@ -240,9 +240,9 @@
             [parDic setValue:pagenum forKey:@"pageNum"];
             [parDic setValue:findtext forKey:@"name"];
             [parDic setValue:@"10" forKey:@"pageSize"];//依次请求
-            dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+           // dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
-            dispatch_sync(concurrentQueue, ^{
+           // dispatch_sync(concurrentQueue, ^{
                 [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatReqAddItem.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                     totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
                     init=[responseObject objectForKey:@"list"];
@@ -294,14 +294,11 @@
                 
                 /*download the image here*/
                 
-            });
+          //  });
            
             
         }
-        else
-        {
-            [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
-        }
+        
         
         
         
@@ -311,10 +308,13 @@
         
         
         // 拿到当前的上拉刷新控件，结束刷新状态
-        [_tableView.mj_footer endRefreshing];
-        }
-       
-    
+        
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"已经到底啦"];
+    }
+    [_tableView.mj_footer endRefreshing];
 }
 
 /*-(void)initwithnodear
@@ -371,18 +371,18 @@
     if (!cell) {
         //if (node.depth==0||node.depth==1) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
-            //数量
+            //名称
             UILabel* name;
-            name=[[UILabel alloc]initWithFrame:CGRectMake(20, 15, ScreenWidth/2-30, 40)];
+            name=[[UILabel alloc]initWithFrame:CGRectMake(10, 15, ScreenWidth/2-13, 40)];
         
             name.tag=10;
             name.textColor=[UIColor lightGrayColor];
-            name.font=[UIFont systemFontOfSize:14];
+            name.font=[UIFont systemFontOfSize:12];
             name.textAlignment=NSTextAlignmentLeft;
             [cell.contentView addSubview:name];
+        //数量
             UILabel* count;
-            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2, 15, 60, 40)];
-            
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2+10, 15, 60, 40)];
             count.tag=11;
             count.textColor=[UIColor redColor];
             count.font=[UIFont systemFontOfSize:14];
@@ -390,7 +390,7 @@
             [cell.contentView addSubview:count];
             
             //需求量输入框
-            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 18, 80, 30)];
+            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-70, 18, 60, 30)];
             text.borderStyle = UITextBorderStyleRoundedRect;
            
             
@@ -433,7 +433,7 @@
         
     }*/
     UILabel* label1=(UILabel*)[cell.contentView viewWithTag:10];
-    label1.font=[UIFont systemFontOfSize:14];
+    label1.font=[UIFont systemFontOfSize:12];
     label1.text=[NSString stringWithFormat:@"%@",node.name];
     label1.lineBreakMode = NSLineBreakByWordWrapping;
     label1.numberOfLines = 0;

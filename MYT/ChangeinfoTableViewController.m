@@ -188,7 +188,7 @@
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identif];
         
         //物料或者物料规格名字
-        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 120, 40)];
+        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 5, ScreenWidth/2-10, 60)];
         name.lineBreakMode = NSLineBreakByWordWrapping;
         name.numberOfLines = 0;
         name.font=[UIFont systemFontOfSize:12];
@@ -198,7 +198,7 @@
         
         //是物料还是物料规格
         UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 11, 80, 40)];
-        phone.center=CGPointMake(ScreenWidth/2, 31);
+        phone.center=CGPointMake(ScreenWidth/2+50, 31);
         phone.textAlignment=NSTextAlignmentCenter;
         phone.font=[UIFont systemFontOfSize:14];
         phone.textColor=[UIColor darkGrayColor];
