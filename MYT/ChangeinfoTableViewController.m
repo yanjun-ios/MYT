@@ -89,7 +89,7 @@
 {
     UIView * view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
     //物料或者物料规格名字
-    UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 60, 20)];
+    UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 100, 20)];
     name.font=[UIFont systemFontOfSize:14];
     name.textColor=[UIColor lightGrayColor];
     name.text=@"名称";
@@ -118,7 +118,7 @@
     zf=1;
     NSString * clientidstr=[NSString stringWithFormat:@"%@",_clientId];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
-    [parDic setValue:@50 forKey:@"pageSize"];
+    [parDic setValue:@200 forKey:@"pageSize"];
     NSString * num=[NSString stringWithFormat:@"%d",zf];
     [parDic setValue:num forKey:@"pageNum"];
     [parDic setValue:clientidstr forKey:@"cusid"];
@@ -188,15 +188,17 @@
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identif];
         
         //物料或者物料规格名字
-        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 100, 20)];
-        name.font=[UIFont systemFontOfSize:14];
+        UILabel* name=[[UILabel alloc]initWithFrame:CGRectMake(10, 11, 120, 40)];
+        name.lineBreakMode = NSLineBreakByWordWrapping;
+        name.numberOfLines = 0;
+        name.font=[UIFont systemFontOfSize:12];
         name.textColor=[UIColor darkGrayColor];
         name.tag=1000;
         [cell.contentView addSubview:name];
         
         //是物料还是物料规格
-        UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 80, 20)];
-        phone.center=CGPointMake(ScreenWidth/2, 21);
+        UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 11, 80, 40)];
+        phone.center=CGPointMake(ScreenWidth/2, 31);
         phone.textAlignment=NSTextAlignmentCenter;
         phone.font=[UIFont systemFontOfSize:14];
         phone.textColor=[UIColor darkGrayColor];
@@ -204,7 +206,7 @@
         [cell.contentView addSubview:phone];
         
   
-        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-30, 11, 60, 20)];
+        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-30, 11, 60, 40)];
         need.font=[UIFont systemFontOfSize:14];
         need.textColor=[UIColor darkGrayColor];
         need.tag=1002;

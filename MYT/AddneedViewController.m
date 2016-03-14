@@ -52,19 +52,23 @@
    _clientId= [NetRequestManager sharedInstance].clientId;
    self.tableView.delegate=self;
     self.tableView.dataSource=self;
+    _stocksearch.delegate=self;
+     _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    ndone=[[NSMutableArray alloc]init];
+    typea=[[NSMutableArray alloc]init];
+    wula=[[NSMutableArray alloc]init];
+    typjson=[[NSMutableArray alloc]init];
+    wuljson=[[NSMutableArray alloc]init];
   /*  _tempedata=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc] init];
     typearr=[[NSMutableArray alloc]init];
     wularr=[[NSMutableArray alloc]init];
     nodear=[[NSMutableArray alloc]init];
-    typjson=[[NSMutableArray alloc]init];
-    wuljson=[[NSMutableArray alloc]init];
-    ndone=[[NSMutableArray alloc]init];
-    typea=[[NSMutableArray alloc]init];
-    wula=[[NSMutableArray alloc]init];
+
+   
     
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    _stocksearch.delegate=self;
+   
+   
     NSLog(@"%@",_nodearr);
     for(int i=0;i<_nodearr.count;i++)
     {
@@ -105,12 +109,12 @@
         dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
         dispatch_sync(concurrentQueue, ^{
-            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatReqAddItem.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                 
                 totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
                 init=[responseObject objectForKey:@"list"];
                 for (NSDictionary *dic in init) {
-                    if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                    if ([[dic objectForKey:@"TW"] isEqualToString:@"T"]) {
                         [typea addObject:dic];
                     }
                     else
@@ -120,18 +124,18 @@
                 }
                 for (int i=0; i<wula.count; i++) {
                     NSDictionary * wulinfo=[wula objectAtIndex:i];
-                    NSString* nodeid=[wulinfo objectForKey:@"id"];
-                    int counts=((NSNumber*)[wulinfo objectForKey:@"invCt"]).intValue;
-                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"matterName"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
+                    NSString* nodeid=[wulinfo objectForKey:@"ID"];
+                    int counts=((NSNumber*)[wulinfo objectForKey:@"INVCT"]).intValue;
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"NAME"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
                     [ndone addObject:node];
                     
                 }
                 for (int i=0; i<typea.count; i++) {
                     NSDictionary * typeinfo=[typea objectAtIndex:i];
-                    NSString* nodeid=[typeinfo objectForKey:@"id"];
-                    int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                    NSString* nodeid=[typeinfo objectForKey:@"ID"];
+                    int counts=((NSNumber*)[typeinfo objectForKey:@"INVCT"]).intValue;
                     
-                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
+                    Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"NAME"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                     [ndone addObject:node];
                 }
                 //先物料后物料类别
@@ -239,11 +243,11 @@
             dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
             dispatch_sync(concurrentQueue, ^{
-                [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+                [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatReqAddItem.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                     totlepage=((NSNumber*)[responseObject objectForKey:@"totlePage"]).intValue;
                     init=[responseObject objectForKey:@"list"];
                     for (NSDictionary *dic in init) {
-                        if ([[dic objectForKey:@"tw"] isEqualToString:@"T"]) {
+                        if ([[dic objectForKey:@"TW"] isEqualToString:@"T"]) {
                             [typea addObject:dic];
                         }
                         else
@@ -253,18 +257,18 @@
                     }
                     for (int i=0; i<wula.count; i++) {
                         NSDictionary * wulinfo=[wula objectAtIndex:i];
-                        NSString* nodeid=[wulinfo objectForKey:@"id"];
-                        int counts=((NSNumber*)[wulinfo objectForKey:@"invCt"]).intValue;
-                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"matterName"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
+                        NSString* nodeid=[wulinfo objectForKey:@"ID"];
+                        int counts=((NSNumber*)[wulinfo objectForKey:@"INVCT"]).intValue;
+                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[wulinfo objectForKey:@"NAME"] depth:0 expand:YES child:NO matid:nodeid  typid:@"-1" needcount:counts];
                         [ndone addObject:node];
                         
                     }
                     for (int i=0; i<typea.count; i++) {
                         NSDictionary * typeinfo=[typea objectAtIndex:i];
-                        NSString* nodeid=[typeinfo objectForKey:@"id"];
-                        int counts=((NSNumber*)[typeinfo objectForKey:@"counts"]).intValue;
+                        NSString* nodeid=[typeinfo objectForKey:@"ID"];
+                        int counts=((NSNumber*)[typeinfo objectForKey:@"INVCT"]).intValue;
                         
-                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typename"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
+                        Node1 * node=[[Node1 alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"TTNAME"] depth:0 expand:YES child:YES matid:@"-1" typid:nodeid needcount:counts];
                         [ndone addObject:node];
                     }
                     //先物料后物料类别
@@ -337,7 +341,13 @@
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+        return 70;
+    
+    
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Node1 *node = [ndone objectAtIndex:indexPath.row];
@@ -362,8 +372,16 @@
         //if (node.depth==0||node.depth==1) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL_ID];
             //数量
+            UILabel* name;
+            name=[[UILabel alloc]initWithFrame:CGRectMake(20, 15, ScreenWidth/2-30, 40)];
+        
+            name.tag=10;
+            name.textColor=[UIColor lightGrayColor];
+            name.font=[UIFont systemFontOfSize:14];
+            name.textAlignment=NSTextAlignmentLeft;
+            [cell.contentView addSubview:name];
             UILabel* count;
-            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2-40, 15, 80, 15)];
+            count=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth/2, 15, 60, 40)];
             
             count.tag=11;
             count.textColor=[UIColor redColor];
@@ -372,7 +390,7 @@
             [cell.contentView addSubview:count];
             
             //需求量输入框
-            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 8, 80, 30)];
+            UITextField *text = [[UITextField alloc]initWithFrame:CGRectMake(ScreenWidth-80, 18, 80, 30)];
             text.borderStyle = UITextBorderStyleRoundedRect;
            
             
@@ -414,6 +432,12 @@
         }
         
     }*/
+    UILabel* label1=(UILabel*)[cell.contentView viewWithTag:10];
+    label1.font=[UIFont systemFontOfSize:14];
+    label1.text=[NSString stringWithFormat:@"%@",node.name];
+    label1.lineBreakMode = NSLineBreakByWordWrapping;
+    label1.numberOfLines = 0;
+    
     UILabel* label2=(UILabel*)[cell.contentView viewWithTag:11];
     label2.font=[UIFont systemFontOfSize:14];
     label2.text=[NSString stringWithFormat:@"%d",node.needcount];
@@ -444,8 +468,8 @@
     
     //
     // cell有缩进的方法
-  //  cell.indentationLevel = node.depth; // 缩进级别
-    //cell.indentationWidth = 20.f; // 每个缩进级别的距离
+   // cell.indentationLevel = node.depth; // 缩进级别
+   // cell.indentationWidth = 20.f; // 每个缩进级别的距离
     
     
     //    NSMutableString *name = [NSMutableString string];
@@ -454,9 +478,10 @@
     //    }
     
     //    [name appendString:node.name];
-    cell.textLabel.font=[UIFont systemFontOfSize:14];
-    cell.textLabel.text = node.name;
-    
+   // cell.textLabel.font=[UIFont systemFontOfSize:14];
+   // cell.textLabel.text = node.name;
+    // cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    // cell.textLabel.numberOfLines = 0;
     return cell;
 }
 

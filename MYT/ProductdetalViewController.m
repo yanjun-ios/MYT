@@ -178,6 +178,7 @@
     UILabel* maitname=(UILabel*)[cell.contentView viewWithTag:120];
     maitname.text=[maitinfo objectForKey:@"matterName"];
     UILabel* maticount=(UILabel*)[cell.contentView viewWithTag:121];
+    maticount.textAlignment=NSTextAlignmentCenter;
     maticount.text=((NSNumber*)[maitinfo objectForKey:@"invCt"]).stringValue;
     return cell;
 }

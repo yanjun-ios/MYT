@@ -122,10 +122,12 @@
         dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
         dispatch_sync(concurrentQueue, ^{
-            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatTree.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+            [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/searchMatIvt.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                 
                 findarr=[responseObject objectForKey:@"list"];
-                _tebleSearch.frame=CGRectMake(0, _stocksearch.frame.origin.y+_stocksearch.frame.size.height, _stocksearch.frame.size.width, 20*findarr.count);
+                _tebleSearch.frame=CGRectMake(3, _stocksearch.frame.origin.y+_stocksearch.frame.size.height, self.view.frame.size.width-6, 30*findarr.count);
+                [[Utility sharedInstance]setLayerView:_tebleSearch borderW:1 borderColor:[UIColor lightGrayColor] radius:0];
+                [self.view bringSubviewToFront:_tebleSearch];
                 _tebleSearch.hidden=NO;
                 [_tebleSearch reloadData];
                 
@@ -340,11 +342,13 @@
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag==201) {
-        return 20;
+    if (tableView.tag==200) {
+        return 40;
     }
     else
-        return 40;
+        return 30;
+  
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -493,14 +497,15 @@
     }
     else
     {
-        static NSString *NODE_CELL_ID ;
+        static NSString *NODE_CELL ;
         //if (node.depth==0||node.depth==1) {
-        NODE_CELL_ID = @"node_cell_id0";
+        NODE_CELL = @"3";
         NSDictionary* dic=[findarr objectAtIndex:indexPath.row];
-        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL_ID];
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:NODE_CELL];
         if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NODE_CELL];
             UILabel* typename;
-            typename=[[UILabel alloc]initWithFrame:CGRectMake(20, 0, 60, 20)];
+            typename=[[UILabel alloc]initWithFrame:CGRectMake(33, 3, 200, 20)];
             
             typename.tag=21;
             typename.textColor=[UIColor blackColor];
@@ -509,7 +514,7 @@
             [cell.contentView addSubview:typename];
         }
         UILabel* label2=(UILabel*)[cell.contentView viewWithTag:21];
-        label2.font=[UIFont systemFontOfSize:14];
+        label2.font=[UIFont systemFontOfSize:15];
         label2.text=[dic objectForKey:@"typeName"];
         return cell;
     }
