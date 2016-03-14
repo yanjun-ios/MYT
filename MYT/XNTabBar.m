@@ -87,10 +87,10 @@
             
             btn.tag = i; //设置按钮的标记, 方便来索引当前的按钮,并跳转到相应的视图
             
-            CGFloat x = i * self.bounds.size.width / btncount;
-            CGFloat y = 0;
-            CGFloat width = self.bounds.size.width / btncount;
-            CGFloat height = self.bounds.size.height;
+            int  x = i * self.bounds.size.width / btncount;
+            int y = 0;
+            int width = self.bounds.size.width / btncount;
+            int height = self.bounds.size.height;
             btn.frame = CGRectMake(x, y, width, height);
             
             if (btn.tag==_myindex&&_myindex!=0) {

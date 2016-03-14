@@ -17,6 +17,8 @@
     int num;
     NSMutableArray* jsonlist;
     NSString* detail;
+    NSString* messageType;
+    NSString* messageTime;
 }
 @end
 
@@ -140,6 +142,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     detail=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"CONT"];
+    messageType=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TITLE"];
+     messageTime=[[jsonlist objectAtIndex:[indexPath row]] objectForKey:@"TIME"];
     [self performSegueWithIdentifier:@"detail" sender:self];
 }
 
@@ -176,6 +180,8 @@
     if ([segue.identifier isEqualToString:@"detail"]) {
         messageDetailViewController* destination=[segue destinationViewController];
         destination.getMessageDetail=detail;
+        destination.getMessageType=messageType;
+        destination.getMessageTime=messageTime;
     }
 }
 

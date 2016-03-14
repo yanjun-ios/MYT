@@ -7,7 +7,7 @@
 //
 
 #import "messageDetailViewController.h"
-
+#import "Utility.h"
 @interface messageDetailViewController ()
 
 @end
@@ -15,7 +15,12 @@
 @implementation messageDetailViewController
 
 - (void)viewDidLoad {
+    self.view.backgroundColor=[UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
+    [[Utility sharedInstance] setLayerView:_TF_show borderW:1 borderColor:[UIColor lightGrayColor] radius:10];
+    _TF_show.backgroundColor=[UIColor whiteColor];
+    _labTitle.text=_getMessageType;
     _TF_show.text=_getMessageDetail;
+    _lab_time.text=_getMessageTime;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
