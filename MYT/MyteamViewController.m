@@ -161,20 +161,20 @@
     @[
       
       [KxMenuItem menuItem:@"业绩排行"
-                     image:[UIImage imageNamed:@"ok"]
+                     image:[UIImage imageNamed:@"paixingbang"]
                     target:self
                     action:@selector(performanceClick:)],
       
       [KxMenuItem menuItem:@"通讯录"
-                     image:[UIImage imageNamed:@"ok"]
+                     image:[UIImage imageNamed:@"tongxunlu"]
                     target:self
                     action:@selector(phone:)],
       
       ];
     
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
+    //KxMenuItem *first = menuItems[0];
+    //first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+    //first.alignment = NSTextAlignmentCenter;
     
     [KxMenu showMenuInView:self.view
                   fromRect:sender.frame
