@@ -71,6 +71,11 @@
         name.tag=1000;
         [cell.contentView addSubview:name];
         
+        //性别
+        UIImageView* sexImg=[[UIImageView alloc]initWithFrame:CGRectMake(70, 11, 20, 20)];
+        sexImg.tag=1003;
+        [cell.contentView addSubview:sexImg];
+        
         //电话号码
         UILabel* phone=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 20)];
         phone.center=CGPointMake(ScreenWidth/2, 21);
@@ -93,6 +98,17 @@
     [btn setImage:[UIImage imageNamed:@"电话小"] forState:0];
     [btn addTarget:self action:@selector(call:) forControlEvents:UIControlEventTouchUpInside];
     btn.tag=10000+indexPath.row;
+    
+    
+    
+    //性别
+    int sexvalue=((NSNumber*)[[jsonAry objectAtIndex:indexPath.row] objectForKey:@"sex"]).intValue;
+    if (sexvalue==0) {
+        ((UIImageView*)[cell.contentView viewWithTag:1003]).image=[UIImage imageNamed:@"man"];
+    }else
+    {
+    ((UIImageView*)[cell.contentView viewWithTag:1003]).image=[UIImage imageNamed:@"woman"];
+    }
     
     
     return cell;

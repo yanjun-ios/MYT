@@ -10,6 +10,8 @@
 #import "NetRequestManager.h"
 #import "addTableViewController.h"
 #import "CilentViewController.h"
+#import "TheMenuViewController.h"
+#import "IIViewDeckController.h"
 @interface RegionsTableViewController ()
 {
     NSMutableDictionary* locationSelected;
@@ -95,10 +97,12 @@
     [locationSelected setValue:[[[[arelist objectAtIndex:_provinceIndex] objectForKey:@"citys"] objectAtIndex:_citysIndex] objectForKey:@"cityCode"] forKey:@"cityCode"];
     if ([NetRequestManager sharedInstance].FROMDECK==1) {
         CilentViewController* contro=[self.navigationController.viewControllers objectAtIndex:2];
-        self.LocationDelegate=contro;
+        TheMenuViewController* MenuContro=(TheMenuViewController*)self.viewDeckController.rightController;
+        self.LocationDelegate=MenuContro;
+         //self.LocationDelegate=contro;
         [self.LocationDelegate passLovation:locationSelected];
         [self.navigationController popToViewController:contro animated:YES];
-        [NetRequestManager sharedInstance].FROMDECK=0;
+        [NetRequestManager sharedInstance].FROMDECK=1;
     }else
     {
         addTableViewController *addVC = [[addTableViewController alloc] init];

@@ -51,14 +51,13 @@
 {
     
     [self.viewDeckController setPanningMode:IIViewDeckFullViewPanning];
-//    if ([NetRequestManager sharedInstance].FROMDECK==1) {
-//        [self.viewDeckController openRightView];
-//    }
-    if (self.viewDeckController.openRightView) {
-        [self.viewDeckController closeRightView];
+    if ([NetRequestManager sharedInstance].FROMDECK==1) {
+        [self.viewDeckController openRightView];
     }
+//    if (self.viewDeckController.openRightView) {
+//        [self.viewDeckController closeRightView];
+//    }
 
-    
     [self initinfor];
       // [_tableview reloadData];
     self.navigationController.navigationBarHidden=NO;
@@ -196,6 +195,18 @@
     NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
     [DIC setObject:parStr forKey:@"paraMap"];
     [self searchClient:DIC];
+}
+
+//释放键盘
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+
+    [_findcust resignFirstResponder];
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView
@@ -519,6 +530,7 @@
     //判断是否打开，做出不同响应
     if ([self.viewDeckController isSideOpen:IIViewDeckRightSide]) {//已经打开
         [self.viewDeckController closeRightView];//则关闭左视图
+        [NetRequestManager sharedInstance].FROMDECK=0;
         }
     else {//未打开
         [self.viewDeckController openRightView];//则打开左视图
@@ -547,6 +559,26 @@
     NSLog(@"%@",locationDic);
 }
 
+//从右边菜单过来的代理方法
+-(void)passClientName:(NSString *)text Location:(NSDictionary *)LocaDic Needs:(NSArray *)needArry
+{
+    NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];//user_id
+    [parDic setValue:text forKey:@"cusname"];
+    [parDic setValue:@1 forKey:@"pageNum"];
+    [parDic setValue:@100 forKey:@"pageSize"];
+    [parDic setValue:[LocaDic objectForKey:@"provinceCode"] forKey:@"province"];
+    [parDic setValue:[LocaDic objectForKey:@"cityCode"] forKey:@"city"];
+    [parDic setValue:[LocaDic objectForKey:@"regioncode"] forKey:@"district"];
+    [parDic setValue:@"ALL" forKey:@"isneed"];
+    [parDic setValue:needArry forKey:@"needarry"];
+    NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:parDic];
+    
+    NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
+    [DIC setObject:parStr forKey:@"paraMap"];
+    [self searchClient:DIC];
+
+}
 
 //添加客户按钮
 - (IBAction)addClientClick:(id)sender {
