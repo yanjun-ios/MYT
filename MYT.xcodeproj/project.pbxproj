@@ -81,6 +81,7 @@
 		9CD760011C436058001C7C98 /* CusMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD760001C436058001C7C98 /* CusMarkViewController.m */; };
 		9CEBD4351C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CEBD4331C8C1CDC0079095B /* libUMessage_Sdk_1.2.6.a */; };
 		9CFB24241C9AC02D00900BD9 /* ChooseNeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFB24231C9AC02D00900BD9 /* ChooseNeedsViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CFB24271C9C306100900BD9 /* addCusLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CFB24261C9C306100900BD9 /* addCusLogViewController.m */; settings = {ASSET_TAGS = (); }; };
 		ADFE538885F62AAD7DCDEF77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DAA3D31AA655B689A679C69 /* libPods.a */; };
 		D9430F961C44B3A800714898 /* FindmapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9430F951C44B3A800714898 /* FindmapViewController.m */; };
 		D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A815D91C48CDA500C5E698 /* TreeViewController.m */; };
@@ -244,6 +245,8 @@
 		9CEBD4341C8C1CDC0079095B /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		9CFB24221C9AC02D00900BD9 /* ChooseNeedsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseNeedsViewController.h; sourceTree = "<group>"; };
 		9CFB24231C9AC02D00900BD9 /* ChooseNeedsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseNeedsViewController.m; sourceTree = "<group>"; };
+		9CFB24251C9C306100900BD9 /* addCusLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCusLogViewController.h; sourceTree = "<group>"; };
+		9CFB24261C9C306100900BD9 /* addCusLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCusLogViewController.m; sourceTree = "<group>"; };
 		D3386515BDC47DFDC09A65F0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D9430F941C44B3A800714898 /* FindmapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindmapViewController.h; sourceTree = "<group>"; };
 		D9430F951C44B3A800714898 /* FindmapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindmapViewController.m; sourceTree = "<group>"; };
@@ -614,6 +617,8 @@
 				77A7223D1C4A750900715D4D /* AddneedViewController.m */,
 				773101AE1C4B74E40043C2C7 /* CilentplaceViewController.h */,
 				773101AF1C4B74E40043C2C7 /* CilentplaceViewController.m */,
+				9CFB24251C9C306100900BD9 /* addCusLogViewController.h */,
+				9CFB24261C9C306100900BD9 /* addCusLogViewController.m */,
 			);
 			name = YJCrud;
 			sourceTree = "<group>";
@@ -888,6 +893,7 @@
 				9CFB24241C9AC02D00900BD9 /* ChooseNeedsViewController.m in Sources */,
 				D9A815DA1C48CDA500C5E698 /* TreeViewController.m in Sources */,
 				77725C691C1D07960018AB07 /* PerformanceViewController.m in Sources */,
+				9CFB24271C9C306100900BD9 /* addCusLogViewController.m in Sources */,
 				18C0A4581C15187D00C380B5 /* UIViewController+Helper.m in Sources */,
 				9CBF33A51C1ABED400F7E1DC /* MoreViewController.m in Sources */,
 				9CD75FF01C414771001C7C98 /* Z_NetRequestManager.m in Sources */,

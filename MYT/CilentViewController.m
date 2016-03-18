@@ -573,7 +573,6 @@
     [parDic setValue:@"ALL" forKey:@"isneed"];
     [parDic setValue:needArry forKey:@"needarry"];
     NSString* parStr=[[NetRequestManager sharedInstance] DataToJsonString:parDic];
-    
     NSMutableDictionary* DIC=[[NSMutableDictionary alloc]init];
     [DIC setObject:parStr forKey:@"paraMap"];
     [self searchClient:DIC];

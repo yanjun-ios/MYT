@@ -6,6 +6,7 @@
 //  Copyright © 2016年 YunRui. All rights reserved.
 //
 #import "RegionsTableViewController.h"
+#import "ChooseNeedsViewController.h"
 #import <UIKit/UIKit.h>
 
 @protocol SearchClientParaDelegat <NSObject>
@@ -14,7 +15,7 @@
 
 @end
 
-@interface TheMenuViewController : UIViewController<UISearchBarDelegate,PassLocationValueDelegate>
+@interface TheMenuViewController : UIViewController<UISearchBarDelegate,PassLocationValueDelegate,PassNeedsArryDelegate>
 - (IBAction)clickLocation:(id)sender;
 - (IBAction)clickToNeeds:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchClient;

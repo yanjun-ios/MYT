@@ -12,6 +12,7 @@
 #import "ProvinceTableViewController.h"
 #import "NetRequestManager.h"
 #import "CilentViewController.h"
+#import "ChooseNeedsViewController.h"
 @interface TheMenuViewController ()
 {
     NSMutableDictionary* locationCodeDic;
@@ -24,6 +25,7 @@
 
 - (void)viewDidLoad {
     _searchClient.delegate=self;
+    clienttneedsArry=[[NSMutableArray alloc]init];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -57,24 +59,44 @@
 }
 //点击跳转到用料需求选择界面
 - (IBAction)clickToNeeds:(id)sender {
-    
+    [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+        [NetRequestManager sharedInstance].FROMDECK=1;
+        UINavigationController * navVC = (UINavigationController *) self.viewDeckController.centerController;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *NeedsContro= (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"NEEDS"];
+        [navVC pushViewController:NeedsContro animated:YES];
+        
+    }];
 }
 
+//选择用料需求的代理方法
+-(void)passNeeds:(NSArray*)NeedsAry
+{
+    _labNeeds.textColor=[UIColor whiteColor];
+    _labNeeds.text=@"您已选择用料需求";
+    [clienttneedsArry addObjectsFromArray:NeedsAry];
+}
 
-
+//选择区域的代理方法
 -(void)passLovation:(NSDictionary *)locationDic
 {
    locationCodeDic = [[NSMutableDictionary alloc]initWithDictionary:locationDic];
+    _labLocation.textColor=[UIColor whiteColor];
     _labLocation.text=[NSString stringWithFormat:@"%@%@%@",[locationCodeDic objectForKey:@"provinceName"],[locationCodeDic objectForKey:@"cityName"],[locationCodeDic objectForKey:@"regionName"]];
 }
+
+//清除区域选择
 - (IBAction)clickRemoveLocation:(id)sender {
     _labLocation.text=@"请选择区域";
+     _labLocation.textColor=[UIColor redColor];
     locationCodeDic=[[NSMutableDictionary alloc]initWithObjects:@[@"",@"",@"",@"",@"",@""] forKeys:@[@"cityCode",@"cityName",@"provinceCode",@"provinceName",@"regionCode",@"regionName"]];
 }
-
+//清除用料需求
 - (IBAction)clickRemoveNeeds:(id)sender {
     
-    
+    _labNeeds.textColor=[UIColor redColor];
+    _labNeeds.text=@"请选择用料需求";
+    [clienttneedsArry removeAllObjects];
 }
 - (IBAction)filterNow:(id)sender {
     
