@@ -10,7 +10,8 @@
 
 @implementation Node
 
-- (instancetype)initWithParentId : (NSString*)parentId nodeId : (NSString*)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(NSString*)matid counts:(int)counts matecounts:(int)matecounts{
+- (instancetype)initWithParentId : (NSString*)parentId nodeId : (NSString*)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(NSString*)matid counts:(int)counts matecounts:(int)matecounts
+isHm:(NSString *)isHm{
     self = [self init];
     if (self) {
         self.parentId = parentId;
@@ -22,6 +23,7 @@
         self.matid=matid;
         self.counts=counts;
         self.matecounts=matecounts;
+        self.isHm=isHm;
     }
     return self;
 }

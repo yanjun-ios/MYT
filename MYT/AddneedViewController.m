@@ -866,6 +866,10 @@
             [wuljson removeAllObjects];
             if([responseObject objectForKey:@"status"])
             {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:NO];
+                });
+                
                 /*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  [self.navigationController popViewControllerAnimated:NO];
                  // 2秒后异步执行这里的代码...
@@ -888,7 +892,16 @@
         }];
    
 }
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    [_stocksearch resignFirstResponder];
+}
 /*- (IBAction)click_find:(id)sender {
     NSString *findtext = [_findtext.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if ([findtext isEqualToString:@""]) {

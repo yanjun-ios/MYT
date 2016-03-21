@@ -19,6 +19,8 @@
 {
     self.navigationController.navigationBarHidden=NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    [super viewWillAppear:animated];
+    [self.selectedViewController viewWillAppear:animated];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

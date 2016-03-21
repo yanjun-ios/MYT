@@ -119,7 +119,8 @@
                     NSString* nodeid=[typeinfo objectForKey:@"id"];
                     int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
                     int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
-                    Node * node=[[Node alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:0 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    NSString *isHm=[typeinfo objectForKey:@"isHm"];
+                    Node * node=[[Node alloc]initWithParentId:@"-1" nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:0 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts isHm:isHm];
                     [nodear addObject:node];
                 }
               /*  for (int i=0; i<wular.count; i++) {

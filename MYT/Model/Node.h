@@ -28,9 +28,10 @@
 @property (nonatomic , assign)NSString* matid;//物料id
 @property (nonatomic , assign)int counts;//库存量
 @property (nonatomic , assign)int matecounts;//匹配到的客户数量
+@property (nonatomic , copy) NSString* isHm;
 /**
  *快速实例化该对象模型
  */
-- (instancetype)initWithParentId : (NSString*)parentId nodeId : (NSString*)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(NSString*)matid counts:(int)counts matecounts:(int)matecounts;
+- (instancetype)initWithParentId : (NSString*)parentId nodeId : (NSString*)nodeId name : (NSString *)name depth : (int)depth expand : (BOOL)expand child:(BOOL)child matid:(NSString*)matid counts:(int)counts matecounts:(int)matecounts isHm:(NSString*)isHm;
 
 @end

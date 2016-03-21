@@ -394,10 +394,13 @@
             [cell.contentView addSubview:men];
             
             //跳转按钮
-            UIButton * skip=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-30, 5, 35, 35)];
-            skip.tag=14;
-            //[[Utility sharedInstance] setLayerView:skip borderW:1 borderColor:[UIColor redColor] radius:4];
-            [cell.contentView addSubview:skip];
+           
+                UIButton * skip=[[UIButton alloc]init];
+                skip.tag=14;
+                //[[Utility sharedInstance] setLayerView:skip borderW:1 borderColor:[UIColor redColor] radius:4];
+                [cell.contentView addSubview:skip];
+            
+           
             
             UIImageView *image=[[UIImageView alloc] init];
             image.tag=13;
@@ -451,9 +454,18 @@
         label3.text=[NSString stringWithFormat:@"%d",node.matecounts];
         
         UIButton* skip=(UIButton*)[cell.contentView viewWithTag:14];
-        [skip addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
-        [skip setImage:[UIImage imageNamed:@"toright"]  forState:UIControlStateNormal];
-        skip.tag=indexPath.row+1000;
+        if ([node.isHm isEqualToString:@"Y"]) {
+            
+            skip.frame=CGRectMake(ScreenWidth-30, 5, 35, 35);
+            [skip addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
+            [skip setImage:[UIImage imageNamed:@"toright"]  forState:UIControlStateNormal];
+            
+           // skip.tag=indexPath.row+1000;
+        }
+        else
+            skip.frame=CGRectMake(ScreenWidth, 0, 0, 0);
+        
+        
         UIImageView *image=(UIImageView*)[cell.contentView viewWithTag:13];
         if (node.depth<=3) {
             NSLog(@"%@",node.name);
@@ -525,11 +537,15 @@
 {
     
     UIButton* btn =  (UIButton*)sender;
-    int row=(int)btn.tag-1000;//获取点击的行
+    //int row=(int)btn.tag-1000;//获取点击的行
+    UITableViewCell* cell=(UITableViewCell*)[[sender superview] superview];
+    NSIndexPath* indexp=[_tableView indexPathForCell:cell];
+    int row=(int)indexp.row;
     Node* node=(Node*)[_tempedata objectAtIndex:row];
     NSLog(@"%@",node.nodeId);
     typeid=node.nodeId;
-     [self performSegueWithIdentifier:@"product" sender:self];
+    [self performSegueWithIdentifier:@"product" sender:self];
+ 
     
 }
 - (void)didReceiveMemoryWarning {
@@ -601,7 +617,8 @@
                     NSString* nodeid=[typeinfo objectForKey:@"id"];
                     int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
                     int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
-                    Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    NSString* isHm=[typeinfo objectForKey:@"isHm"];
+                    Node * node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts isHm:isHm];
                     
                     if (parentNode.expand) {
                         NSLog(@"%@",[nodear objectAtIndex:j]);
@@ -751,7 +768,8 @@
                     NSString* nodeid=[typeinfo objectForKey:@"id"];
                     int counts=((NSNumber*)[typeinfo objectForKey:@"ivt"]).intValue;
                     int matecounts=((NSNumber*)[typeinfo objectForKey:@"matCt"]).intValue;
-                    Node *  node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:parentNode.depth+1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts];
+                    NSString * isHm=[typeinfo objectForKey:@"isHm"];
+                    Node *  node1=[[Node alloc]initWithParentId:parentNode.nodeId nodeId:nodeid name:[typeinfo objectForKey:@"typeName"] depth:parentNode.depth+1 expand:YES child:YES matid:@"-1" counts:counts matecounts:matecounts isHm:isHm];
                     
                     NSLog(@"%hd",parentNode.expand);
                     if (parentNode.expand) {
@@ -938,8 +956,14 @@
     }
     else
     {
+        
         typeid=[[findarr objectAtIndex:indexPath.row] objectForKey:@"id"];
-        [self performSegueWithIdentifier:@"product" sender:self];
+        if([[[findarr objectAtIndex:indexPath.row] objectForKey:@"isHm"] isEqualToString:@"Y"])
+        {
+            [self performSegueWithIdentifier:@"product" sender:self];
+        }
+        else
+            [SVProgressHUD showErrorWithStatus:@"该类别暂时没有子物料"];
     }
   }
 /**
