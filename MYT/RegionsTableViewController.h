@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @protocol PassLocationValueDelegate
 -(void)passLovation:(NSDictionary*)locationDic;
 @end
@@ -14,6 +15,6 @@
 @property(nonatomic,retain)NSArray*regionsList;
 @property(nonatomic,assign)int provinceIndex;
 @property(nonatomic,assign)int citysIndex;
-@property(nonatomic,retain) id<PassLocationValueDelegate>LocationDelegate;
+@property(nonatomic,weak) id<PassLocationValueDelegate>LocationDelegate;
 @end
 

@@ -254,7 +254,7 @@
    NSString* userid=[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"];
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]init];
     [parDic setValue:[NSString stringWithFormat:@"%d",num] forKey:@"pageNum"];
-    [parDic setValue:@"3" forKey:@"pageSize"];
+    [parDic setValue:@"2" forKey:@"pageSize"];
      [parDic setValue:userid forKey:@"userid"];
     [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@"yd/getPushInfo.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         num++;

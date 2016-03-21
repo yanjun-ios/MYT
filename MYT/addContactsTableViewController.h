@@ -17,4 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *_TF_Email;
 @property (weak, nonatomic) IBOutlet UITextField *_TF_other;
 @property(nonatomic,retain)NSString* clientId;
+@property (weak, nonatomic) IBOutlet UIButton *btn_man;
+@property (weak, nonatomic) IBOutlet UIButton *btn_woman;
+- (IBAction)sexChoose:(UIButton *)sender;
 @end

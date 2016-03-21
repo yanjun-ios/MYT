@@ -10,6 +10,7 @@
 #import "NetRequestManager.h"
 #import "QQRequestManager.h"
 #import "MJRefresh.h"
+#import "addCusLogViewController.h"
 @interface TradingLogViewController ()
 {
     NSString* clientId;
@@ -68,6 +69,14 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ADDLOG"]) {
+        addCusLogViewController* destination=[segue destinationViewController];
+        destination.cusId=clientId;
+    }
 }
 
 //taleview代理方法

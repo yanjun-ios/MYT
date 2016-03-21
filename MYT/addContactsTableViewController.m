@@ -13,6 +13,10 @@
 {
     BOOL bKeyBoardHide;
      NSMutableDictionary* addcusjson;
+    UIButton* btnSelected;
+    int sexValue;
+    int Keyboardheight;
+    CGRect currentTfRec;
 }
 @end
 
@@ -44,6 +48,29 @@
 }
 
 - (void)viewDidLoad {
+    
+    //键盘监听
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    //增加监听，当键退出时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    
+    [_btn_man setImage:[UIImage imageNamed:@"choosed"] forState:UIControlStateSelected];
+    [_btn_man setImage:[UIImage imageNamed:@"unchoose"] forState:UIControlStateNormal];
+    
+    [_btn_woman setImage:[UIImage imageNamed:@"choosed"] forState:UIControlStateSelected];
+    [_btn_woman setImage:[UIImage imageNamed:@"unchoose"] forState:UIControlStateNormal];
+    
+    _btn_man.selected=YES;
+    btnSelected=_btn_man;
+    sexValue=1;
+    
     addcusjson=[[NSMutableDictionary alloc]init];
     _clientId= [NetRequestManager sharedInstance].clientId;
     self.tableView.backgroundColor=[UIColor groupTableViewBackgroundColor];
@@ -80,20 +107,33 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+//键盘弹出时调用
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    if (keyboardRect.origin.y<currentTfRec.origin.y+currentTfRec.size.height) {
+        self.tableView.frame=CGRectMake(0, keyboardRect.origin.y-(currentTfRec.origin.y+currentTfRec.size.height), ScreenWidth, ScreenHeight);
+    }
+    
+}
+//当键退出时调用
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+}
+
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     bKeyBoardHide = NO;
     UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[textField convertRect:textField.bounds toView:window];
-    float y1=rect.origin.y;
-    if(y1>216)
-    {
-    self.tableView.frame=CGRectMake(0, -216, ScreenWidth, ScreenHeight);
-    }
+    currentTfRec=[textField convertRect:textField.bounds toView:window];
 }
+
 -(void)textFieldDidEndEditing:(UITextField *)textField
-{    bKeyBoardHide = YES;
-    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-50);
+{   // bKeyBoardHide = YES;
+    //    self.tableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-50);
 }
 
 -(void)finishclick
@@ -105,7 +145,7 @@
     [addcusjson setObject:__TF_Email.text forKey:@"email"];
     [addcusjson setObject:__TF_Telephone.text forKey:@"mobilePhone"];
     [addcusjson setObject:__TF_QQ.text forKey:@"qq"];
-    [addcusjson setObject:@"0" forKey:@"sex"];
+    [addcusjson setObject:[NSString stringWithFormat:@"%d",sexValue] forKey:@"sex"];
     [addcusjson setObject:__TF_other.text forKey:@"remark"];//经度
     [addcusjson setObject:__TF_Phone.text forKey:@"phone"];//纬度
     [addcusjson setObject:clientidstr forKey:@"cusid"];
@@ -217,4 +257,16 @@ else
 }
 */
 
+- (IBAction)sexChoose:(UIButton *)sender {
+    if (sender.tag==2000) {
+        sexValue=0;
+    }else
+    {
+        sexValue=1;
+    }
+    btnSelected.selected=NO;
+    btnSelected = sender;
+    btnSelected.selected=YES;
+    
+}
 @end

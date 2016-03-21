@@ -86,7 +86,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
 
     return 40;
@@ -213,10 +213,11 @@
         phone.tag=1001;
         [cell.contentView addSubview:phone];
         
-  
-        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-30, 11, 60, 40)];
+        //需求量
+        UILabel* need=[[UILabel alloc]initWithFrame:CGRectMake(ScreenWidth-60, 11, 60, 40)];
         need.font=[UIFont systemFontOfSize:14];
         need.textColor=[UIColor darkGrayColor];
+        need.textAlignment=NSTextAlignmentCenter;
         need.tag=1002;
         [cell.contentView addSubview:need];
     }

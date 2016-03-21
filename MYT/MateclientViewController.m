@@ -271,7 +271,10 @@
 -(void)clickPhone:(UIButton*)btn
 {
     //跳转到客户资料的通讯录
-    int index=btn.tag-100000;
+    //int index=btn.tag-100000;
+    UITableViewCell* cell = (UITableViewCell*)[[btn superview] superview];
+    NSIndexPath* indexpat=[_tableview indexPathForCell:cell];
+    int index=(int)indexpat.row;
   dtlid=  [[jsonarry objectAtIndex:index-1] objectForKey:@"dtlid"];
    cusid= [[jsonarry objectAtIndex:index-1] objectForKey:@"cusid"];
     [self performSegueWithIdentifier:@"toContact" sender:self];

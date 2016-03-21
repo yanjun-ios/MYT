@@ -10,7 +10,8 @@
 #import "RegionsTableViewController.h"
 #import "IIViewDeckController.h"
 #import "MJRefresh.h"
-@interface CilentViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,PassLocationValueDelegate>
+#import "TheMenuViewController.h"
+@interface CilentViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,PassLocationValueDelegate,SearchClientParaDelegat>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *Button_connect;
 @property (weak, nonatomic) IBOutlet UISearchBar *findcust;
