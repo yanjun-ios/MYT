@@ -59,7 +59,14 @@
     [parDic setValue:@10 forKey:@"pageSize"];
     [parDic setValue:_searchNeedsBar.text forKey:@"name"];
     [[QQRequestManager sharedRequestManager] GET:[SEVER_URL stringByAppendingString:@"yd/getMatReqAddItem.action"] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
-        [getNeedsAry addObjectsFromArray:[responseObject objectForKey:@"list"]];
+        
+        NSArray* jsonAry=(NSArray*)[responseObject objectForKey:@"list"];
+        for (NSDictionary* dic in jsonAry) {
+            NSMutableDictionary* mdic=[[NSMutableDictionary alloc]initWithDictionary:dic];
+            [mdic setValue:@0 forKey:@"btnState"];
+            [getNeedsAry addObject:mdic];
+        }
+        //[getNeedsAry addObjectsFromArray:[responseObject objectForKey:@"list"]];
         [_tableview reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -71,12 +78,12 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 定义cell标识  每个cell对应一个自己的标识
-    NSString *CellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
+   // NSString *CellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.section,indexPath.row];
+    NSString *CellIdentifier=@"cellidentifi";
     // 通过不同标识创建cell实例
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    //cell=[[UITableViewCell alloc]init];
         //名称
         UILabel* name;
         name=[[UILabel alloc]initWithFrame:CGRectMake(10, 15, ScreenWidth/2, 40)];
@@ -89,17 +96,29 @@
         //添加
         
         UIButton* btn=[[UIButton alloc]initWithFrame:CGRectMake(ScreenWidth-50, 20, 30, 30)];
-        [btn setImage:[UIImage imageNamed:@"addNeeds1"] forState:UIControlStateNormal];
+        btn.tag=101;
         [btn addTarget:self action:@selector(addNeeds:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:btn];
         
   }
+    
     
     UILabel* label1=(UILabel*)[cell.contentView viewWithTag:100];
     label1.lineBreakMode = NSLineBreakByWordWrapping;
     label1.numberOfLines = 0;
     label1.text=[[getNeedsAry objectAtIndex:[indexPath row]] objectForKey:@"NAME"];
     
+    //根据数据源初始化按钮
+    UIButton* btn=(UIButton*)[cell.contentView viewWithTag:101];
+    int state = ((NSNumber*)[[getNeedsAry objectAtIndex:[indexPath row]] objectForKey:@"btnState"]).intValue;
+    if (state==0) {
+        [btn setImage:[UIImage imageNamed:@"addNeeds1"] forState:UIControlStateNormal];
+        btn.selected=NO;
+    }else
+    {
+        [btn setImage:[UIImage imageNamed:@"addNeeds2"] forState:UIControlStateNormal];
+         btn.selected=YES;
+    }
     
     return cell;
 }
@@ -119,11 +138,11 @@
 
 -(void)addNeeds:(UIButton*)sender
 {
-     _constraint_top.constant=-44;
-    [self.view setNeedsUpdateConstraints];
-    [UIView animateWithDuration:0.3f animations:^{
-        [self.view layoutIfNeeded];
-    }];
+//     _constraint_top.constant=-44;
+//    [self.view setNeedsUpdateConstraints];
+//    [UIView animateWithDuration:0.3f animations:^{
+//        [self.view layoutIfNeeded];
+//    }];
         UITableViewCell* cell = (UITableViewCell*)[[sender superview] superview];
     NSIndexPath* index=[_tableview indexPathForCell:cell];
     NSString* ID=[[getNeedsAry objectAtIndex:index.row] objectForKey:@"ID"];
@@ -136,6 +155,7 @@
         if ([chooseAry containsObject:dic]) {
             [chooseAry removeObject:dic];
         }
+        [[getNeedsAry objectAtIndex:index.row] setValue:@0 forKey:@"btnState"];
     }else
     {
         [sender setImage:[UIImage imageNamed:@"addNeeds2"] forState:UIControlStateNormal];
@@ -144,6 +164,7 @@
         if (![chooseAry containsObject:dic]) {
             [chooseAry addObject:dic];
         }
+        [[getNeedsAry objectAtIndex:index.row] setValue:@1 forKey:@"btnState"];
     }
 
 }
@@ -163,12 +184,23 @@
 */
 
 - (IBAction)finishedChoosed:(id)sender {
+   NSString* message =  [NSString stringWithFormat:@"您已选择%lu种物料",(unsigned long)chooseAry.count];
+    UIAlertView* alert=[[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"确定", nil];
+    [alert show];
     
-    TheMenuViewController* MenuContro=(TheMenuViewController*)self.viewDeckController.rightController;
-    self.passneesdelegat=MenuContro;
-    //self.LocationDelegate=contro;
-    [self.passneesdelegat passNeeds:chooseAry];
-    [self.navigationController popViewControllerAnimated:YES];
-    [NetRequestManager sharedInstance].FROMDECK=1;
+   
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        TheMenuViewController* MenuContro=(TheMenuViewController*)self.viewDeckController.rightController;
+        self.passneesdelegat=MenuContro;
+        //self.LocationDelegate=contro;
+        [self.passneesdelegat passNeeds:chooseAry];
+        [self.navigationController popViewControllerAnimated:YES];
+        [NetRequestManager sharedInstance].FROMDECK=1;
+    }
+}
+
 @end
