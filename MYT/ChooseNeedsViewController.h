@@ -16,4 +16,5 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraint_top;
 - (IBAction)finishedChoosed:(id)sender;
 @property(nonatomic,weak)id<PassNeedsArryDelegate> passneesdelegat;
+@property(nonatomic,readonly) UIAccelerationValue oldOffset;
 @end
