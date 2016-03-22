@@ -105,7 +105,8 @@ static Z_NetRequestManager * sharedInstance = nil;
 }
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location=[locations firstObject];//取出第一个位置
-    if (location.horizontalAccuracy < 200 && location.horizontalAccuracy != -1){
+   // NSLog(@"%f",location.horizontalAccuracy);
+    if (location.horizontalAccuracy >0){
         CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
         NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
         longi=coordinate.longitude;
@@ -114,7 +115,7 @@ static Z_NetRequestManager * sharedInstance = nil;
         [_locationManager stopUpdatingLocation];
     } else {
         [manager stopUpdatingLocation];	 //停止获取
-        [NSThread sleepForTimeInterval:10]; //阻塞10秒
+        [NSThread sleepForTimeInterval:1]; //阻塞10秒
         [manager startUpdatingLocation];	//重新获取
     }
    

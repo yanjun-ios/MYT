@@ -21,6 +21,7 @@
      UIAlertView *alert ;
     int qiyeorperson;
     NSDictionary* locationCodeDic;
+     CGRect currentTfRec;
 }
 @end
 
@@ -68,6 +69,15 @@
     alert.delegate=self;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Getlocation:) name:@"coordinate"  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    //增加监听，当键退出时收出消息
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     [super viewDidLoad];
     
     
@@ -107,18 +117,30 @@
 {
     
     UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[textField convertRect:textField.bounds toView:window];
-    float y1=rect.origin.y;
-    
-    if(y1>216)
-    {
-        self.tableView.frame=CGRectMake(0, -216, ScreenWidth, ScreenHeight);
-    }
+    currentTfRec=[textField convertRect:textField.bounds toView:window];
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
+    //self.tableView.frame=CGRectMake(0, 60, ScreenWidth, ScreenHeight-50);
+}
+
+//键盘弹出时调用
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    if (keyboardRect.origin.y<currentTfRec.origin.y+currentTfRec.size.height) {
+        self.tableView.frame=CGRectMake(0, keyboardRect.origin.y-(currentTfRec.origin.y+currentTfRec.size.height), ScreenWidth, ScreenHeight);
+    }
+    
+}
+//当键退出时调用
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
     self.tableView.frame=CGRectMake(0, 60, ScreenWidth, ScreenHeight-50);
 }
+
 -(void)Getlocation:(NSNotification *)aNoti
  {
     // 通知传值

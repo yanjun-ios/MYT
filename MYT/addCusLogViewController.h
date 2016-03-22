@@ -12,4 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *TF_Time;
 @property(nonatomic,copy)NSString* cusId;
+@property (weak, nonatomic) IBOutlet UITextField *TF_People;
+@property (weak, nonatomic) IBOutlet UIButton *btnAdd;
+- (IBAction)click_Add:(id)sender;
 @end

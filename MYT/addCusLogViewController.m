@@ -18,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //设置背景颜色
+    self.view.backgroundColor=[UIColor colorWithRed:240.0/255 green:240.0/255 blue:240.0/255 alpha:1.0];
     //添加一个时间选择器
     datepicker=[[UIDatePicker alloc]init];
     [datepicker addTarget:self action:@selector(datechenged:) forControlEvents:UIControlEventValueChanged];
@@ -41,6 +43,7 @@
     NSMutableDictionary* parDic=[[NSMutableDictionary alloc]initWithCapacity:10];
     [parDic setValue:[[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"] forKey:@"userid"];
     [parDic setValue:_cusId forKey:@"cusid"];
+    [parDic setValue:_TF_People.text forKey:@"name"];
     [parDic setValue:_TF_Time.text forKey:@"time"];
     [[QQRequestManager sharedRequestManager]GET:[SEVER_URL stringByAppendingString:@""] parameters:parDic showHUD:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         [self qq_performSVHUDBlock:^{
@@ -74,6 +77,7 @@
 
 -(void)click
 {
+    [_TF_People resignFirstResponder];
     [_TF_Time resignFirstResponder];
    
 }
@@ -87,4 +91,8 @@
 }
 */
 
+- (IBAction)click_Add:(id)sender {
+    
+    [self addData];
+}
 @end
